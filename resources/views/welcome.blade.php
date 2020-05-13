@@ -5,9 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Laravel</title>
+        <script src="{{ URL::asset('js/app.js') }}" defer></script>
+        <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel=”stylesheet" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -98,6 +100,8 @@
                 </div>
             </div>
         </div>
-        <script src="{{ URL::asset('js/app.js') }}"></script>
+
+
+
     </body>
 </html>
