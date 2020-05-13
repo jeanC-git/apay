@@ -5,12 +5,15 @@
 @import 'variables';
 
 // Bootstrap
-// @import '~bootstrap/scss/bootstrap';
-
-// BOOTSTRAP VUE
 @import 'node_modules/bootstrap/scss/bootstrap';
+// BOOTSTRAP VUE
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
 //ADMIN LTE
 @import '~admin-lte/dist/css/adminlte.css';
 
+// Font Awesome
+@import "~@fortawesome/fontawesome-free/scss/brands";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
