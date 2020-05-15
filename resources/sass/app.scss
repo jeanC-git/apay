@@ -1,8 +1,32 @@
+//----------------------CONFIGURACION BOOTSTRAP VUE + ADMINLTE----------------------------
+
+// // Fonts
+// @import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel=”stylesheet");
+
+// // Variables
+// @import 'variables';
+
+// // Bootstrap
+// @import 'node_modules/bootstrap/scss/bootstrap';
+// // BOOTSTRAP VUE
+// @import 'node_modules/bootstrap-vue/src/index.scss';
+
+// //ADMIN LTE
+// @import '~admin-lte/dist/css/adminlte.css';
+
+// // Font Awesome
+// @import "~@fortawesome/fontawesome-free/scss/brands";
+// @import "~@fortawesome/fontawesome-free/scss/regular";
+// @import "~@fortawesome/fontawesome-free/scss/solid";
+// @import "~@fortawesome/fontawesome-free/scss/fontawesome";
+
+
+///////////////////////////////////////////////////////////////////////
+
+//----------------------CONFIGURACION VUETIFY----------------------------
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// Vuetify
+@import '~vuetify/dist/vuetify.min.css';
