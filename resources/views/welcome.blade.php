@@ -85,12 +85,9 @@
                 <div class="title m-b-md">
                     APAY
                 </div>
-                <div id="app">
+                <v-app id="app">
                     <example-component></example-component>
-                    <navbar></navbar>
-
-                </div>
-
+                </v-app>
             </div>
         </div>
     </body>

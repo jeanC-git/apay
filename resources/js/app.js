@@ -11,7 +11,7 @@ Vue.use(Vuetify);
 
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('navbar', require('./components/NavBar.vue').default);
+// Vue.component('navbar', require('./components/Navbar.vue').default);
 
 
 const app = new Vue({
