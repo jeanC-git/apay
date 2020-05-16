@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <v-row justify class="ma-0 pa-0">
-            <v-col cols="12" class="mt-0">
-                <v-img src="https://i.ibb.co/xFT2W9F/banner.jpg" class="d-block"
-                max-width="1440"
-                max-height="513">
-                </v-img>
-             </v-col>
-        </v-row>
+    <div class="ma-0 pa-0">
+        <template>
+            <v-row>
+                <v-col cols="12" class="pa-0">
+                    <v-img src="https://i.ibb.co/xFT2W9F/banner.jpg" class="d-block"
+                    max-height="513">
+                    </v-img>
+                </v-col>
+            </v-row>
         <v-row class="green accent-2">
             <v-container>
                 <v-row>
@@ -29,6 +29,6 @@
                 </v-row>
             </v-container>
         </v-row> 
-    </div>
-    
+        </template>
+    </div>  
 </template>

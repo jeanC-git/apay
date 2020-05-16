@@ -4,9 +4,10 @@
     padless
   >
     <v-card
+      width="100%"
       flat
       tile
-      class="indigo lighten-1 white--text text-center"
+      class="green accent-4 white--text text-center"
     >
       <v-card-text>
         <v-btn
