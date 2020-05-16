@@ -11,7 +11,13 @@ Vue.use(Vuetify);
 
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('navbar', require('./components/Navbar.vue').default);
+
+Vue.component('navbar', require('./components/NavBar.vue').default);
+Vue.component('inicio', require('./components/Inicio.vue').default);
+Vue.component('pie', require('./components/Footer.vue').default);
+Vue.component('perfil', require('./components/Perfil.vue').default);
+Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
+Vue.component('registro', require('./components/Registro.vue').default);
 
 
 const app = new Vue({
