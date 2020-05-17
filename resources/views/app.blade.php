@@ -8,17 +8,15 @@
     <script src="{{ URL::asset('js/app.js') }}" defer></script>
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 </head>
-<style>
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-</style>
+
 <body>
     <v-app id="app">
-        <inicio></inicio>
-        <footer></footer>
+        <v-content>
+            <inicio></inicio>
+            <pie></pie>
+            <inicio-sesion></inicio-sesion>
+            <registro></registro>
+        </v-content>
     </v-app>
 </body>
 </html>
