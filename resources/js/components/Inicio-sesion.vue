@@ -22,20 +22,7 @@
               >
                 <v-toolbar-title class="grey--text darken-3">Iniciar Sesión</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn
-                      :href="source"
-                      icon
-                      large
-                      target="_blank"
-                      v-on="on"
-                    >
-                      
-                    </v-btn>
-                  </template>
-                  <span>Source</span>
-                </v-tooltip>
+              
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -44,10 +31,11 @@
                     name="login"
                     type="text"
                     prepend-icon="mdi-account-circle"
+                    color="green accent-3"
                   ></v-text-field>
 
                   <v-text-field
-                  color="green accent-1"
+                  color="green accent-3"
                     id="password"
                     label="Contraseña"
                     name="password"
@@ -63,9 +51,11 @@
               <v-card-actions outline tile>
                
                 <v-spacer></v-spacer>
-                <v-btn class="grey--text darken-3" flat color="yellow darken-1" >Registrarse</v-btn>
+                <v-btn class= 'color: yellow darken-2'
+                style = 'color : #9F9E9D' >Registrarse</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn class="grey--text darken-3" flat color="yellow darken-1">Ingresar</v-btn>
+                <v-btn class= 'color: yellow darken-2'
+                style = 'color : #9F9E9D'>Ingresar</v-btn>
                   
               </v-card-actions>
             </v-card>
