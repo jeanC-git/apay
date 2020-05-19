@@ -43,6 +43,7 @@
                     label="Correo electrónico"
                     name="login"
                     type="text"
+                    prepend-icon="mdi-account-circle"
                   ></v-text-field>
 
                   <v-text-field
@@ -50,13 +51,21 @@
                     id="password"
                     label="Contraseña"
                     name="password"
-                    type="password"
+                    :type="showPassword ? 'text' :'password'"
+                    prepend-icon="mdi-lock"
+                    :append-icon="showPassword ? 'mdi-eye' :
+                    'mdi-eye-off'"
+                    @click:append="showPassword = 
+                    !showPassword"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
-              <v-card-actions>
+              <v-card-actions outline tile>
+               
                 <v-spacer></v-spacer>
-                <v-btn class="grey--text darken-3" flat color="yellow darken-1" >Ingresar</v-btn>
+                <v-btn class="grey--text darken-3" flat color="yellow darken-1" >Registrarse</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn class="grey--text darken-3" flat color="yellow darken-1">Ingresar</v-btn>
                   
               </v-card-actions>
             </v-card>
@@ -65,12 +74,14 @@
       </v-container>
     </v-content>
   </v-app>
+ 
 </template>
 
 <script>
   export default {
     props: {
       source: String,
+      showPassword: false
     },
   }
 </script>
