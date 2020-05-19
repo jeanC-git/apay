@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -335,14 +335,13 @@
             <a href="" class="title-mobile">APAY</a>
         </div>
     </nav>
+
     <v-app id="app">
         <v-content>
-
             <div class="ma-0 pa-0">
                 <template>
                     <v-row>
                         <v-col cols="12" class="pa-0">
-
                             <v-app id="inspire"
                                 style="background-image:url('https://i.ibb.co/xFT2W9F/banner.jpg');background-size: cover;background-position:center;background-repeat: no-repeat;">
                                 <v-content>
@@ -357,7 +356,7 @@
                                                         <v-tooltip bottom>
                                                             <template v-slot:activator="{ on }">
                                                                 <v-btn :href="source" icon large target="_blank"
-                                                                    v-on="on"></v-btn>
+                                                                v-on="on"></v-btn>
                                                             </template>
                                                             <span>Source</span>
                                                         </v-tooltip>
@@ -365,11 +364,16 @@
                                                     <form method="POST" action="{{ route('login') }}">
                                                         @csrf
                                                         <v-card-text>
-                                                            <v-text-field label="Correo electrónico" name="email"
-                                                            type="text"></v-text-field>
-
-                                                            <v-text-field color="green accent-1" id="password"
-                                                            label="Contraseña" name="password" type="password">
+                                                            <v-text-field color="green accent-3" label="Correo electrónico" name="email"
+                                                            type="text" prepend-icon="mdi-account-circle">
+                                                            </v-text-field>
+                                                            <v-text-field color="green accent-3" id="password"
+                                                            label="Contraseña" name="password"  :type="showPassword ? 'text' :'password'"
+                                                            prepend-icon="mdi-lock"
+                                                            :append-icon="showPassword ? 'mdi-eye' :
+                                                            'mdi-eye-off'"
+                                                             @click:append="showPassword = 
+                                                            !showPassword">
                                                             </v-text-field>
                                                         </v-card-text>
                                                         <v-card-actions>
@@ -384,10 +388,6 @@
                                     </v-container>
                                 </v-content>
                             </v-app>
-
-                            <!-- <v-img src="https://i.ibb.co/xFT2W9F/banner.jpg" class="d-block"
-                                max-height="513">
-                      </v-img>-->
                         </v-col>
                     </v-row>
                     <v-row class="green accent-2">
@@ -420,7 +420,7 @@
 
 
             <v-footer dark padless>
-                <v-card width="100%" flat tile class="green accent-4 white--text text-center">
+                <v-card width="100%" flat tile class="green accent-3 white--text text-center">
                     <v-card-text>
                         <v-btn class="mx-4 white--text" icon>
                             <v-icon size="24px">mdi-facebook</v-icon>
@@ -447,14 +447,10 @@
                     </v-card-text>
                 </v-card>
             </v-footer>
-
-            {{-- <!-- <navbar-component></navbar-component> -->
-            <inicio></inicio>
-            <pie></pie>
-            <!-- <inicio-sesion></inicio-sesion> -->
-            <registro></registro> --}}
+            <perfil></perfil>
         </v-content>
     </v-app>
+    
     <script>
         function mostrar_navbar() {
             document.querySelector('.nav-fostrap').classList.toggle('visible');

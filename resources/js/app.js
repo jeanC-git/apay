@@ -5,9 +5,6 @@ window.Vue = require('vue');
 // LOAD VUETIFY
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
-// import BootstrapVue from 'bootstrap-vue' //Importing
-
-// Vue.use(BootstrapVue) // Telling Vue to use this in whole application
 
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

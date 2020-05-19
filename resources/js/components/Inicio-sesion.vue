@@ -40,6 +40,7 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
+                    color="green accent-1"
                     label="Correo electrónico"
                     name="login"
                     type="text"
@@ -47,7 +48,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                  color="green accent-1"
+                    color="green accent-1"
                     id="password"
                     label="Contraseña"
                     name="password"
