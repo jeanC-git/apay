@@ -88,6 +88,7 @@
                     <example-component></example-component>
                 </v-app>
             </div>
+
         </div>
     </body>
 </html>

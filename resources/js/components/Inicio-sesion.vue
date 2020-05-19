@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" style='background-image:url("https://i.ibb.co/xFT2W9F/banner.jpg");background-size: cover;background-position:center;background-repeat: no-repeat;'>
     <v-content>
       <v-container
         class="fill-height"
@@ -76,7 +76,6 @@
   </v-app>
  
 </template>
-
 <script>
   export default {
     props: {
