@@ -22,4 +22,13 @@ const app = new Vue({
     el: '#app',
     //añade la instancia de Vuetify como parámetro en la de Vue
     vuetify: new Vuetify(),
+    props: {
+        showPassword: false,
+        showValidatePassword: false
+    },
+    data() {
+        return {
+            mostrar_inicio_sesion: true
+        }
+    }
 });

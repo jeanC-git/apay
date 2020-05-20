@@ -51,9 +51,8 @@
 
                                                     </v-toolbar>
                                                     <v-card-text>
-                                                        <form method="POST" action="{{ route('login') }}">
-                                                            @csrf
-                                                            <v-text-field label="Correo electrónico" name="email"
+                                                        <v-form>
+                                                            <v-text-field label="Correo electrónico" name="login"
                                                                 type="text" prepend-icon="mdi-account-circle"
                                                                 color="green accent-3"></v-text-field>
 
@@ -63,19 +62,19 @@
                                                                 prepend-icon="mdi-lock" :append-icon="showPassword ? 'mdi-eye' :
                                                       'mdi-eye-off'" @click:append="showPassword =
                                                       !showPassword"></v-text-field>
+                                                        </v-form>
                                                     </v-card-text>
                                                     <v-card-actions outline tile>
 
                                                         <v-spacer></v-spacer>
                                                         <v-btn class='color: yellow darken-2' style='color : #9F9E9D'
-                                                        @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
-                                                        Registrarse</v-btn>
+                                                            @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
+                                                            Registrarse</v-btn>
                                                         <v-spacer></v-spacer>
-                                                        <v-btn type="submit" class='color: yellow darken-2' style='color : #9F9E9D'>
+                                                        <v-btn class='color: yellow darken-2' style='color : #9F9E9D'>
                                                             Ingresar</v-btn>
 
-                                                        </v-card-actions>
-                                                    </form>
+                                                    </v-card-actions>
                                                 </v-card>
                                             </v-col>
                                         </v-row>
