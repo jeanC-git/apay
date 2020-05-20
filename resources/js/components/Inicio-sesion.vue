@@ -36,7 +36,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                  color="green accent-3"
+                    color="green accent-1"
                     id="password"
                     label="Contraseña"
                     name="password"

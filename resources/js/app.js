@@ -5,9 +5,6 @@ window.Vue = require('vue');
 // LOAD VUETIFY
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
-// import BootstrapVue from 'bootstrap-vue' //Importing
-
-// Vue.use(BootstrapVue) // Telling Vue to use this in whole application
 
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -18,6 +15,7 @@ Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('perfil', require('./components/Perfil.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
+Vue.component('registro', require('./components/Perfil.vue').default);
 
 
 const app = new Vue({

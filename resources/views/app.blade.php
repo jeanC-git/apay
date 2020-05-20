@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -31,12 +31,10 @@
     </nav>
     <v-app id="app">
         <v-content>
-
             <div class="ma-0 pa-0">
                 <template>
                     <v-row>
                         <v-col cols="12" class="pa-0">
-
                             <v-app id="inspire"
                                 style="background-image:url('https://i.ibb.co/xFT2W9F/banner.jpg');background-size: cover;background-position:center;background-repeat: no-repeat;">
                                 <v-content>
@@ -59,11 +57,16 @@
                                                     <form method="POST" action="{{ route('login') }}">
                                                         @csrf
                                                         <v-card-text>
-                                                            <v-text-field label="Correo electrónico" name="email"
-                                                            type="text"></v-text-field>
-
-                                                            <v-text-field color="green accent-1" id="password"
-                                                            label="Contraseña" name="password" type="password">
+                                                            <v-text-field color="green accent-3" label="Correo electrónico" name="email"
+                                                            type="text" prepend-icon="mdi-account-circle">
+                                                            </v-text-field>
+                                                            <v-text-field color="green accent-3" id="password"
+                                                            label="Contraseña" name="password"  :type="showPassword ? 'text' :'password'"
+                                                            prepend-icon="mdi-lock"
+                                                            :append-icon="showPassword ? 'mdi-eye' :
+                                                            'mdi-eye-off'"
+                                                            @click:append="showPassword = 
+                                                            !showPassword">
                                                             </v-text-field>
                                                         </v-card-text>
                                                         <v-card-actions>
@@ -78,10 +81,6 @@
                                     </v-container>
                                 </v-content>
                             </v-app>
-
-                            <!-- <v-img src="https://i.ibb.co/xFT2W9F/banner.jpg" class="d-block"
-                                max-height="513">
-                      </v-img>-->
                         </v-col>
                     </v-row>
                     <v-row class="green accent-2">
@@ -114,7 +113,7 @@
 
 
             <v-footer dark padless>
-                <v-card width="100%"  tile class="green accent-4 white--text text-center">
+                <v-card width="100%" tile class="green accent-3 white--text text-center">
                     <v-card-text>
                         <v-btn class="mx-4 white--text" icon>
                             <v-icon size="24px">mdi-facebook</v-icon>
@@ -129,13 +128,10 @@
                             <v-icon size="24px">mdi-instagram</v-icon>
                         </v-btn>
                     </v-card-text>
-
                     <v-card-text class="white--text pt-0">
                         Equipo de Apay
                     </v-card-text>
-
                     <v-divider></v-divider>
-
                     <v-card-text class="white--text">
                         2020 — <strong>Curso de Integrador</strong>
                     </v-card-text>
@@ -143,10 +139,12 @@
             </v-footer>
             <registro></registro> 
             <inicio-sesion></inicio-sesion>
+            <perfil></perfil>
         </v-content>
-    </v-app>
+    </v-app> 
     <script>
         function mostrar_navbar() {
             document.querySelector('.nav-fostrap').classList.toggle('visible');
         };
     </script>
+</body>
