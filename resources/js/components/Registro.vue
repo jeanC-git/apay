@@ -17,15 +17,15 @@
             md="4"
           >
             <v-card class="elevation-12"
-                     color="grey">
+                     color="">
               <v-toolbar
-                color="grey"
+                color="yellow darken-1"
                 dark
                 flat
               >
               <v-card-actions>
 
-                <v-toolbar-title class="cyan--text ">Registrate</v-toolbar-title>
+                <v-toolbar-title class="grey--text darken-3">Registrate</v-toolbar-title>
                 </v-card-actions>
                 <v-spacer></v-spacer>
                 <v-diverder></v-diverder>
@@ -44,24 +44,20 @@
                 
               </v-toolbar>
               <v-card-text>
-                  <v-toolbar-title class="cyan--text " 
-                  dark
-                  flat>
-      Elige si eres consumidor o comerciante
-                </v-toolbar-title>
+                 
                 <v-form>
                     <v-text-field
                     label="Nombre"
                     name="nombre"
                     type="text"
-                    color="yellow darken-1"
+                    color="green accent-3"
                   ></v-text-field>
 
                   <v-text-field
                     label="Apellido"
                     name="apellido"
                     type="text"
-                    color="yellow darken-1"
+                    color="green accent-3"
                   ></v-text-field>
                   
 
@@ -70,7 +66,7 @@
                     label="Correo electrónico"
                     name="login"
                     type="text"
-                    color="yellow darken-1"
+                    color="green accent-3"
                     
                   ></v-text-field>
 
@@ -84,11 +80,11 @@
                     'mdi-eye-off'"
                     @click:append="showPassword = 
                     !showPassword"
-                    color="yellow darken-1"
+                    color="green accent-3"
                   ></v-text-field>
 
                   <v-text-field
-                  color="yellow darken-1"
+                  color="green accent-3"
                     id="password"
                     label="Confirmar contraseña"
                     name="validatepassword"
@@ -113,7 +109,8 @@
                <v-card-actions >
                 <v-spacer></v-spacer>
                 <v-flex justify-center> 
-                <v-btn class="grey--text darken-3" flat color="yellow darken-1" >Continuar</v-btn>
+                <v-btn class= 'color: yellow darken-2'
+                style = 'color : #9F9E9D' >Continuar</v-btn>
                 
                </v-flex>
               </v-card-actions>
