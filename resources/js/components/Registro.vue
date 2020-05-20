@@ -1,12 +1,4 @@
 <template>
-    <v-app id="inspire">
-    <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-       
-        
-      >
         <v-row
           align="center"
           justify="center"
@@ -21,15 +13,13 @@
               <v-toolbar
                 color="yellow darken-1"
                 dark
-                flat
               >
               <v-card-actions>
 
                 <v-toolbar-title class="grey--text darken-3">Registrate</v-toolbar-title>
                 </v-card-actions>
                 <v-spacer></v-spacer>
-                <v-diverder></v-diverder>
-
+                <v-divider></v-divider>
                <v-card-text>
         <v-btn
           v-for="icon in icons"
@@ -44,7 +34,6 @@
                 
               </v-toolbar>
               <v-card-text>
-                 
                 <v-form>
                     <v-text-field
                     label="Nombre"
@@ -100,7 +89,7 @@
                 <v-flex justify-center>  
             <div id='example-3'
            style="text-align:center">
-                <input type="checkbox" id="aceptar" value="Aceptar" v-model="picked">
+                <input type="checkbox" id="aceptar" value="Aceptar">
 <label>Aceptar términos y condiciones</label>
                  <br>
             </div>
@@ -120,9 +109,6 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
 
 
 </template>

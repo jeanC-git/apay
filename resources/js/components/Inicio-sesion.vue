@@ -8,6 +8,7 @@
         <v-row
           align="center"
           justify="center"
+          v-show="mostrar_iniciar"
         >
           <v-col class="mt-0"
             cols="12"
@@ -52,7 +53,7 @@
                
                 <v-spacer></v-spacer>
                 <v-btn class= 'color: yellow darken-2'
-                style = 'color : #9F9E9D' >Registrarse</v-btn>
+                style = 'color : #9F9E9D' @click="cambiar_registro">Registrarse</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn class= 'color: yellow darken-2'
                 style = 'color : #9F9E9D'>Ingresar</v-btn>
@@ -61,16 +62,30 @@
             </v-card>
           </v-col>
         </v-row>
+        <RegistroInicio v-show="mostrar_registro"></RegistroInicio>
       </v-container>
     </v-content>
   </v-app>
- 
 </template>
 <script>
+import RegistroInicio from './Registro';
   export default {
+    data(){
+      return{
+        mostrar_registro:false,
+        mostrar_iniciar:true
+      };
+    },
     props: {
       source: String,
       showPassword: false
-    },
+    },components: {
+        RegistroInicio
+    },methods:{
+      cambiar_registro(){
+        this.mostrar_registro=true;
+        this.mostrar_iniciar=false;
+      }
+    }
   }
 </script>
