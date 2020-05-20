@@ -9,6 +9,7 @@
     <script src="{{ URL::asset('js/app.js') }}" defer></script>
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
+    @laravelPWA
 </head>
 
 <body id="body">

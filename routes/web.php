@@ -20,3 +20,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//RUTA OFFLINE PWA
+// Route::get('/offline', function () {
+//     return view('vendor/laravelpwa/offline');
+// });
