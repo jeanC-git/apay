@@ -28,7 +28,8 @@ const app = new Vue({
     },
     data() {
         return {
-            mostrar_inicio_sesion: true
+            mostrar_inicio_sesion: true,
+            drawer: null,
         }
     }
 });

@@ -50,9 +50,9 @@
                                                         <v-spacer></v-spacer>
 
                                                     </v-toolbar>
+                                                    <form method="POST" action="{{ route('login') }}">
+                                                        @csrf
                                                     <v-card-text>
-                                                        <form method="POST" action="{{ route('login') }}">
-                                                            @csrf
                                                             <v-text-field label="Correo electrónico" name="email"
                                                                 type="text" prepend-icon="mdi-account-circle"
                                                                 color="green accent-3"></v-text-field>
@@ -68,13 +68,14 @@
 
                                                         <v-spacer></v-spacer>
                                                         <v-btn class='color: yellow darken-2' style='color : #9F9E9D'
-                                                        @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
-                                                        Registrarse</v-btn>
+                                                            @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
+                                                            Registrarse</v-btn>
                                                         <v-spacer></v-spacer>
-                                                        <v-btn type="submit" class='color: yellow darken-2' style='color : #9F9E9D'>
+                                                        <v-btn type="submit" class='color: yellow darken-2'
+                                                            style='color : #9F9E9D'>
                                                             Ingresar</v-btn>
 
-                                                        </v-card-actions>
+                                                    </v-card-actions>
                                                     </form>
                                                 </v-card>
                                             </v-col>
@@ -106,32 +107,32 @@
                                                         </v-card-text>
 
                                                     </v-toolbar>
+                                                    <form method="POST" action="{{ route('register') }}">
+                                                        @csrf
                                                     <v-card-text>
-                                                        <v-form>
-                                                            <v-text-field label="Nombre" name="nombre" type="text"
+                                                            <v-text-field label="Nombre" name="name" type="text"
                                                                 color="green accent-3"></v-text-field>
 
-                                                            <v-text-field label="Apellido" name="apellido" type="text"
+                                                            <v-text-field label="Apellido" name="lastname" type="text"
                                                                 color="green accent-3"></v-text-field>
 
 
 
-                                                            <v-text-field label="Correo electrónico" name="login"
+                                                            <v-text-field label="Correo electrónico" name="email"
                                                                 type="text" color="green accent-3"></v-text-field>
 
-                                                            <v-text-field id="password" label="Contraseña"
+                                                            <v-text-field label="Contraseña"
                                                                 name="password"
                                                                 :type="showPassword ? 'text' :'password'" :append-icon="showPassword ? 'mdi-eye' :
                     'mdi-eye-off'" @click:append="showPassword =
                     !showPassword" color="green accent-3"></v-text-field>
 
-                                                            <v-text-field color="green accent-3" id="password"
-                                                                label="Confirmar contraseña" name="validatepassword"
+                                                            <v-text-field color="green accent-3"
+                                                                label="Confirmar contraseña" name="password_confirmation"
                                                                 :type="showValidatePassword ? 'text' :'password'"
                                                                 :append-icon="showValidatePassword ? 'mdi-eye' :
                     'mdi-eye-off'" @click:append="showValidatePassword =
                     !showValidatePassword"></v-text-field>
-                                                        </v-form>
                                                     </v-card-text>
                                                     <v-card-actions>
                                                         <v-flex justify-center>
@@ -146,7 +147,7 @@
                                                         <v-spacer></v-spacer>
                                                         <v-flex justify-center>
                                                             <v-btn class='color: yellow darken-2'
-                                                                style='color : #9F9E9D'>
+                                                                style='color : #9F9E9D' type="submit">
                                                                 Continuar</v-btn>
 
                                                         </v-flex>
@@ -154,6 +155,7 @@
                                                     <v-card-text class="white--text pt-0">
                                                         ¿Ya tienes una cuenta?
                                                     </v-card-text>
+                                                </form>
                                                 </v-card>
                                             </v-col>
                                         </v-row>
