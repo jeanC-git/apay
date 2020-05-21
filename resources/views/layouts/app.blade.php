@@ -83,7 +83,7 @@
                 <v-content>
                     <v-container class="fill-height" fluid>
 
-                        @if(@Auth::user()->hasRole('cliente'))
+                        @if(@Auth::user()->hasRole('consumidor'))
                         <h2>Eres un cliente</h2>
 
 

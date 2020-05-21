@@ -1,4 +1,4 @@
-@if(@Auth::user()->hasRole('cliente'))
+@if(@Auth::user()->hasRole('consumidor'))
 <v-list-item href="#">
     <v-list-item-icon>
         <v-icon>mdi-inbox</v-icon>
