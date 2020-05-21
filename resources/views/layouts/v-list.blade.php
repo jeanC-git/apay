@@ -40,7 +40,7 @@
         <v-list-item-title>Información personal</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="#">
+<v-list-item href="/registro-puesto">
     <v-list-item-icon>
         <v-icon>mdi-shopping</v-icon>
     </v-list-item-icon>

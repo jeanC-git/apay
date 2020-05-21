@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @laravelPWA
 </head>
 <body>
     <v-app id="app">
@@ -38,7 +39,7 @@
                                         <v-list-item-title>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-                                                style="text-decoration: none;">
+                                                style="text-decoration: none; color:black">
                                                 Cerrar Sesión
                                             </a>
                                         </v-list-item-title>
@@ -74,13 +75,7 @@
                 </v-app-bar>
                 <v-content>
                     <v-container class="fill-height" fluid>
-                        @if(@Auth::user()->hasRole('cliente'))
-                        <h2>Eres un cliente</h2>
-                        @elseif(@Auth::user()->hasRole('comerciante'))
-                        <h2>Eres un comerciante</h2>
-                        @elseif(@Auth::user()->hasRole('administrador'))
-                        <h2>Eres un administrador</h2>
-                        @endif
+                        @yield('content')
                     </v-container>
                 </v-content>
             </v-app>
