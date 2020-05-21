@@ -15,7 +15,7 @@ Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('perfil', require('./components/Perfil.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
-Vue.component('registro', require('./components/Perfil.vue').default);
+Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').default);
 
 
 const app = new Vue({

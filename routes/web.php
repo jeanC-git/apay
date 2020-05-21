@@ -28,3 +28,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/offline', function () {
 //     return view('vendor/laravelpwa/offline');
 // });
+
+
+// RUTAS COMERCIANTE
+Route::get('/registro-puesto', function () {
+    return view('comerciante.registro_puesto');
+});
+
+// RUTAS CONSUMIDOR
+
+
+// RUTAS ADMINISTRADOR
+
