@@ -26,14 +26,12 @@ const app = new Vue({
         showPassword: false,
         showValidatePassword: false
     },
-    data() {
-        return {
-            mostrar_inicio_sesion: true,
-            drawer: null,
-            dialog: false,
-            btn_registro: true,
-        }
-    },
+    data: () => ({
+        mostrar_inicio_sesion: true,
+        drawer: null,
+        dialog: false,
+        btn_registro: true,
+    }),
     methods: {
         tyc(bool1, bool2) {
             let me = this;
