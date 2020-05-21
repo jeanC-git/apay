@@ -15,13 +15,9 @@ Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('perfil', require('./components/Perfil.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
-<<<<<<< HEAD
-Vue.component('perfil', require('./components/Perfil.vue').default);
-=======
 Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').default);
 
 
->>>>>>> f9659f689ae71269599e8a971f847f1be5020e7a
 const app = new Vue({
     el: '#app',
     //añade la instancia de Vuetify como parámetro en la de Vue
@@ -36,8 +32,17 @@ const app = new Vue({
             drawer: null,
             icons: [
                 'mdi-facebook-box',
-                'mdi-google',   
-            ]
+                'mdi-google',
+            ],
+            dialog: false,
+            btn_registro: true,
+        }
+    },
+    methods: {
+        tyc(bool1, bool2) {
+            let me = this;
+            me.dialog = bool1;
+            me.btn_registro = bool2;
         }
     }
 });
