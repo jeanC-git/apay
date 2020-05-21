@@ -30,6 +30,15 @@ const app = new Vue({
         return {
             mostrar_inicio_sesion: true,
             drawer: null,
+            dialog: false,
+            btn_registro: true,
+        }
+    },
+    methods: {
+        tyc(bool1, bool2) {
+            let me = this;
+            me.dialog = bool1;
+            me.btn_registro = bool2;
         }
     }
 });

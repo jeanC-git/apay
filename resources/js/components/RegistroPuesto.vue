@@ -3,11 +3,12 @@
     <v-col class="mt-0" cols="12" sm="8" md="4">
       <v-card class="elevation-12" color>
         <v-toolbar color="yellow darken-2" justify-center>
+          <!-- <v-img src="\imgs\images_comerciante\form.svg"></v-img> -->
           <img src="\images\images_comerciante\form.svg" alt />
           <v-toolbar-title class="grey--text darken-3">Hola, {{id_user}}</v-toolbar-title>
           <v-spacer></v-spacer>
-          <br />
-          <v-toolbar-subtitle class="grey--text darken-3">Cuentanos sobre tu negocio</v-toolbar-subtitle>
+          <!-- <br /> -->
+          <!-- <v-toolbar-subtitle class="grey--text darken-3">Cuentanos sobre tu negocio</v-toolbar-subtitle> -->
         </v-toolbar>
         <v-card-text>
           <v-form>
