@@ -22,8 +22,6 @@
                 <li><a href="">Inicio</a></li>
                 <li><a href="">Caseros</a></li>
                 <li><a href="">Alimentos</a></li>
-                <li><a href="">Testimonios</a></li>
-                <li><a href="">Iniciar sesión</a></li>
             </ul>
         </div>
         <div class="nav-bg-fostrap">
@@ -175,18 +173,18 @@
                                 <v-col cols="12">
                                     <h1 class="text-center">Nuestros servicios</h1>
                                 </v-col>
-                                <v-col cols="4" md="4">
+                                <v-col cols="12" md="4" xs="12">
                                     <v-icon x-large color="pink accent-3" class="d-block text-center">mdi-heart</v-icon>
                                     <p class="text-center font-weight-bold">Encuentra tus alimentos en un solo lugar.
                                     </p>
                                 </v-col>
-                                <v-col cols="4" md="4">
+                                <v-col cols="12" md="4" xs="12">
                                     <v-icon x-large color="yellow darken-1" class="d-block text-center">mdi-star
                                     </v-icon>
                                     <p class="text-center font-weight-bold">Te contactamos con tu casero(a)-clientes.
                                     </p>
                                 </v-col>
-                                <v-col cols="4" md="4">
+                                <v-col cols="12" md="4" xs="12">
                                     <v-icon x-large color="blue-grey darken-3" class="d-block text-center">mdi-thumb-up
                                     </v-icon>
                                     <p class="text-center font-weight-bold">Precio estandar al mercado sugerido.</p>

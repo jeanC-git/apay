@@ -19,53 +19,45 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @laravelPWA
 </head>
-
 <body>
     <v-app id="app">
         <template>
             <v-app id="inspire">
-                <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app>
-                    <template>
+                <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app color="#A0FFE1">
+                    <template >
                         <v-list>
                             <v-list-item-group>
-
-
-                                @include('layouts.v-list')
-
+                                @include('layouts.v-list');
                                 {{-- BOTON LOGOUT --}}
-                                <v-list-item href="{{ route('logout') }}" @click="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <v-list-item>
                                     <v-list-item-icon>
                                         <v-icon>mdi-logout</v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Cerrar Sesión
+                                            <a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                                                style="text-decoration: none;">
+                                                Cerrar Sesión
+                                            </a>
                                         </v-list-item-title>
                                     </v-list-item-content>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                         style="display: none;">
                                         @csrf
                                     </form>
                                 </v-list-item>
-
-
                             </v-list-item-group>
                         </v-list>
                     </template>
-
-
-
                 </v-navigation-drawer>
-
-                <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+                <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="#69F0AE" dark>
                     <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
                     <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
                         <span class="hidden-sm-and-down">{{auth()->user()->name}}</span>
                     </v-toolbar-title>
-                    <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Search"
+                    <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Buscar producto"
                         class="hidden-sm-and-down"></v-text-field>
                     <v-spacer></v-spacer>
                     <v-btn icon>
@@ -75,35 +67,24 @@
                         <v-icon>mdi-bell</v-icon>
                     </v-btn>
                     <v-btn icon large>
-                        <v-avatar size="32px" item>
-                            <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify"></v-img>
+                        <v-avatar size="42px" item>
+                            <v-img src="\images\icons\icon-72x72.png" alt="Vuetify"></v-img>
                         </v-avatar>
                     </v-btn>
                 </v-app-bar>
                 <v-content>
                     <v-container class="fill-height" fluid>
-
-                        @if(@Auth::user()->hasRole('consumidor'))
+                        @if(@Auth::user()->hasRole('cliente'))
                         <h2>Eres un cliente</h2>
-
-
                         @elseif(@Auth::user()->hasRole('comerciante'))
                         <h2>Eres un comerciante</h2>
-
-
                         @elseif(@Auth::user()->hasRole('administrador'))
-
                         <h2>Eres un administrador</h2>
                         @endif
-
                     </v-container>
                 </v-content>
-
             </v-app>
         </template>
-
-
     </v-app>
 </body>
-
 </html>

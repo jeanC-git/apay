@@ -1,27 +1,69 @@
-@if(@Auth::user()->hasRole('consumidor'))
+@if(@Auth::user()->hasRole('cliente'))
 <v-list-item href="#">
     <v-list-item-icon>
-        <v-icon>mdi-inbox</v-icon>
+        <v-icon>mdi-account-circle</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
-        <v-list-item-title>Inbox</v-list-item-title>
+        <v-list-item-title>Información personal</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
 <v-list-item href="#">
     <v-list-item-icon>
-        <v-icon>mdi-star</v-icon>
+        <v-icon>mdi-note</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
-        <v-list-item-title>Star</v-list-item-title>
+        <v-list-item-title>Listas de compras</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-
-
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-cart</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Mi lista</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-security</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Reglas de adquisión</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
 @elseif(@Auth::user()->hasRole('comerciante'))
-<h2>Eres un comerciante</h2>
-
-
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-account-multiple</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Información personal</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-shopping</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Negocios</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-folder</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Gestión de productos</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="#">
+    <v-list-item-icon>
+        <v-icon>mdi-note</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Listas de compras</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
 @elseif(@Auth::user()->hasRole('administrador'))
-
 <h2>Eres un administrador</h2>
 @endif
