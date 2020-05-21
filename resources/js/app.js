@@ -1,11 +1,11 @@
 require('./bootstrap');
-
+//IMPORT SWAL
+import Swal from 'sweetalert2'
+window.Swal = Swal;
 window.Vue = require('vue');
-
 // LOAD VUETIFY
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
-
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
