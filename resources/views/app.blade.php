@@ -36,7 +36,7 @@
                     <v-row>
                         <v-col cols="12" class="pa-0">
                             <v-app id="inspire"
-                                style="background-image:url('https://i.ibb.co/xFT2W9F/banner.jpg');background-size: cover;background-position:center;background-repeat: no-repeat;">
+                                style="background-image:url('images/icons/banner.jpg');background-size: cover;background-position:center;background-repeat: no-repeat;">
                                 {{-- INICIO SESION --}}
                                 <v-content v-if="mostrar_inicio_sesion===true">
                                     <v-container class="fill-height" fluid>
@@ -47,7 +47,6 @@
                                                         <v-toolbar-title class="grey--text darken-3">Iniciar Sesión
                                                         </v-toolbar-title>
                                                         <v-spacer></v-spacer>
-
                                                     </v-toolbar>
                                                     <form method="POST" action="{{ route('login') }}">
                                                         @csrf
@@ -81,7 +80,6 @@
                                         </v-row>
                                     </v-container>
                                 </v-content>
-
                                 {{-- REGISTRAR USUARIO --}}
                                 <v-content v-else>
                                     <v-container class="fill-height" fluid>
@@ -89,22 +87,20 @@
                                             <v-col class="mt-0" cols="12" sm="8" md="4">
                                                 <v-card class="elevation-12" color="">
                                                     <v-toolbar color="yellow darken-1" dark>
+                                                        <v-btn  icon color="grey"  @click="mostrar_inicio_sesion = !mostrar_inicio_sesion"
+                                                            ><v-icon>mdi-arrow-left</v-icon></v-btn>
+                                                        </v-flex>
                                                         <v-card-actions>
-
                                                             <v-toolbar-title class="grey--text darken-3">Registrate
                                                             </v-toolbar-title>
                                                         </v-card-actions>
                                                         <v-spacer></v-spacer>
-                                                        <v-divider></v-divider>
-                                                        <v-card-text>
                                                             <v-btn class="mx-4 white--text" icon>
-                                                                <v-icon size="24px">mdi-facebook-box</v-icon>
+                                                                <v-icon size="40px">mdi-facebook-box</v-icon>
                                                             </v-btn>
                                                             <v-btn class="mx-4 white--text" icon>
-                                                                <v-icon size="24px">mdi-google</v-icon>
+                                                                <v-icon size="40px">mdi-google</v-icon>
                                                             </v-btn>
-                                                        </v-card-text>
-
                                                     </v-toolbar>
                                                     <form method="POST" action="{{ route('register') }}">
                                                         @csrf
@@ -114,24 +110,20 @@
 
                                                             <v-text-field label="Apellido" name="lastname" type="text"
                                                                 color="green accent-3"></v-text-field>
-
-
-
                                                             <v-text-field label="Correo electrónico" name="email"
                                                                 type="text" color="green accent-3"></v-text-field>
 
                                                             <v-text-field label="Contraseña"
                                                                 name="password"
                                                                 :type="showPassword ? 'text' :'password'" :append-icon="showPassword ? 'mdi-eye' :
-                    'mdi-eye-off'" @click:append="showPassword =
-                    !showPassword" color="green accent-3"></v-text-field>
-
+                                                                'mdi-eye-off'" @click:append="showPassword =
+                                                                !showPassword" color="green accent-3"></v-text-field>
                                                             <v-text-field color="green accent-3"
                                                                 label="Confirmar contraseña" name="password_confirmation"
                                                                 :type="showValidatePassword ? 'text' :'password'"
                                                                 :append-icon="showValidatePassword ? 'mdi-eye' :
-                    'mdi-eye-off'" @click:append="showValidatePassword =
-                    !showValidatePassword"></v-text-field>
+                                                                'mdi-eye-off'" @click:append="showValidatePassword =
+                                                                !showValidatePassword"></v-text-field>
                                                     </v-card-text>
                                                     <v-card-actions>
                                                         <v-flex justify-center>
@@ -148,22 +140,14 @@
                                                             <v-btn class='color: yellow darken-2'
                                                                 style='color : #9F9E9D' type="submit">
                                                                 Continuar</v-btn>
-
                                                         </v-flex>
                                                     </v-card-actions>
-                                                    <v-card-text class="white--text pt-0">
-                                                        ¿Ya tienes una cuenta?
-                                                    </v-card-text>
                                                 </form>
                                                 </v-card>
                                             </v-col>
                                         </v-row>
                                     </v-container>
                                 </v-content>
-
-
-
-
                             </v-app>
                         </v-col>
                     </v-row>
@@ -194,8 +178,6 @@
                     </v-row>
                 </template>
             </div>
-
-
             <footer></footer>
         </v-content>
     </v-app>

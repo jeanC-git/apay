@@ -15,9 +15,7 @@ Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('perfil', require('./components/Perfil.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
-Vue.component('registro', require('./components/Perfil.vue').default);
-
-
+Vue.component('perfil', require('./components/Perfil.vue').default);
 const app = new Vue({
     el: '#app',
     //añade la instancia de Vuetify como parámetro en la de Vue
@@ -30,6 +28,10 @@ const app = new Vue({
         return {
             mostrar_inicio_sesion: true,
             drawer: null,
+            icons: [
+                'mdi-facebook-box',
+                'mdi-google',   
+            ]
         }
     }
 });
