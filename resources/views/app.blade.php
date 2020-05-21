@@ -103,21 +103,12 @@
                                                             </v-toolbar-title>
                                                         </v-card-actions>
                                                         <v-spacer></v-spacer>
-<<<<<<< HEAD
                                                             <a class="mx-4 white--text" icon href="{{ route('social.auth', 'facebook') }}">
                                                                 <v-icon size="40px">mdi-facebook-box</v-icon>
                                                             </a>
                                                             <a class="mx-4 white--text" icon href="{{ route('social.auth', 'google') }}">
                                                                 <v-icon size="40px">mdi-google</v-icon>
                                                             </a>
-=======
-                                                        <v-btn class="mx-4 white--text" icon>
-                                                            <v-icon size="40px">mdi-facebook-box</v-icon>
-                                                        </v-btn>
-                                                        <v-btn class="mx-4 white--text" icon>
-                                                            <v-icon size="40px">mdi-google</v-icon>
-                                                        </v-btn>
->>>>>>> 1d4d87bb1e773812677dde111a67cc6a161af3e8
                                                     </v-toolbar>
                                                     <form method="POST" action="{{ route('register') }}">
                                                         @csrf
