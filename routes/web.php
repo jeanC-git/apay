@@ -34,7 +34,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
-
+Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 // RUTAS CONSUMIDOR
 
 

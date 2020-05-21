@@ -1,11 +1,11 @@
 require('./bootstrap');
-
+//IMPORT SWAL
+import Swal from 'sweetalert2'
+window.Swal = Swal;
 window.Vue = require('vue');
-
 // LOAD VUETIFY
 import Vuetify from 'vuetify'
 Vue.use(Vuetify);
-
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
@@ -30,10 +30,6 @@ const app = new Vue({
         return {
             mostrar_inicio_sesion: true,
             drawer: null,
-            icons: [
-                'mdi-facebook-box',
-                'mdi-google',
-            ],
             dialog: false,
             btn_registro: true,
         }

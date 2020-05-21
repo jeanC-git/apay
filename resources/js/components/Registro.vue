@@ -127,20 +127,13 @@
                  style = 'color : #9F9E9D'>iniciar sesion</v-btn>
                  </v-flex>
                 </v-card-actions>
-                
-                
-                
-                
             </v-card>
           </v-col>
         </v-row>
       </v-container>
     </v-content>
   </v-app>
-
-
 </template>
-
 <script>
   export default {
     props: {
@@ -154,9 +147,6 @@
         'mdi-google',
         
       ],
-
-
-
     }),
   }
 </script>

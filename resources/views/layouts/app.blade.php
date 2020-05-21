@@ -29,7 +29,7 @@
                     <template >
                         <v-list>
                             <v-list-item-group>
-                                @include('layouts.v-list');
+                                @include('layouts.v-list')
                                 {{-- BOTON LOGOUT --}}
                                 <v-list-item>
                                     <v-list-item-icon>
