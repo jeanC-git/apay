@@ -27,8 +27,8 @@ class SocialAuthController extends Controller
         } else {  
             // En caso de que no exista creamos un nuevo usuario con sus datos.
             $user = User::create([
-                'name' => $social_user->name,
-                'lastname'=>$social_user->name,
+                'name' => $social_user->first_name,
+                'lastname'=>$social_user->last_name,
                 'email' => $social_user->email,
                 'avatar' => $social_user->avatar,
             ]); 

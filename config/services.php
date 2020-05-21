@@ -32,11 +32,11 @@ return [
     'facebook' => [
         'client_id' => '533488740863959',
         'client_secret' => 'd94fd6e3542be599696d3f5704f35b6d',
-        'redirect' => 'http://localhost:8000/auth/facebook/callback'
+        'redirect' => 'https://www.apay.somadevoos.com/auth/facebook/callback'
     ],
     'google' => [
         'client_id' => '536868857650-sqgehi9jsi0959bd207aepq0iv0cpekh.apps.googleusercontent.com',
         'client_secret' => 'JGHBR2_9wC8o75ELRhNspD7u',
-        'redirect' => 'http://127.0.0.1:8000/auth/google/callback/',
+        'redirect' => 'https://www.apay.somadevoos.com/auth/google/callback/',
     ],
 ];
