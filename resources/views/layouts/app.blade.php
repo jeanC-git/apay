@@ -30,36 +30,18 @@
                     <template>
                         <v-list>
                             <v-list-item-group>
-                                <v-list-item>
-                                    <v-list-item-icon>
-                                        <v-icon>mdi-inbox</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>
-                                        <v-list-item-title>Inbox</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                                <v-list-item>
-                                    <v-list-item-icon>
-                                        <v-icon>mdi-star</v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-content>
-                                        <v-list-item-title>Star</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
 
+
+                                @include('layouts.v-list')
 
                                 {{-- BOTON LOGOUT --}}
-                                <v-list-item>
+                                <v-list-item href="{{ route('logout') }}" @click="event.preventDefault();document.getElementById('logout-form').submit();">
                                     <v-list-item-icon>
                                         <v-icon>mdi-logout</v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();document.getElementById('logout-form').submit();"
-                                                style="text-decoration: none;">
-                                                Cerrar Sesión
-                                            </a>
+                                            Cerrar Sesión
                                         </v-list-item-title>
                                     </v-list-item-content>
 
@@ -100,6 +82,7 @@
                 </v-app-bar>
                 <v-content>
                     <v-container class="fill-height" fluid>
+
                         @if(@Auth::user()->hasRole('cliente'))
                         <h2>Eres un cliente</h2>
 
@@ -112,6 +95,7 @@
 
                         <h2>Eres un administrador</h2>
                         @endif
+
                     </v-container>
                 </v-content>
 
