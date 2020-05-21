@@ -33,7 +33,9 @@
 
 
 
-$color-pack: false; 
-// COLOR PACK VUETIFY 
+$color-pack: false;
+// COLOR PACK VUETIFY
 @import '~vuetify/src/styles/main.sass';
 
+//SWEETALER
+@import "~sweetalert2/dist/sweetalert2.min.css";
