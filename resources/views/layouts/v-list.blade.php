@@ -65,5 +65,20 @@
     </v-list-item-content>
 </v-list-item>
 @elseif(@Auth::user()->hasRole('administrador'))
-<h2>Eres un administrador</h2>
+<v-list-item href="/consumidores">
+    <v-list-item-icon>
+        <v-icon>mdi-note</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Consumidores</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="/comerciantes">
+    <v-list-item-icon>
+        <v-icon>mdi-folder</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Comerciantes</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
 @endif

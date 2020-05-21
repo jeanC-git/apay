@@ -3,8 +3,8 @@
     @if(@Auth::user()->hasRole('consumidor'))
 
     @elseif(@Auth::user()->hasRole('comerciante'))
-
     @elseif(@Auth::user()->hasRole('administrador'))
+    <consumidores></consumidores> 
 
     @endif
 @endsection
