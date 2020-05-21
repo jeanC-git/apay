@@ -35,13 +35,11 @@
                                     <v-list-item-icon>
                                         <v-icon>mdi-logout</v-icon>
                                     </v-list-item-icon>
-                                    <v-list-item-content>
-                                        <v-list-item-title>
-                                            <a href="{{ route('logout') }}"
+                                    <v-list-item-content href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
                                                 style="text-decoration: none; color:black">
+                                        <v-list-item-title>
                                                 Cerrar Sesión
-                                            </a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST"
@@ -81,5 +79,6 @@
             </v-app>
         </template>
     </v-app>
+    
 </body>
 </html>

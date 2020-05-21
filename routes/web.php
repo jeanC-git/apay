@@ -36,7 +36,8 @@ Route::get('/registro-puesto', function () {
 });
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 // RUTAS CONSUMIDOR
-
-
 // RUTAS ADMINISTRADOR
-
+//RUTAS AUTENTIFICACION FACEBOOK
+Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
+Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+//RUTAS AUTENTIFICACION GOOGLE

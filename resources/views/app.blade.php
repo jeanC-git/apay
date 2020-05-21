@@ -47,6 +47,12 @@
                                                         <v-toolbar-title class="grey--text darken-3">Iniciar Sesión
                                                         </v-toolbar-title>
                                                         <v-spacer></v-spacer>
+                                                        <a class="mx-4 white--text" icon href="{{ route('social.auth', 'facebook') }}">
+                                                            <v-icon size="40px">mdi-facebook-box</v-icon>
+                                                        </a>
+                                                        <a class="mx-4 white--text" icon href="{{ route('social.auth', 'google') }}">
+                                                            <v-icon size="40px">mdi-google</v-icon>
+                                                        </a>
                                                     </v-toolbar>
                                                     <form method="POST" action="{{ route('login') }}">
                                                         @csrf
@@ -54,7 +60,6 @@
                                                             <v-text-field label="Correo electrónico" name="email"
                                                                 type="text" prepend-icon="mdi-account-circle"
                                                                 color="green accent-3"></v-text-field>
-
                                                             <v-text-field color="green accent-1" id="password"
                                                                 label="Contraseña" name="password"
                                                                 :type="showPassword ? 'text' :'password'"
@@ -95,12 +100,12 @@
                                                             </v-toolbar-title>
                                                         </v-card-actions>
                                                         <v-spacer></v-spacer>
-                                                            <v-btn class="mx-4 white--text" icon>
+                                                            <a class="mx-4 white--text" icon href="{{ route('social.auth', 'facebook') }}">
                                                                 <v-icon size="40px">mdi-facebook-box</v-icon>
-                                                            </v-btn>
-                                                            <v-btn class="mx-4 white--text" icon>
+                                                            </a>
+                                                            <a class="mx-4 white--text" icon href="{{ route('social.auth', 'google') }}">
                                                                 <v-icon size="40px">mdi-google</v-icon>
-                                                            </v-btn>
+                                                            </a>
                                                     </v-toolbar>
                                                     <form method="POST" action="{{ route('register') }}">
                                                         @csrf
