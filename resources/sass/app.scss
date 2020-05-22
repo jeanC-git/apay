@@ -28,12 +28,16 @@
 @import url('https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css');
 @import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
 
+
+
 // Vuetify
 @import '~vuetify/dist/vuetify.min.css';
 
 
 
-$color-pack: false; 
-// COLOR PACK VUETIFY 
+$color-pack: false;
+// COLOR PACK VUETIFY
 @import '~vuetify/src/styles/main.sass';
 
+//SWEETALER
+// @import "~sweetalert2/dist/sweetalert2.min.css";
