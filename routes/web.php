@@ -32,6 +32,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
+Route::get('/mis-productos',function(){
+    return view('comerciante.mis-productos');
+});
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 // RUTAS CONSUMIDOR
 Route::get('/catalogo', function () {
@@ -47,7 +50,7 @@ Route::get('/comerciantes', function () {
     return view('administrador.comerciantes');
 });
 Route::get('/precios', function () {
-    return view('comerciante.precios');
+    return view('administrador.precios');
 });
 //RUTAS AUTENTIFICACION FACEBOOK
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');

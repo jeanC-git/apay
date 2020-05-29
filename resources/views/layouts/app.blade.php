@@ -32,7 +32,7 @@
                                 {{-- BOTON LOGOUT --}}
                                 <v-list-item>
                                     <v-list-item-icon>
-                                        <v-icon>mdi-logout</v-icon>
+                                        <v-icon color="grey darken-4">mdi-logout</v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-content href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
@@ -66,7 +66,7 @@
                     </v-btn>
                     <v-btn icon large>
                         <v-avatar size="42px" item>
-                            <v-img src="\images\icons\icon-72x72.png" alt="Vuetify"></v-img>
+                            <v-img src="\images\icons\icon-72x72.png" alt=""></v-img>
                         </v-avatar>
                     </v-btn>
                 </v-app-bar>
