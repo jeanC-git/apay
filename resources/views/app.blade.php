@@ -159,7 +159,6 @@
                                                                     Registrarte</v-btn>
                                                             </v-flex>
                                                         </v-card-actions>
-
                                                     </form>
                                                 </v-card>
                                             </v-col>
@@ -196,7 +195,8 @@
                     </v-row>
                 </template>
             </div>
-            <footer></footer>
+            <pie></pie>
+            
         </v-content>
 
         <v-row justify="center">
@@ -261,8 +261,6 @@
                 </v-card>
             </v-dialog>
         </v-row>
-
-
     </v-app>
 
     <script>

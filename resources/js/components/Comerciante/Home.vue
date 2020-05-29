@@ -14,7 +14,7 @@
     <v-list>
       <v-list-item v-for="item in items" :key="item.title">
         <v-list-item-icon>
-          <v-icon v-if="item.icon" color="green">mdi-star</v-icon>
+          <v-icon v-if="item.icon" color="yellow">mdi-star</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>

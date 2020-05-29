@@ -1,15 +1,23 @@
 @if(@Auth::user()->hasRole('consumidor'))
 <v-list-item href="#">
     <v-list-item-icon>
-        <v-icon>mdi-account-circle</v-icon>
+        <v-icon color="green accent-3">mdi-account-circle</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Información personal</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
+<v-list-item href="/productos">
+    <v-list-item-icon>
+        <v-icon color="green accent-3"> mdi-food-apple</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Alimentos</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
 <v-list-item href="#">
     <v-list-item-icon>
-        <v-icon>mdi-note</v-icon>
+        <v-icon color="green accent-3">mdi-note</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Listas de compras</v-list-item-title>
@@ -79,6 +87,14 @@
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Comerciantes</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
+<v-list-item href="/precios">
+    <v-list-item-icon>
+        <v-icon>mdi-folder</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Precios</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
 @endif
