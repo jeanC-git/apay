@@ -7,7 +7,7 @@
         <v-list-item-title>Información personal</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="/productos">
+<v-list-item href="/catalogo">
     <v-list-item-icon>
         <v-icon color="green accent-3"> mdi-food-apple</v-icon>
     </v-list-item-icon>

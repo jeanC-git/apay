@@ -19,7 +19,7 @@ Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').defa
 Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL CONSUMIDOR
 Vue.component('home-consumidor', require('./components/Consumidor/Home.vue').default);
-Vue.component('productos', require('./components/Consumidor/Productos.vue').default);
+Vue.component('catalogo', require('./components/Consumidor/Catalogo.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL EL ADMINISTRADOR
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);

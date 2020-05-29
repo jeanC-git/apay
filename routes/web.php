@@ -34,8 +34,8 @@ Route::get('/registro-puesto', function () {
 });
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 // RUTAS CONSUMIDOR
-Route::get('/productos', function () {
-    return view('consumidor.productos');
+Route::get('/catalogo', function () {
+    return view('consumidor.catalogo');
 });
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');

@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    <productos></productos>
+    <catalogo></catalogo>
 @endsection
