@@ -60,7 +60,7 @@
                                                             <v-text-field label="Correo electrónico" name="email"
                                                                 type="email" prepend-icon="mdi-account-circle"
                                                                 color="green accent-3"></v-text-field>
-                                                            <v-text-field color="green accent-1" id="password"
+                                                            <v-text-field color="green accent-3" id="password"
                                                                 label="Contraseña" name="password"
                                                                 :type="showPassword ? 'text' :'password'"
                                                                 prepend-icon="mdi-lock" :append-icon="showPassword ? 'mdi-eye' :
@@ -68,7 +68,6 @@
                                                       !showPassword"></v-text-field>
                                                         </v-card-text>
                                                         <v-card-actions outline tile>
-
                                                             <v-spacer></v-spacer>
                                                             <v-btn class='color: yellow darken-2'
                                                                 style='color : #9F9E9D'
@@ -77,8 +76,8 @@
                                                             <v-spacer></v-spacer>
                                                             <v-btn type="submit" class='color: yellow darken-2'
                                                                 style='color : #9F9E9D'>
-                                                                Ingresar</v-btn>
-
+                                                                Ingresar
+                                                            </v-btn>
                                                         </v-card-actions>
                                                     </form>
                                                 </v-card>
@@ -156,7 +155,7 @@
                                                                 <v-btn class='color: yellow darken-2'
                                                                     style='color : #9F9E9D' type="submit"
                                                                     :disabled="btn_registro">
-                                                                    Registrarte</v-btn>
+                                                                    Continuar</v-btn>
                                                             </v-flex>
                                                         </v-card-actions>
                                                     </form>

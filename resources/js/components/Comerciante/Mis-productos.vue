@@ -3,59 +3,59 @@
     width="100%"
     color="#F5F5F7"
     >
-        <v-list-item>
-            <v-list-item-content>
-                <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
+      <v-list-item>
+          <v-list-item-content>
+              <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
+          </v-list-item-content>
+      </v-list-item>
 
-        <v-data-table
-            :headers="headers"
-            :items="products"
-        >
-        <template v-slot:top>
-            <v-toolbar>
-                <v-dialog v-model="dialog" max-width="500px" >
-                    <template v-slot:activator="{ on }">
-                        <v-spacer></v-spacer>
-                        <v-btn fab color="yellow darken-1" v-on="on">
-                            <v-icon dark>mdi-plus</v-icon>
-                        </v-btn>
-                    </template>
-                    <v-card color="grey lighten-3">
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="green accent-3" text @click="save"><v-icon>mdi-content-save-all</v-icon></v-btn>
-                            <v-btn color="green accent-3" text @click="close"><v-icon>mdi-close</v-icon></v-btn>
-                        </v-card-actions>
-                        <v-card-text>
-                            <v-container> 
-                                <v-row>
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-file-input color="green accent-3" filled prepend-icon="mdi-camera" v-model="editedItem.image" label="Foto"></v-file-input>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-text-field color="green accent-3" v-model="editedItem.name" label="Nombre"></v-text-field>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-input color="green accent-3" disabled v-model="editedItem.price" label="Precio"></v-input>
-                                    </v-col>
-                                    <v-col cols="12" sm="12" md="12">
-                                        <v-text-field color="green accent-3" v-model="editedItem.stock" label="Stock"></v-text-field>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                        </v-card-text>
-                    </v-card>
-                </v-dialog>
-            </v-toolbar>
-        </template>
+      <v-data-table
+          :headers="headers"
+          :items="products"
+      >
+      <template v-slot:top>
+          <v-toolbar>
+              <v-dialog v-model="dialog" max-width="500px" >
+                  <template v-slot:activator="{ on }">
+                      <v-spacer></v-spacer>
+                      <v-btn fab color="yellow darken-1" v-on="on">
+                          <v-icon dark>mdi-plus</v-icon>
+                      </v-btn>
+                  </template>
+                  <v-card color="grey lighten-3">
+                      <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="green accent-3" text @click="save"><v-icon>mdi-content-save-all</v-icon></v-btn>
+                          <v-btn color="green accent-3" text @click="close"><v-icon>mdi-close</v-icon></v-btn>
+                      </v-card-actions>
+                      <v-card-text>
+                          <v-container> 
+                              <v-row>
+                                  <v-col cols="12" sm="12" md="12">
+                                      <v-file-input color="green accent-3" filled prepend-icon="mdi-camera" v-model="editedItem.image" label="Foto"></v-file-input>
+                                  </v-col>
+                                  <v-col cols="12" sm="12" md="12">
+                                      <v-text-field color="green accent-3" v-model="editedItem.name" label="Nombre"></v-text-field>
+                                  </v-col>
+                                  <v-col cols="12" sm="12" md="12">
+                                      <v-input color="green accent-3" disabled v-model="editedItem.price" label="Precio"></v-input>
+                                  </v-col>
+                                  <v-col cols="12" sm="12" md="12">
+                                      <v-text-field color="green accent-3" v-model="editedItem.stock" label="Stock"></v-text-field>
+                                  </v-col>
+                              </v-row>
+                          </v-container>
+                      </v-card-text>
+                  </v-card>
+              </v-dialog>
+          </v-toolbar>
+      </template>
 
-        <template v-slot:item.actions="{ item }">
-            <v-icon color="yellow darken-1" small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-            <v-icon color="green accent-3" small @click="deleteItem(item)">mdi-delete</v-icon>
-        </template>
-        </v-data-table>
+      <template v-slot:item.actions="{ item }">
+          <v-icon color="yellow darken-1" small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon color="green accent-3" small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template>
+      </v-data-table>
     </v-card>
 </template>
 
@@ -111,7 +111,7 @@ export default {
       let me = this;
       this.products = [];
       axios
-        .get("/lista_consumidores")
+        .get("/lista_productos")
         .then(function(response) {
           let respuesta = response.data;
           me.products = respuesta.data;
