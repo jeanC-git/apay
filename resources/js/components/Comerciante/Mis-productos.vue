@@ -16,10 +16,10 @@
       <template v-slot:top>
           <v-toolbar>
               <v-dialog v-model="dialog" max-width="500px" >
-                  <template v-slot:activator="{ on }">
+                  <template>
                       <v-spacer></v-spacer>
-                      <v-btn fab color="yellow darken-1" v-on="on">
-                          <v-icon dark>mdi-plus</v-icon>
+                      <v-btn fab color="yellow darken-1">
+                          <v-icon dark>mdi-cart</v-icon>
                       </v-btn>
                   </template>
                   <v-card color="grey lighten-3">
