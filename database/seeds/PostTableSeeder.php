@@ -19,8 +19,8 @@ class PostTableSeeder extends Seeder
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
                 'password'=>Hash::make('12345678'),
-                'email' => $faker->unique()->safeEmail,
-            ]); 
+                'email' => $faker->unique()->freeEmail,
+            ]);
             $user->assignRole('consumidor');
         }
         $user = User::create([
@@ -28,15 +28,17 @@ class PostTableSeeder extends Seeder
             'lastname'=>$faker->lastName,
             'password'=>Hash::make('12345678'),
             'email' => 'admin@admin.com',
-        ]); 
+        ]);
         $user->assignRole('administrador');
 
-        $user = User::create([
-            'name' => $faker->firstname,
-            'lastname'=>$faker->lastName,
-            'password'=>Hash::make('12345678'),
-            'email' => 'comerciante@comerciante.com',
-        ]); 
-        $user->assignRole('comerciante');
+        foreach (range(1,100) as $index) {
+            $user = User::create([
+                'name' => $faker->firstname,
+                'lastname'=>$faker->lastName,
+                'password'=>Hash::make('12345678'),
+                'email' => $faker->unique()->freeEmail,
+            ]);
+            $user->assignRole('comerciante');
+        }
     }
 }

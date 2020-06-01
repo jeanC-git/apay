@@ -18,6 +18,9 @@ Vue.component('registro', require('./components/Registro.vue').default);
 Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').default);
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);
+Vue.component('home-consumidor', require('./components/Consumidor/Home.vue').default);
+Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
+
 
 const app = new Vue({
     el: '#app',

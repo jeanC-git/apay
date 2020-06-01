@@ -32,7 +32,7 @@
     </v-list-item-content>
 </v-list-item>
 @elseif(@Auth::user()->hasRole('comerciante'))
-<v-list-item href="#">
+<v-list-item href="/home">
     <v-list-item-icon>
         <v-icon>mdi-account-multiple</v-icon>
     </v-list-item-icon>
