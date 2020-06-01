@@ -11,14 +11,14 @@ class PostTableProductos extends Seeder
      */
     public function run()
     {
-            DB::table('categorias')->insert([
-                ['nombre' => 'Verduras'],
-                ['nombre' => 'Frutas'],
-                ['nombre' => 'Carnes'],
-                ['nombre' => 'Marinos'],
-                ['nombre' => 'Abarrotes'],
-            ]);
-            $subcategoria=array(
+            // DB::table('categorias')->insert([
+            //     ['nombre' => 'Verduras'],
+            //     ['nombre' => 'Frutas'],
+            //     ['nombre' => 'Carnes'],
+            //     ['nombre' => 'Marinos'],
+            //     ['nombre' => 'Abarrotes'],
+            // ]);
+            $subcategoria=[
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Aceites'],
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Arroz'],
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Alimentos en conserva'],
@@ -34,12 +34,12 @@ class PostTableProductos extends Seeder
                 ["nombre_categoria"=>'Carnes','nombre_subcategoria'=>'Chancho'],
                 ["nombre_categoria"=>'Marinos','nombre_subcategoria'=>'Pescados'],
                 ["nombre_categoria"=>'Marinos','nombre_subcategoria'=>'Marisco'],
-            );
+            ];
             foreach ($subcategoria as $value) {
-                $id_categoria=DB::table('subcategorias')->select('subcategorias.id')->where($value["nombre_categoria"])->first();
+                $id_categoria=DB::table('categorias')->select('categorias.id')->where('nombre',$value["nombre_categoria"])->first();
                 DB::table('subcategorias')->insert([
                     ['nombre'       => $value["nombre_subcategoria"],
-                    'id_categoria'  => $id_categoria],
+                    'id_categoria'  => $id_categoria->id],
                 ]);
             }
     }
