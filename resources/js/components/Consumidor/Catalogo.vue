@@ -14,14 +14,13 @@
       </v-col>
       <v-col cols="12" xs="3" sm="2">
         <v-btn icon color="green accent-3">
-              <v-icon>mdi-cart</v-icon>
+          <v-icon>mdi-cart</v-icon>
         </v-btn>
       </v-col>
     </v-row>
     </v-container>
 
-    <v-row>
-      <template >
+    <template v-slot:top>
         <v-card
           max-width="250"
           class="mx-auto"
@@ -36,8 +35,8 @@
           </v-list-item>
 
           <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
-            height="100"
+            src="https://www.lavanguardia.com/r/GODO/LV/p4/WebSite/2017/05/18/Recortada/img_ysaiz_20160908-162606_imagenes_lv_getty_istock_22114092_small-k7HC-U422720718631MyF-992x558@LaVanguardia-Web.jpg"
+
           ></v-img>
 
           <v-card-text>
@@ -56,6 +55,7 @@
                   color="yellow darken-1"      
                   right
                   fab
+                  @click="addToCart"
                 >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -63,6 +63,26 @@
           </v-card-actions>
         </v-card>
       </template>
-    </v-row>
   </v-card>
 </template>
+
+<script>
+export default {
+  data: {
+    cart:[],
+  },
+  computed:{
+    cartAmount(){
+      return this.cart.length
+    }
+  },
+  methods:{
+    selectedProduct(){
+
+    },
+    addToCart(){
+      thi.cart.push(this.selectedProduct)
+    }
+  }
+}
+</script>
