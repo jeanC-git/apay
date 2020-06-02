@@ -15,7 +15,7 @@
     <v-data-table
       :headers="headers"
       :items="desserts"
-      sort-by="calories"
+      sort-by="name"
       class="elevation-1"
       :loading="loading"
       loading-text="Cargando datos"

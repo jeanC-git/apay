@@ -18,7 +18,7 @@
               <v-dialog v-model="dialog" max-width="500px" >
                   <template v-slot:activator="{ on }">
                       <v-spacer></v-spacer>
-                      <v-btn fab color="yellow darken-1">
+                      <v-btn fab color="yellow darken-1" v-on="on">
                           <v-icon dark v-on="on">mdi-plus</v-icon>
                       </v-btn>
                   </template>
@@ -37,18 +37,27 @@
                                   <v-col cols="12" sm="12" md="12">
                                       <v-text-field color="green accent-3" v-model="editedItem.name" label="Nombre"></v-text-field>
                                   </v-col>
+                                  <v-col class="d-flex" cols="12" sm="6">
+                                    <v-select
+                                      :items="arrayCategorias"
+                                      label="Categoría"
+                                      outlined
+                                      color="green accent-3"
+                                      item-text="nombre"
+                                      item-value="id"
+                                    >
+                                    </v-select>
+                                  </v-col>
+                                  <v-col class="d-flex" cols="12" sm="6">
+                                    <v-select
+                                      :items="items"
+                                      label="SubCategoría"
+                                      outlined
+                                      color="green accent-3"
+                                    ></v-select>
+                                  </v-col>
                                   <v-col cols="12" sm="12" md="12">
                                       <v-input color="green accent-3" disabled v-model="editedItem.price" label="Precio"></v-input>
-                                  </v-col>
-                                  <v-col>
-                                    <select class="form-control">
-                                      <option
-                                        v-for="categoria in arrayCategorias"
-                                        :key="categoria.id"
-                                        v-bind:value="categoria.id"
-                                        v-text="categoria.nombre"
-                                      ></option>
-                                    </select>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
                                       <v-text-field color="green accent-3" v-model="editedItem.stock" label="Stock"></v-text-field>
@@ -76,6 +85,9 @@ export default {
     search: "",
     loading: true,
     dialog: false,
+    items:[
+      
+    ],
     headers: [
       {
         text: "Nombre",
@@ -92,7 +104,10 @@ export default {
     editedIndex: -1,
     editedItem: {
       name: "",
-      email: ""
+      category: "",
+      subcategory:"",
+      price:"",
+      stock:"",
     },
     defaultItem: {
       name: "",
@@ -103,7 +118,7 @@ export default {
   }),
   computed: {
     formTitle() {
-      this.getCategorias();
+      
       return this.editedIndex === -1 ? "Nuevo producto" : "Editar producto";
     }
   },
@@ -120,11 +135,12 @@ export default {
 
   methods: {
     getCategorias(){
+      let me = this;
       axios
-        .get("apiCategoria")
+        .get("api/apiCategoria")
         .then(function(response) {
-          console.log(response.data);
-          this.arrayCategorias=response.data;
+          console.log(response.data.data);
+          me.arrayCategorias=response.data.data;
         })
         .catch(function(error) {
           // handle error
@@ -135,11 +151,9 @@ export default {
       let me = this;
       this.products = [];
       axios
-        .get("/lista_comerciantes")
+        .get("/lista_consumidores")
         .then(function(response) {
-          let respuesta = response.data;
-          me.products = respuesta.data;
-          me.loading = false;
+          
         })
         .catch(function(error) {
           // handle error
@@ -174,6 +188,8 @@ export default {
       }
       this.close();
     }
-  }
+  },mounted() {
+    this.getCategorias();
+  },
 };
 </script>

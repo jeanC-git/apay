@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::middleware(Autenticar::class)->apiResource('apiProducto', 'Api\ApiProducto');
-Route::middleware(Autenticar::class)->apiResource('apiCategoria', 'Api\ApiCategoria');
+Route::apiResource('apiCategoria', 'Api\ApiCategoria');
 Route::middleware(Autenticar::class)->apiResource('apiSubCategoria', 'Api\ApiSubCategoria');
