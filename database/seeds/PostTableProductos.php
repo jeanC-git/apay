@@ -11,13 +11,13 @@ class PostTableProductos extends Seeder
      */
     public function run()
     {
-            // DB::table('categorias')->insert([
-            //     ['nombre' => 'Verduras'],
-            //     ['nombre' => 'Frutas'],
-            //     ['nombre' => 'Carnes'],
-            //     ['nombre' => 'Marinos'],
-            //     ['nombre' => 'Abarrotes'],
-            // ]);
+            DB::table('categorias')->insert([
+                ['nombre' => 'Verduras'],
+                ['nombre' => 'Frutas'],
+                ['nombre' => 'Carnes'],
+                ['nombre' => 'Marinos'],
+                ['nombre' => 'Abarrotes'],
+            ]);
             $subcategoria=[
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Aceites'],
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Arroz'],

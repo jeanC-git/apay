@@ -27,7 +27,6 @@ class CreateProductosTable extends Migration
             $table->foreign('id_categoria')->references('id')->on('categorias'); // FK: user_id
         });
     }
-
     /**
      * Reverse the migrations.
      *
