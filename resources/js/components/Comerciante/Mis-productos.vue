@@ -16,10 +16,10 @@
       <template v-slot:top>
           <v-toolbar>
               <v-dialog v-model="dialog" max-width="500px" >
-                  <template>
+                  <template v-slot:activator="{ on }">
                       <v-spacer></v-spacer>
                       <v-btn fab color="yellow darken-1">
-                          <v-icon dark>mdi-cart</v-icon>
+                          <v-icon dark v-on="on">mdi-plus</v-icon>
                       </v-btn>
                   </template>
                   <v-card color="grey lighten-3">
@@ -39,6 +39,16 @@
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
                                       <v-input color="green accent-3" disabled v-model="editedItem.price" label="Precio"></v-input>
+                                  </v-col>
+                                  <v-col>
+                                    <select class="form-control">
+                                      <option
+                                        v-for="categoria in arrayCategorias"
+                                        :key="categoria.id"
+                                        v-bind:value="categoria.id"
+                                        v-text="categoria.nombre"
+                                      ></option>
+                                    </select>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
                                       <v-text-field color="green accent-3" v-model="editedItem.stock" label="Stock"></v-text-field>
@@ -62,6 +72,7 @@
 <script>
 export default {
   data: () => ({
+    arrayCategorias:[],
     search: "",
     loading: true,
     dialog: false,
@@ -92,6 +103,7 @@ export default {
   }),
   computed: {
     formTitle() {
+      this.getCategorias();
       return this.editedIndex === -1 ? "Nuevo producto" : "Editar producto";
     }
   },
@@ -107,11 +119,23 @@ export default {
   },
 
   methods: {
+    getCategorias(){
+      axios
+        .get("apiCategoria")
+        .then(function(response) {
+          console.log(response.data);
+          this.arrayCategorias=response.data;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
     initialize() {
       let me = this;
       this.products = [];
       axios
-        .get("/lista_productos")
+        .get("/lista_comerciantes")
         .then(function(response) {
           let respuesta = response.data;
           me.products = respuesta.data;
