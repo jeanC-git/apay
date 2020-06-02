@@ -23,9 +23,6 @@
                 dark
  
               >
-              
-              
-
                 <v-toolbar-title   class="grey--text darken-3">Registrate</v-toolbar-title>
                 <v-spacer></v-spacer>
                 
@@ -34,14 +31,10 @@
                   v-for="icon in icons"
                   :key="icon"
                   class="mx-4 white--text"
-                  icon
-                 
-                  
+                  icon  
                   >
                    <v-icon size="40px">{{ icon }}</v-icon>
                   </v-btn>
-                
-                
                </v-toolbar>
                <v-card-text>
                  

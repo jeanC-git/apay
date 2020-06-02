@@ -32,7 +32,7 @@
                                 {{-- BOTON LOGOUT --}}
                                 <v-list-item>
                                     <v-list-item-icon>
-                                        <v-icon>mdi-logout</v-icon>
+                                        <v-icon color="grey darken-4">mdi-logout</v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-content href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"
@@ -56,17 +56,15 @@
                         <span style='color : #9F9E9D' class="hidden-sm-and-down">Bienvenido, {{auth()->user()->name}}</span>
                     </v-toolbar-title>
                     <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Buscar producto"
-                        class="hidden-sm-and-down"></v-text-field>
+                        class="hidden-sm-and-down">
+                    </v-text-field>
                     <v-spacer></v-spacer>
-                    <v-btn icon>
-                        <v-icon>mdi-apps</v-icon>
-                    </v-btn>
                     <v-btn icon>
                         <v-icon>mdi-bell</v-icon>
                     </v-btn>
                     <v-btn icon large>
                         <v-avatar size="42px" item>
-                            <v-img src="\images\icons\icon-72x72.png" alt="Vuetify"></v-img>
+                            <v-img src="\images\icons\icon-72x72.png" alt=""></v-img>
                         </v-avatar>
                     </v-btn>
                 </v-app-bar>

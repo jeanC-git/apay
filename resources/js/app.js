@@ -8,18 +8,23 @@ import Vuetify from 'vuetify'
 Vue.use(Vuetify);
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
+//REGISTRO DE COMPONENTES LIBRES
 Vue.component('navbar-component', require('./components/NavBarComponent.vue').default);
 Vue.component('inicio', require('./components/Inicio.vue').default);
 Vue.component('pie', require('./components/Footer.vue').default);
-Vue.component('perfil', require('./components/Perfil.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
+//REGISTRO DE COMPONENTES SOLO PARA EL COMERCIANTE
 Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').default);
+Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
+Vue.component('productos',require('./components/Comerciante/Mis-productos.vue').default);
+//REGISTRO DE COMPONENTES SOLO PARA EL CONSUMIDOR
+Vue.component('home-consumidor', require('./components/Consumidor/Home.vue').default);
+Vue.component('catalogo', require('./components/Consumidor/Catalogo.vue').default);
+//REGISTRO DE COMPONENTES SOLO PARA EL EL ADMINISTRADOR
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);
-Vue.component('home-consumidor', require('./components/Consumidor/Home.vue').default);
-Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
+Vue.component('precios-admin', require('./components/Administrador/Precios.vue').default);
 
 
 const app = new Vue({
