@@ -15,16 +15,16 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre'); 
-            $table->string('descripcion'); 
-            $table->string('precio'); 
-            $table->string('codigo'); 
-            $table->string('foto'); 
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->string('precio');
+            $table->string('codigo');
+            $table->string('foto');
             $table->timestamps();
-            $table->bigInteger('id_subcategoria')->unsigned(); // ID DEL USUARIO DEL PERFIL
-            $table->bigInteger('id_categoria')->unsigned(); // ID DEL USUARIO DEL PERFIL
-            $table->foreign('id_subcategoria')->references('id')->on('subcategorias'); // FK: user_id
-            $table->foreign('id_categoria')->references('id')->on('categorias'); // FK: user_id
+            $table->bigInteger('id_subcategoria')->unsigned();
+            $table->bigInteger('id_categoria')->unsigned();
+            $table->foreign('id_subcategoria')->references('id')->on('subcategorias');
+            $table->foreign('id_categoria')->references('id')->on('categorias');
         });
     }
     /**
