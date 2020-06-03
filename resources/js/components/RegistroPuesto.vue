@@ -27,7 +27,7 @@
               :counter="6"
             ></v-text-field>
             <br />
-            <v-select
+            <!-- <v-select
               :items="items"
               label="Documento de identidad"
               color="green accent-3"
@@ -46,7 +46,7 @@
               v-model="puesto.numero_documento"
               :rules="reglasValidacion.dniRules"
               :counter="8"
-            ></v-text-field>
+            ></v-text-field> -->
             <v-text-field
               label="Celular"
               name="celular"
@@ -59,12 +59,14 @@
             ></v-text-field>
             <br />
             <v-select
-              :items="categorias"
+              :items="arrayCategorias"
               label="Categoría"
               color="green accent-3"
+              item-text="nombre"
+              item-value="id"
               dense
-              prepend-icon="mdi-storefront"
               v-model="puesto.categoria"
+              prepend-icon="mdi-storefront"
               :rules="reglasValidacion.selectRules"
             ></v-select>
           </v-card-text>
@@ -83,12 +85,11 @@
 export default {
   props: ["id_user"],
   data: () => ({
+    arrayCategorias:[],
     base_url: "",
     puesto: {
       nombre_puesto: "",
       numero_puesto: "",
-      documento_personal: "",
-      numero_documento: "",
       celular: "",
       categoria: ""
     },
@@ -123,7 +124,23 @@ export default {
       selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
     }
   }),
+  mounted() {
+    this.getCategorias();
+  },
   methods: {
+    getCategorias(){
+      let me = this;
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          console.log(response.data.data);
+          me.arrayCategorias=response.data.data;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
     registrar_puesto() {
       let me = this;
       let validar = me.$refs.form.validate();
