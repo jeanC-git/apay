@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-
 Route::middleware(Autenticar::class)->apiResource('apiProducto', 'Api\ApiProducto');
 Route::apiResource('apiCategoria', 'Api\ApiCategoria');
-Route::middleware(Autenticar::class)->apiResource('apiSubCategoria', 'Api\ApiSubCategoria');
+Route::apiResource('apiSubCategoria', 'Api\ApiSubCategoria');
