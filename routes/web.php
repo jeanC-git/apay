@@ -40,6 +40,9 @@ Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPues
 Route::get('/catalogo', function () {
     return view('consumidor.catalogo');
 });
+Route::get('/informacion-personal', function () {
+    return view('consumidor.informacion-personal');
+});
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');
 Route::get('/consumidores', function () {
