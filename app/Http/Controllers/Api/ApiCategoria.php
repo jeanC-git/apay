@@ -28,11 +28,9 @@ class ApiCategoria extends Controller
     public function store(Request $request)
     {
         $data = (object) $request->data;
-
         $categoria = new Categoria();
         $categoria->nombre = $data->nombre;
         $saved = $categoria->save();
-
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
@@ -63,7 +61,7 @@ class ApiCategoria extends Controller
     public function destroy($id)
     {
         $categoria = Categoria::destroy($id);
-
         return ($categoria) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
+    
 }
