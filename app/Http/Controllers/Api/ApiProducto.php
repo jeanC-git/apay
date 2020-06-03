@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ApiProducto extends Controller
@@ -17,7 +18,13 @@ class ApiProducto extends Controller
     //  GET METHOD
     public function index()
     {
-        $productos = Producto::all();
+        // $productos = Producto::all();
+
+        $productos = DB::table('productos')
+                    ->select('productos.*', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria')
+                    ->join('subcategorias', 'productos.id_subcategoria', '=', 'subcategorias.id',)
+                    ->join('categorias', 'subcategorias.id_categoria', '=', 'categorias.id')
+                    ->get();
         return response()->json(['data' => $productos]);
     }
 

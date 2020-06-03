@@ -16,9 +16,6 @@ class ApiCategoria extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        // return array(
-        //     'data' =>$categorias
-        // );
         return response()->json(['data' => $categorias]);
     }
 

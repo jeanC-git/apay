@@ -22,9 +22,9 @@ class CreateProductosTable extends Migration
             $table->string('foto');
             $table->timestamps();
             $table->bigInteger('id_subcategoria')->unsigned();
-            $table->bigInteger('id_categoria')->unsigned();
+            $table->bigInteger('id_und_medida')->unsigned();
             $table->foreign('id_subcategoria')->references('id')->on('subcategorias');
-            $table->foreign('id_categoria')->references('id')->on('categorias');
+            $table->foreign('id_und_medida')->references('id')->on('unidades_nedidas');
         });
     }
     /**
