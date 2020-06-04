@@ -21,9 +21,10 @@ class ApiProducto extends Controller
         // $productos = Producto::all();
 
         $productos = DB::table('productos')
-                    ->select('productos.*', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria')
+                    ->select('productos.*', 'categorias.nombre as categoria', 'subcategorias.nombre as subcategoria','unidades_medidas.nombre as medida')
                     ->join('subcategorias', 'productos.id_subcategoria', '=', 'subcategorias.id',)
                     ->join('categorias', 'subcategorias.id_categoria', '=', 'categorias.id')
+                    ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
                     ->get();
         return response()->json(['data' => $productos]);
     }
@@ -82,5 +83,9 @@ class ApiProducto extends Controller
         $subcategoria = Producto::destroy($id);
 
         return ($subcategoria) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
+    }
+    public function show($id){
+        $productos = Producto::where('id_subcategoria','=',$id)->get();
+        return response()->json(['data' => $productos]);
     }
 }

@@ -2,10 +2,9 @@
   <v-card width="100%" color="#F5F5F7">
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
+        <v-list-item-title class="headline">Gestiona a tus productos:</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-
     <v-data-table :headers="headers" :items="products">
       <template v-slot:top>
         <v-toolbar>
@@ -29,7 +28,7 @@
               <v-card-text>
                 <v-container>
                   <v-row>
-                    <v-col cols="12" sm="12" md="12">
+                    <!-- <v-col cols="12" sm="12" md="12">
                       <v-file-input
                         color="green accent-3"
                         filled
@@ -37,10 +36,10 @@
                         v-model="editedItem.image"
                         label="Foto"
                       ></v-file-input>
-                    </v-col>
-                    <v-col cols="12" sm="12" md="12">
+                    </v-col> -->
+                    <!-- <v-col cols="12" sm="12" md="12">
                       <v-text-field color="green accent-3" v-model="editedItem.name" label="Nombre"></v-text-field>
-                    </v-col>
+                    </v-col> -->
                     <v-col class="d-flex" cols="12" sm="6">
                       <v-select
                         :items="arrayCategorias"
@@ -56,21 +55,34 @@
                     <v-col class="d-flex" cols="12" sm="6">
                       <v-select
                         :items="arraySubcategoria"
-                        label="SubCategoría"
+                        label="Sub-Categoría"
                         item-text="nombre"
                         item-value="id"
                         outlined
                         color="green accent-3"
                         v-model="editedItem.subcategory"
+                        @change="getProducto()"
+                      ></v-select>
+                    </v-col>
+                    <v-col class="d-flex" cols="12" sm="6">
+                      <v-select
+                        :items="arrayProductos"
+                        label="Nombre del producto"
+                        item-text="nombre"
+                        item-value="id"
+                        outlined
+                        color="green accent-3"
+                        v-model="editedItem.nombre"
+                        @change="getPrecioXunidad()"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
-                      <v-input
+                      <v-text-field
                         color="green accent-3"
                         disabled
                         v-model="editedItem.price"
                         label="Precio"
-                      ></v-input>
+                      ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <v-text-field color="green accent-3" v-model="editedItem.stock" label="Stock"></v-text-field>
@@ -92,9 +104,11 @@
 
 <script>
 export default {
+  props: ["id_user"],
   data: () => ({
     arrayCategorias: [],
     arraySubcategoria: [],
+    arrayProductos:[],
     search: "",
     loading: true,
     dialog: false,
@@ -144,12 +158,21 @@ export default {
   },
 
   methods: {
+    getProductosXPuesto(){
+      let me = this;
+      axios.get("api/apiComercianteProductos/"+me.id_user).then(function(response) {
+          console.log(response.data.data);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    },
     getCategorias() {
       let me = this;
+      me.arrayCategorias=[],
+      me.arrayProductos=[],
       axios
         .get("api/apiCategoria")
         .then(function(response) {
-          console.log(response.data.data);
           me.arrayCategorias = response.data.data;
         })
         .catch(function(error) {
@@ -159,12 +182,35 @@ export default {
     },
     getSubCategorias() {
       let me = this;
+      me.arrayProductos=[],
       axios
         .get("api/apiSubCategoria/" + me.editedItem.category)
         .then(function(response) {
           me.arraySubcategoria = response.data.data;
-          console.log(response);
           // console.log(response.data.data);
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
+    getProducto(){
+        let me=this;
+        axios.get("api/apiProducto/" + me.editedItem.subcategory)
+        .then(function(response) {
+          me.arrayProductos = response.data.data;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
+    getPrecioXunidad(){
+        let me=this;
+        axios.get("api/apiUnidadMedida/" + me.editedItem.nombre)
+        .then(function(response) {
+          console.log(response.data.data.precio);
+          me.editedItem.price = response.data.data.precio+' x '+ response.data.data.nombre;
         })
         .catch(function(error) {
           // handle error
@@ -210,6 +256,7 @@ export default {
   },
   mounted() {
     this.getCategorias();
+    this.getProductosXPuesto();
   }
 };
 </script>

@@ -40,16 +40,82 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+              <v-dialog v-model="dialog" max-width="500px">
+                <template v-slot:activator="{ on }">
+                  <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Producto</v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Agregar producto</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="newItem.nombre" label="Nombre" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="newItem.descripcion" label="Descripción" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-text-field v-model="newItem.precio" :rules="rules.precioRules" label="Precio" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-select
+                            :items="arrayMedidas"
+                            label="Unidad de medida"
+                            outlined
+                            color="green accent-3"
+                            item-text="nombre"
+                            item-value="id"
+                            v-model="newItem.id_und_medida"
+                            required
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-select
+                            :items="arrayCategorias"
+                            label="Categoría"
+                            outlined
+                            color="green accent-3"
+                            item-text="nombre"
+                            item-value="id"
+                            v-model="newItem.id_categoria"
+                            @change="getSubCategorias()"
+                            required
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6">
+                          <v-select
+                            :items="arraySubcategoria"
+                            label="SubCategoría"
+                            item-text="nombre"
+                            item-value="id"
+                            outlined
+                            color="green accent-3"
+                            v-model="newItem.id_subcategoria"
+                            required
+                          ></v-select>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                    <v-btn color="blue darken-1" text @click="save">Guardar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-container>
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="abrirModalEdit(item)">mdi-pencil</v-icon>
-            <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+            <v-icon small @click="deleteItem(item)" > mdi-delete</v-icon>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
-
     <v-dialog v-model="modal" max-width="50%">
       <v-card>
         <v-card-title>Editar precio del producto : {{productoEdit.nombre}}</v-card-title>
@@ -73,18 +139,63 @@
         </v-form>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialog_delete"
+        width="500"
+      >
+        <v-card>
+          <v-card-title
+            class="headline yellow lighten-2"
+            primary-title
+          >
+            Eliminar producto
+          </v-card-title>
+  
+          <v-card-text class="mt-4">
+           ¿Esta seguro de eliminar el producto?
+          </v-card-text>
+  
+          <v-divider></v-divider>
+  
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog_delete = false"
+            >
+              Cancelar
+            </v-btn>
+            <v-btn
+              color="red lighten-2"
+              text
+              @click="eliminar_producto()"
+            >
+              Aceptar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-card>
 </template>
-
-
 <script>
 export default {
   data: () => ({
+    dialog: false,
+    dialog_delete:false,
+    id_item_delete:'',
     rules: {
       precioRules: [
         v => !!v || "Precio es requerido.",
         v => v > 0 || "El precio debe ser mayor a 0."
       ]
+    },
+    newItem: {
+      nombre: '',
+      descripcion: '',
+      precio: 0,
+      id_subcategoria: '',
+      id_categoria:'',
+      id_und_medida:'',
     },
     footerProps: {
       itemsPerPageText: "Resultados por página",
@@ -92,6 +203,9 @@ export default {
       itemsPerPageOptions: [5, 10, 15, 20, -1],
       itemsPerPageAllText: "Todos"
     },
+    arrayCategorias:[],
+    arraySubcategoria:[],
+    arrayMedidas:[],
     loading: true,
     buscador: null,
     search: null,
@@ -106,11 +220,12 @@ export default {
       },
       { text: "Categoría", value: "categoria" },
       { text: "Subcategoría", value: "subcategoria" },
+      { text: "Medida", value: "medida" },
+      { text: "Precio (S/.)", value: "precio" },
       { text: "Acciones", value: "actions", sortable: false }
     ],
     productos: [],
     editedIndex: -1,
-
     defaultItem: {
       name: "",
       calories: 0,
@@ -120,11 +235,13 @@ export default {
     },
     productoEdit: ""
   }),
-
   created() {
     this.getProductos();
   },
-
+  mounted() {
+    this.getCategorias();
+    this.getUnidadMedida();
+  },
   methods: {
     getProductos() {
       let vue = this;
@@ -136,13 +253,47 @@ export default {
         }, 1500);
       });
     },
-
+    getUnidadMedida() {
+      let vue = this;
+      axios.get("/api/apiUnidadMedida").then(response => {
+        vue.arrayMedidas = response.data.data;
+      }).catch(function(error) {
+          // handle error
+          console.log(error);
+        });;
+    },
+    getCategorias() {
+      let me = this;
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          console.log(response.data.data);
+          me.arrayCategorias = response.data.data;
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
+    getSubCategorias() {
+      let me = this;
+      axios
+        .get("api/apiSubCategoria/" + me.newItem.id_categoria)
+        .then(function(response) {
+          me.arraySubcategoria = response.data.data;
+          console.log(response);
+          // console.log(response.data.data);
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
     abrirModalEdit(item) {
       let vue = this;
       vue.modal = true;
       vue.productoEdit = item;
     },
-
     editarPrecio() {
       let vue = this;
       let validar = vue.$refs.form.validate();
@@ -186,6 +337,59 @@ export default {
             "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenados correctamente.</p>"
         });
       }
+    },
+    close () {
+      this.dialog = false
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedIndex = -1
+      })
+    },
+    save () {
+      let vue= this;
+      axios.post("/api/apiProducto", {
+            data: vue.newItem
+      }).then(function(response) {
+        vue.getProductos();
+        vue.dialog=false;
+        vue.newItem.nombre='';
+        vue.newItem.descripcion='';
+        vue.newItem.precio=0;
+        vue.newItem.id_subcategoria='';
+        vue.newItem.id_categoria='';
+        vue.newItem.id_und_medida='';
+        Swal.fire({
+          icon: "success",
+          title:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto agregado.</p>",
+          timer: 1700
+        });
+      })
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+      } else {
+        this.desserts.push(this.editedItem)
+      }
+      this.close()
+    },
+    deleteItem (item) {
+      let me=this;
+      me.dialog_delete=true;
+      me.id_item_delete=item.id;
+    },
+    eliminar_producto(){
+      let me=this;
+      axios.delete("/api/apiProducto/"+me.id_item_delete).then(function(response) {
+        me.getProductos();
+        me.dialog_delete=false;
+        me.id_item_delete='';
+        Swal.fire({
+          icon: "success",
+          title:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto eliminado.</p>",
+          timer: 1700
+        });
+      })
     }
   }
 };
