@@ -19,7 +19,6 @@
       </v-col>
     </v-row>
     </v-container>
-
     <v-row>
       <template >
         <v-card
@@ -34,7 +33,6 @@
               <v-list-item-subtitle>Num puesto</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-
           <v-img
             src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg"
             height="100"
