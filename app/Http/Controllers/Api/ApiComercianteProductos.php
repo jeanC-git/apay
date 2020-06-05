@@ -24,7 +24,7 @@ class ApiComercianteProductos extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -35,7 +35,18 @@ class ApiComercianteProductos extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id_comerciante= Comerciante_productos::select('comerciantes.id')
+                                                ->join('comerciantes','comerciantes.id','=','comerciante_productos.id_comerciante')
+                                                ->where('comerciantes.id_user',$request->data['id_user'])
+                                                ->first();
+        $data = (object) $request->data;
+        $producto = new Comerciante_productos();
+        $producto->stock = $data->stock;
+        $producto->id_comerciante = $id_comerciante->id;
+        $producto->id_producto = $data->nombre;
+        $saved = $producto->save();
+
+        return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
     /**
@@ -46,9 +57,20 @@ class ApiComercianteProductos extends Controller
      */
     public function show($id)
     {
-        $categorias = Comerciante_productos::select('comerciantes.*', 'comerciante_productos.*','productos.*')
+        $categorias = Comerciante_productos::select(
+            'comerciantes.id as id_comerciante', 
+            'comerciante_productos.id as id','comerciante_productos.stock as stock',
+            'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto',
+            'unidades_medidas.nombre as unidad',
+            'subcategorias.id as id_subcategoria','subcategorias.nombre as subcategoria',
+            'categorias.id as id_categoria','categorias.nombre as categoria',
+            )
         ->join('comerciantes', 'comerciante_productos.id_comerciante', '=', 'comerciantes.id')
         ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')
+        ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
+        ->join('subcategorias', 'subcategorias.id', '=', 'productos.id_subcategoria')
+        ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
+        
         ->where('comerciantes.id_user',$id)->get();
         return response()->json(['data' => $categorias]);
     }
@@ -84,6 +106,8 @@ class ApiComercianteProductos extends Controller
      */
     public function destroy($id)
     {
-        //
+        $subcategoria = Comerciante_productos::destroy($id);
+
+        return ($subcategoria) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 }
