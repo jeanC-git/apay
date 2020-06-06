@@ -66,8 +66,7 @@
                     <v-row>
                         <v-col cols="12">
                         <v-divider class="green accent-2"></v-divider>
-                        <h1 class="text-center text-lg title ma-3" style="color-text:#263238">Que productos puedes encontrar en este mercado 😍</h1>
-                        
+                        <h1 class="text-center text-lg title ma-3" style="color-text:#263238">Que productos puedes encontrar en este mercado 😍</h1>                   
                         </v-col>
                         <v-col cols="12" md="6">
                         <p class="text-center font-weight-bold text-md body-1" color="blue-grey darken-3">
