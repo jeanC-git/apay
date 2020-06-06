@@ -5,7 +5,7 @@
     >
       <v-list-item>
           <v-list-item-content>
-              <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
+              <v-list-item-title class="headline">Gestiona tus productos</v-list-item-title>
           </v-list-item-content>
       </v-list-item>
 
@@ -45,20 +45,15 @@
                                       color="green accent-3"
                                       item-text="nombre"
                                       item-value="id"
-                                      v-model="editedItem.category"
-                                      @change="getSubCategorias()"
                                     >
                                     </v-select>
                                   </v-col>
                                   <v-col class="d-flex" cols="12" sm="6">
                                     <v-select
-                                      :items="arraySubcategoria"
+                                      :items="items"
                                       label="SubCategoría"
-                                      item-text="nombre"
-                                      item-value="id"
                                       outlined
                                       color="green accent-3"
-                                      v-model="editedItem.subcategory"
                                     ></v-select>
                                   </v-col>
                                   <v-col cols="12" sm="12" md="12">
@@ -74,6 +69,7 @@
               </v-dialog>
           </v-toolbar>
       </template>
+
       <template v-slot:item.actions="{ item }">
           <v-icon color="yellow darken-1" small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
           <v-icon color="green accent-3" small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -86,10 +82,12 @@
 export default {
   data: () => ({
     arrayCategorias:[],
-    arraySubcategoria:[],
     search: "",
     loading: true,
     dialog: false,
+    items:[
+      
+    ],
     headers: [
       {
         text: "Nombre",
@@ -110,7 +108,6 @@ export default {
       subcategory:"",
       price:"",
       stock:"",
-      image:"",
     },
     defaultItem: {
       name: "",
@@ -125,17 +122,14 @@ export default {
       return this.editedIndex === -1 ? "Nuevo producto" : "Editar producto";
     }
   },
-
   watch: {
     dialog(val) {
       val || this.close();
     }
   },
-
   created() {
     this.initialize();
   },
-
   methods: {
     getCategorias(){
       let me = this;
@@ -149,25 +143,12 @@ export default {
           // handle error
           console.log(error);
         });
-    },getSubCategorias(){
-      let me =this;
-      axios
-        .get("api/apiSubCategoria/"+me.editedItem.category)
-        .then(function(response) {
-          me.arraySubcategoria=response.data.data;
-          console.log(response);
-          // console.log(response.data.data);
-        })
-        .catch(function(error) {
-          // handle error
-          console.log(error);
-        });
     },
     initialize() {
       let me = this;
       this.products = [];
       axios
-        .get("/lista_consumidores")
+        .get("")
         .then(function(response) {
           
         })
@@ -177,9 +158,9 @@ export default {
         });
     },
     editItem(item) {
-      // this.editedIndex = this.products.indexOf(item);
-      // this.editedItem = Object.assign({}, item);
-      // this.dialog = true;
+      this.editedIndex = this.products.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
     deleteItem(item) {
       const index = this.products.indexOf(item);
@@ -187,11 +168,11 @@ export default {
         this.products.splice(index, 1);
     },
     close() {
-      // this.dialog = false;
-      // this.$nextTick(() => {
-      //   this.editedItem = Object.assign({}, this.defaultItem);
-      //   this.editedIndex = -1;
-      // });
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
     },
     save() {
       if (this.editedIndex > -1) {
