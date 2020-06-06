@@ -4,7 +4,6 @@
       <v-container
         class="fill-height"
         fluid
-
         >
         <v-row
           align="center"
@@ -16,9 +15,7 @@
             sm="8"
             md="4"
           >
-            <v-card class="elevation-12"
-                     color="blue">
-           
+            <v-card class="elevation-12" color="blue">
             </v-card>
           </v-col>
         </v-row>

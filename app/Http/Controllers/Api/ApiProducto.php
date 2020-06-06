@@ -60,7 +60,6 @@ class ApiProducto extends Controller
     public function update(Request $request, $id)
     {
         $data = (object) $request->data;
-
         $producto = Producto::find($id);
         $producto->nombre = $data->nombre;
         $producto->descripcion = $data->descripcion;
@@ -68,7 +67,6 @@ class ApiProducto extends Controller
         $producto->id_subcategoria = $data->id_subcategoria;
         $producto->id_und_medida = $data->id_und_medida;
         $saved = $producto->save();
-
         return ($saved) ? response()->json(['mensaje' => 'Updated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
@@ -86,6 +84,9 @@ class ApiProducto extends Controller
     }
     public function show($id){
         $productos = Producto::where('id_subcategoria','=',$id)->get();
-        return response()->json(['data' => $productos]);
+        if(count($productos)>0){
+            return response()->json(['data' => $productos,"descripcion"=>$productos[0]->descripcion]);
+        }
+        return response()->json(['data' =>[]]);
     }
 }
