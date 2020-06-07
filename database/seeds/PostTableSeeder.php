@@ -21,7 +21,7 @@ class PostTableSeeder extends Seeder
         ]);
 
         $faker= Faker::create();
-        foreach (range(1,100) as $index) {
+        foreach (range(1,10) as $index) {
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
@@ -42,7 +42,7 @@ class PostTableSeeder extends Seeder
         ]);
         $user->assignRole('administrador');
 
-        foreach (range(1,100) as $index) {
+        foreach (range(1,10) as $index) {
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
