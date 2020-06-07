@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComerciantesTable extends Migration
+class CreateCategoriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateComerciantesTable extends Migration
      */
     public function up()
     {
-        Schema::create('comerciantes', function (Blueprint $table) {
+        Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->timestamps();
-            $table->bigInteger('id_user')->unsigned(); // ID DEL USUARIO DEL PERFIL
-            $table->foreign('id_user')->references('id')->on('users'); // FK: user_id
         });
     }
 
@@ -28,6 +27,6 @@ class CreateComerciantesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comerciantes');
+        Schema::dropIfExists('categorias');
     }
 }

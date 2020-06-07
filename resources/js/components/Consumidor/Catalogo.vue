@@ -19,8 +19,13 @@
       </v-col>
     </v-row>
     </v-container>
+<<<<<<< HEAD
 
     <template v-slot:top>
+=======
+    <v-row>
+      <template >
+>>>>>>> ef8c87a0d15400dcf4e29b12e58bc8b90616d1c7
         <v-card
           max-width="250"
           class="mx-auto"
@@ -33,7 +38,6 @@
               <v-list-item-subtitle>Num puesto</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-
           <v-img
             src="https://www.lavanguardia.com/r/GODO/LV/p4/WebSite/2017/05/18/Recortada/img_ysaiz_20160908-162606_imagenes_lv_getty_istock_22114092_small-k7HC-U422720718631MyF-992x558@LaVanguardia-Web.jpg"
 

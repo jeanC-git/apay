@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    <productos></productos>
+    <productos id_user="{{auth()->user()->id}}"></productos>
 @endsection

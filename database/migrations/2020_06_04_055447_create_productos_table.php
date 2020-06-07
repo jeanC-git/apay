@@ -18,15 +18,15 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->string('precio');
-            $table->string('codigo');
-            $table->string('foto');
-            $table->timestamps();
+            $table->string('foto')->nullable();
             $table->bigInteger('id_subcategoria')->unsigned();
-            $table->bigInteger('id_categoria')->unsigned();
+            $table->bigInteger('id_und_medida')->unsigned();
+            $table->timestamps();
             $table->foreign('id_subcategoria')->references('id')->on('subcategorias');
-            $table->foreign('id_categoria')->references('id')->on('categorias');
+            $table->foreign('id_und_medida')->references('id')->on('unidades_medidas');
         });
     }
+
     /**
      * Reverse the migrations.
      *

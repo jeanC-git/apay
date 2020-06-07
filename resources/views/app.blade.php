@@ -195,7 +195,7 @@
                 </template>
             </div>
             <pie></pie>
-            
+
         </v-content>
 
         <v-row justify="center">

@@ -16,10 +16,8 @@ class ApiSubCategoria extends Controller
     public function index()
     {
         $subcategorias = SubCategoria::all();
-
         return response()->json(['data' => $subcategorias]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -66,8 +64,10 @@ class ApiSubCategoria extends Controller
     public function destroy($id)
     {
         $subcategoria = SubCategoria::destroy($id);
-
         return ($subcategoria) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
-
+    }
+    public function show($id){
+        $categorias = SubCategoria::where('id_categoria','=',$id)->get();
+        return response()->json(['data' => $categorias]);
     }
 }

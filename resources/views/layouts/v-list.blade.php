@@ -1,5 +1,5 @@
 @if(@Auth::user()->hasRole('consumidor'))
-<v-list-item href="#">
+<v-list-item href="/informacion-personal">
     <v-list-item-icon>
         <v-icon color="grey darken-4">mdi-account-circle</v-icon>
     </v-list-item-icon>
