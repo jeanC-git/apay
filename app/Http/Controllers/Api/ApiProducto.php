@@ -6,6 +6,7 @@ use App\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ApiProducto extends Controller
 {
@@ -33,9 +34,15 @@ class ApiProducto extends Controller
         $producto->precio = $data->precio;
         $producto->id_subcategoria = $data->id_subcategoria;
         $producto->id_und_medida = $data->id_und_medida;
-        $producto->foto = $path;
         $saved = $producto->save();
 
+        if($data->foto!=null){
+            $imagen_b64 = explode(',',$data->foto);
+            $imagen= base64_decode($imagen_b64[1]);
+            $path = Storage::disk('productos')->put($producto->id.'.jpg',$imagen);
+            $producto->foto = $producto->id.'.jpg';
+            $producto->save();
+        }
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
@@ -54,10 +61,12 @@ class ApiProducto extends Controller
 
     public function destroy($id)
     {
-        $subcategoria = Producto::destroy($id);
+        $producto = Producto::destroy($id);
+        $delete = Storage::disk('productos')->delete($id.'.jpg');
 
-        return ($subcategoria) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
+        return ($producto) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
+
     public function show($id){
         $productos = Producto::where('id_subcategoria','=',$id)->get();
         if(count($productos)>0){

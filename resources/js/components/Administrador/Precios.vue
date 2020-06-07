@@ -103,13 +103,15 @@
                           ></v-select>
                         </v-col>
                         <v-col cols="12" sm="12" md="12">
-                          <v-file-input
+                          <!-- <v-file-input
                             show-size
                             chips
                             label="Imagen del producto"
                             v-model="newItem.foto"
+                            @change="validarImagen"
                             accept=".jpg, .jpeg, .png"
-                          ></v-file-input>
+                          ></v-file-input>-->
+                          <input type="file" @change="validarImagen" />
                         </v-col>
                       </v-row>
                     </v-container>
@@ -339,30 +341,34 @@ export default {
         this.editedIndex = -1;
       });
     },
-
+    validarImagen(e) {
+      let fileReader = new FileReader();
+      fileReader.readAsDataURL(e.target.files[0]);
+      fileReader.onload = e => {
+        this.newItem.foto = e.target.result;
+      };
+    },
     save() {
       let vue = this;
-
-      let data = new FormData();
-      data.append("data", vue.newItem);
-
-      axios.post("/api/apiProducto", data).then(function(response) {
-        vue.getProductos();
-        vue.dialog = false;
-        vue.newItem.nombre = "";
-        vue.newItem.descripcion = "";
-        vue.newItem.precio = 0;
-        vue.newItem.id_subcategoria = "";
-        vue.newItem.id_categoria = "";
-        vue.newItem.id_und_medida = "";
-        vue.newItem.foto = null;
-        Swal.fire({
-          icon: "success",
-          title:
-            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto agregado.</p>",
-          timer: 1700
+      axios
+        .post("/api/apiProducto", { data: vue.newItem })
+        .then(function(response) {
+          vue.getProductos();
+          vue.dialog = false;
+          vue.newItem.nombre = "";
+          vue.newItem.descripcion = "";
+          vue.newItem.precio = 0;
+          vue.newItem.id_subcategoria = "";
+          vue.newItem.id_categoria = "";
+          vue.newItem.id_und_medida = "";
+          vue.newItem.foto = null;
+          Swal.fire({
+            icon: "success",
+            title:
+              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto agregado.</p>",
+            timer: 1700
+          });
         });
-      });
     },
     deleteItem(item) {
       let me = this;

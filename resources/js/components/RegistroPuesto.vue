@@ -1,52 +1,38 @@
 <template>
-
   <v-row align="center" justify="center">
     <!-- CARD DE LOS PUESTOS -->
-      <v-card class="mx-auto" max-width="250" v-for="puesto in arrayPuestos" :key="puesto.id">
-        <v-img
-          class="white--text align-end"
-          height="200px"
-          src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2018/05/28/000506340W.jpg"
-        >
-          <v-card-title v-text="puesto.nombre"></v-card-title>
-        </v-img>
-        <v-card-subtitle class="pb-0" v-text="'Número de puesto :'+puesto.numero"></v-card-subtitle>
-        <v-card-text class="text--primary">
-          <div v-text="puesto.cellphone"></div>
-          <div v-text="'Categoria del puesto: ' +puesto.categoria">Whitsunday Island, Whitsunday Islands</div>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            color="orange"
-            text
-          >
-            Compartir
+    <v-card class="mx-auto" max-width="250" v-for="puesto in arrayPuestos" :key="puesto.id">
+      <v-img
+        class="white--text align-end"
+        height="200px"
+        src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2018/05/28/000506340W.jpg"
+      >
+        <v-card-title v-text="puesto.nombre"></v-card-title>
+      </v-img>
+      <v-card-subtitle class="pb-0" v-text="'Número de puesto :'+puesto.numero"></v-card-subtitle>
+      <v-card-text class="text--primary">
+        <div v-text="puesto.cellphone"></div>
+        <div
+          v-text="'Categoria del puesto: ' +puesto.categoria"
+        >Whitsunday Island, Whitsunday Islands</div>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="orange" text>Compartir</v-btn>
+        <v-btn color="orange" text>Ver</v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-card class="mx-auto my-7" max-width="344">
+      <v-card-text>
+        <p class="display-1 text--primary">¡Registra tu puesto!</p>
+        <div class="text--primary d-flex justify-center">
+          <v-btn color="pink" fab x-large dark @click="modal_puesto()">
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
-          <v-btn
-            color="orange"
-            text
-          >
-            Ver
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      <v-card
-      class="mx-auto my-7"
-      max-width="344"
-        >
-        <v-card-text>
-          <p class="display-1 text--primary">
-            ¡Registra tu puesto!
-          </p>
-          <div class="text--primary d-flex justify-center">
-            <v-btn color="pink" fab x-large dark @click="modal_puesto()">
-                <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </div>
-        </v-card-text>
-      </v-card>
+        </div>
+      </v-card-text>
+    </v-card>
     <!-- CARD POR SI NO TIENE PUESTOS CREADO -->
-    
+
     <!-- MODAL PARA REGISTRAR PUESTO -->
     <v-dialog v-model="dialog_registro" width="500">
       <v-card class="elevation-12" color>
@@ -74,7 +60,7 @@
               :rules="reglasValidacion.puestoRules"
               :counter="6"
             ></v-text-field>
-            <br />
+            <!-- <br /> -->
             <!-- <v-select
               :items="items"
               label="Documento de identidad"
@@ -94,7 +80,7 @@
               v-model="puesto.numero_documento"
               :rules="reglasValidacion.dniRules"
               :counter="8"
-            ></v-text-field> -->
+            ></v-text-field>-->
             <v-text-field
               label="Celular"
               name="celular"
@@ -133,17 +119,17 @@
 export default {
   props: ["id_user"],
   data: () => ({
-    dialog_registro:false,
-    arrayCategorias:[],
-    numero_de_puestos:'',
-    arrayPuestos:[],
+    dialog_registro: false,
+    arrayCategorias: [],
+    numero_de_puestos: "",
+    arrayPuestos: [],
     base_url: "",
     puesto: {
       nombre_puesto: "",
       numero_puesto: "",
       celular: "",
       categoria: "",
-      id_user:'',
+      id_user: ""
     },
     items: ["DNI", "Numero de pasaporte"],
     categorias: ["Abarrotes", "Frutas", "Verduras"],
@@ -167,7 +153,7 @@ export default {
       ],
       stringRules: [
         v => !!v || "Campo requerido",
-        v => /^[A-Z]+$/i.test(v) || "No se permiten números"
+        v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
       ],
       numberRules: [
         v => !!v || "Campo requerido",
@@ -175,20 +161,21 @@ export default {
       ],
       selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
     }
-  }),created() {
+  }),
+  created() {
     this.puestosXusuario();
   },
   mounted() {
     this.getCategorias();
   },
   methods: {
-    getCategorias(){
+    getCategorias() {
       let me = this;
       axios
         .get("api/apiCategoria")
         .then(function(response) {
           console.log(response.data.data);
-          me.arrayCategorias=response.data.data;
+          me.arrayCategorias = response.data.data;
         })
         .catch(function(error) {
           // handle error
@@ -199,17 +186,17 @@ export default {
       let me = this;
       let validar = me.$refs.form.validate();
       if (validar) {
-        me.puesto.id_user=me.id_user;
+        me.puesto.id_user = me.id_user;
         axios
           .post(me.base_url + "/comerciante/registrar_puesto", {
             data: me.puesto
           })
           .then(function(response) {
-            me.dialog_registro=false;
-            me.puesto.nombre_puesto='';
-            me.puesto.numero_puesto='';
-            me.puesto.celular='';
-            me.puesto.categoria='';
+            me.dialog_registro = false;
+            me.puesto.nombre_puesto = "";
+            me.puesto.numero_puesto = "";
+            me.puesto.celular = "";
+            me.puesto.categoria = "";
             me.puestosXusuario();
             Swal.fire({
               icon: "success",
@@ -238,16 +225,20 @@ export default {
             "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
         });
       }
-    },modal_puesto(){
-      let me=this;
-      me.dialog_registro=true;
-    },puestosXusuario(){
+    },
+    modal_puesto() {
       let me = this;
-      axios.post('comerciante/verificar_puestos',{
-        data: me.id_user
-      }).then(function(response) {
-        me.arrayPuestos=response.data.data;
-      });
+      me.dialog_registro = true;
+    },
+    puestosXusuario() {
+      let me = this;
+      axios
+        .post("comerciante/verificar_puestos", {
+          data: me.id_user
+        })
+        .then(function(response) {
+          me.arrayPuestos = response.data.data;
+        });
     }
   }
 };

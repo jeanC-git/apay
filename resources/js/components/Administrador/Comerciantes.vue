@@ -4,144 +4,185 @@
       Gestor de comerciantes
       <v-spacer></v-spacer>
       <v-text-field
-        v-model="search"
+        v-model="buscador"
         append-icon="mdi-magnify"
         label="Buscar comerciante"
         single-line
         hide-details
       ></v-text-field>
+      <v-spacer></v-spacer>
+      <v-btn class="ma-2" tile outlined color="success" @click="mostrar_agregar_modal()">
+        <v-icon left>mdi-plus</v-icon>Nuevo Comerciante
+      </v-btn>
+      <v-dialog v-model="modal_nuevo_item" max-width="50%">
+        <v-card>
+          <v-card-title>Agregar nuevo comerciante</v-card-title>
+          <v-form ref="form" @submit.prevent="agregarItem()">
+            <v-card-text>
+              <v-text-field
+                class="mt-2"
+                label="Nombre(s)"
+                color="green accent-3"
+                append-icon="mdi-alphabetical"
+                v-model="nuevoItem.name"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="Apellidos"
+                color="green accent-3"
+                append-icon="mdi-alphabetical"
+                v-model="nuevoItem.lastname"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="DNI"
+                color="green accent-3"
+                append-icon="mdi-numeric"
+                v-model="nuevoItem.dni"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="Correo electrónico"
+                color="green accent-3"
+                append-icon="mdi-email"
+                v-model="nuevoItem.email"
+                required
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn outlined small text @click="modal_nuevo_item = false">Cancelar</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn small color="green accent-2" type="submit">Guardar</v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="modal_edit_item" max-width="50%">
+        <v-card>
+          <v-card-title>Editar comerciante</v-card-title>
+          <v-form ref="form" @submit.prevent="editarItem()">
+            <v-card-text>
+              <v-text-field
+                class="mt-2"
+                label="Nombre(s)"
+                color="green accent-3"
+                append-icon="mdi-alphabetical"
+                v-model="editItem.name"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="Apellidos"
+                color="green accent-3"
+                append-icon="mdi-alphabetical"
+                v-model="editItem.lastname"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="DNI"
+                color="green accent-3"
+                append-icon="mdi-numeric"
+                v-model="editItem.dni"
+                required
+              ></v-text-field>
+              <v-text-field
+                class="mt-2"
+                label="Correo electrónico"
+                color="green accent-3"
+                append-icon="mdi-email"
+                v-model="editItem.email"
+                required
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn outlined small text @click="modal_edit_item = false">Cancelar</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn small color="green accent-2" type="submit">Guardar</v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="modal_delete_item" max-width="50%">
+        <v-card>
+          <v-card-title>Eliminar comerciante</v-card-title>
+          <v-form ref="form" @submit.prevent="eliminarItem()">
+            <v-card-text>Está seguro de eliminar este comerciante ?</v-card-text>
+            <v-card-actions>
+              <v-btn outlined small text @click="modal_delete_item = false">Cancelar</v-btn>
+              <v-spacer></v-spacer>
+              <v-btn small color="green accent-2" type="submit">Eliminar</v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-card>
+      </v-dialog>
     </v-card-title>
-    <v-col cols="12" sm="6" md="4">
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="date"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="date"
-            label="Fecha de inicio"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="date" no-title scrollable>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-        </v-date-picker>
-      </v-menu>
-    </v-col>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="comerciantes"
       sort-by="calories"
       class="elevation-1"
       :loading="loading"
       loading-text="Cargando datos"
+      :search="buscador"
     >
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-dialog v-model="dialog" max-width="500px">
-            <template v-slot:activator="{ on }">
-              <v-btn color="green accent-3" dark class="mb-2" v-on="on">Nuevo comerciante</v-btn>
-            </template>
-            <v-card>
-              <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
-              </v-card-title>
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.name" label="Nombre"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="12" md="12">
-                      <v-text-field v-model="editedItem.email" label="Correo"></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-toolbar>
-      </template>
+      <template v-slot:item.name="{ item }">{{item.name}} {{item.lastname}}</template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small class="mr-2" @click="mostrar_editar_modal(item)">mdi-pencil</v-icon>
+        <v-icon small @click="mostrar_delete_modal(item.id)">mdi-delete</v-icon>
       </template>
-      <!-- <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize">Reset</v-btn>
-      </template>-->
     </v-data-table>
   </v-card>
 </template>
 <script>
 export default {
   data: () => ({
+    buscador: "",
     loading: true,
-    dialog: false,
-    date: new Date().toISOString().substr(0, 10),
-    menu: false,
+    modal_nuevo_item: false,
+    modal_edit_item: false,
+    modal_delete_item: false,
     headers: [
       {
-        text: "Nombres",
+        text: "Nombre(s) y Apellidos",
         align: "start",
-        sortable: false,
+        sortable: true,
         value: "name"
       },
       { text: "Correos", value: "email" },
+      { text: "DNI", value: "dni" },
       { text: "Actions", value: "actions", sortable: false }
     ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: "",
-      email: ""
+    comerciantes: [],
+    nuevoItem: {
+      nombre: "",
+      apellidos: "",
+      email: "",
+      dni: ""
     },
-    defaultItem: {
-      name: "",
-      calories: 0,
-      fat: 0,
-      carbs: 0,
-      protein: 0
-    }
+    editItem: {
+      nombre: "",
+      apellidos: "",
+      email: "",
+      dni: ""
+    },
+    id_deleteItem: ""
   }),
-
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1
-        ? "Nuevo Comerciante"
-        : "Editar Comerciante";
-    }
-  },
-  watch: {
-    dialog(val) {
-      val || this.close();
-    }
-  },
   created() {
     this.initialize();
   },
   methods: {
     initialize() {
       let me = this;
-      this.desserts = [];
+      this.comerciantes = [];
       axios
         .get("/lista_comerciantes")
         .then(function(response) {
           let respuesta = response.data;
-          me.desserts = respuesta.data;
+          me.comerciantes = respuesta.data;
           me.loading = false;
         })
         .catch(function(error) {
@@ -149,33 +190,72 @@ export default {
           console.log(error);
         });
     },
-
-    editItem(item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+    mostrar_agregar_modal() {
+      let vue = this;
+      vue.modal_nuevo_item = true;
     },
-
-    deleteItem(item) {
-      const index = this.desserts.indexOf(item);
-      confirm("Are you sure you want to delete this item?") &&
-        this.desserts.splice(index, 1);
+    mostrar_editar_modal(item) {
+      let vue = this;
+      vue.modal_edit_item = true;
+      vue.editItem = item;
     },
-
-    close() {
-      this.dialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
+    mostrar_delete_modal(id) {
+      let vue = this;
+      vue.modal_delete_item = true;
+      vue.id_deleteItem = id;
     },
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
-      this.close();
+    agregarItem() {
+      let vue = this;
+
+      axios
+        .post("api/apiComerciante", { data: vue.nuevoItem })
+        .then(response => {
+          vue.modal_nuevo_item = false;
+          vue.nuevoItem = {
+            nombre: "",
+            apellidos: "",
+            email: "",
+            dni: ""
+          };
+          vue.initialize();
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
+    },
+    editarItem() {
+      let vue = this;
+      axios
+        .put("api/apiComerciante/" + vue.editItem.id, {
+          data: vue.editItem
+        })
+        .then(function(response) {
+          vue.modal_edit_item = false;
+          vue.editItem = {
+            nombre: "",
+            apellidos: "",
+            email: "",
+            dni: ""
+          };
+          vue.initialize();
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    eliminarItem() {
+      let vue = this;
+      axios
+        .delete("api/apiComerciante/" + vue.id_deleteItem)
+        .then(response => {
+          vue.modal_delete_item = false;
+          vue.initialize();
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        });
     }
   }
 };

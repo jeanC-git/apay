@@ -18,6 +18,15 @@ class PostTableProductos extends Seeder
                 ['nombre' => 'Marinos'],
                 ['nombre' => 'Abarrotes'],
             ]);
+            $categorias = DB::table('categorias')->get();
+
+            foreach ($categorias as $categoria) {
+                DB::table('subcategorias')->insert([
+                    ['nombre'       => 'Otros',
+                    'id_categoria'  => $categoria->id],
+                ]);
+            }
+
             $subcategoria=[
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Aceites'],
                 ["nombre_categoria"=>'Abarrotes','nombre_subcategoria'=>'Arroz'],
@@ -42,5 +51,6 @@ class PostTableProductos extends Seeder
                     'id_categoria'  => $id_categoria->id],
                 ]);
             }
+
     }
 }
