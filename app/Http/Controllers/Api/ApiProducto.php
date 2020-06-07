@@ -33,7 +33,7 @@ class ApiProducto extends Controller
         $producto->precio = $data->precio;
         $producto->id_subcategoria = $data->id_subcategoria;
         $producto->id_und_medida = $data->id_und_medida;
-        $producto->foto = $path;
+        // $producto->foto = $path;
         $saved = $producto->save();
 
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);

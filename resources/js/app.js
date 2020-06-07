@@ -14,9 +14,10 @@ Vue.component('inicio', require('./components/Inicio.vue').default);
 Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
+
 Vue.component('informacion', require('./components/Consumidor/InfoPersonal.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL COMERCIANTE
-Vue.component('registro-puesto', require('./components/RegistroPuesto.vue').default);
+Vue.component('registro-puesto', require('./components/Comerciante/RegistroPuesto.vue').default);
 Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
 Vue.component('productos',require('./components/Comerciante/Mis-productos.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL CONSUMIDOR
@@ -26,6 +27,7 @@ Vue.component('catalogo', require('./components/Consumidor/Catalogo.vue').defaul
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);
 Vue.component('precios-admin', require('./components/Administrador/Precios.vue').default);
+
 
 
 const app = new Vue({
@@ -41,6 +43,7 @@ const app = new Vue({
         drawer: null,
         dialog: false,
         btn_registro: true,
+        snackbar:true,
     }),
     methods: {
         tyc(bool1, bool2) {

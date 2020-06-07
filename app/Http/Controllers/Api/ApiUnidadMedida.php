@@ -47,7 +47,7 @@ class ApiUnidadMedida extends Controller
      */
     public function show($id)
     {
-        $unidades = UnidadMedida::select('unidades_medidas.*', 'productos.precio')
+        $unidades = UnidadMedida::select('unidades_medidas.*', 'productos.precio','productos.descripcion')
         ->join('productos', 'unidades_medidas.id', '=', 'productos.id_und_medida')
         ->where('productos.id',$id)
         ->first();

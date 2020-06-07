@@ -7,22 +7,16 @@ Route::get('/', function () {
 })->name('bienvenido');
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
-
 //RUTA OFFLINE PWA
 // Route::get('/offline', function () {
 //     return view('vendor/laravelpwa/offline');
 // });
-
 // RUTAS COMERCIANTE
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
-
-Route::get('/mis-productos',function(){
-    return view('comerciante.mis-productos');
-});
+Route::get('/mis-productos','ComercianteController@Mis_productos');
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_puestos');
 // RUTAS CONSUMIDOR

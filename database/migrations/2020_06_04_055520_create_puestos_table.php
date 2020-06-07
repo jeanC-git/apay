@@ -18,9 +18,7 @@ class CreatePuestosTable extends Migration
             $table->string('nombre'); 
             $table->string('cellphone'); 
             $table->Integer('numero'); 
-            $table->bigInteger('id_categoria')->unsigned();
             $table->bigInteger('id_comerciante')->unsigned();
-            $table->foreign('id_categoria')->references('id')->on('categorias'); // FK: user_id
             $table->foreign('id_comerciante')->references('id')->on('comerciantes'); // FK: user_id
             $table->timestamps();
         });

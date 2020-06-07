@@ -179,9 +179,7 @@
       </v-card>
     </v-dialog>
     <!-- ELIMINAR PRODUCTO -->
-    <v-dialog v-model="dialog_delete"
-        width="500"
-      >
+    <v-dialog v-model="dialog_delete" width="500">
         <v-card>
           <v-card-title
             class="headline yellow lighten-2"
@@ -211,62 +209,67 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ["id_user"],
-  data: () => ({
-    arrayCategorias: [],
-    arraySubcategoria: [],
-    arrayProductos:[],
-    search: "",
-    loading: true,
-    dialog: false,
-    dialog_editar:false,
-    dialog_delete:false,
-    id_item_delete:'',
-    headers: [
-      {
-        text: "Nombre",
-        align: "start",
-        sortable: false,
-        value: "nombre"
+  
+  props: ["id_puesto","id_comerciante"],
+  data() {
+    return {
+      arrayCategorias: [],
+      arraySubcategoria: [],
+      arrayProductos:[],
+      search: "",
+      loading: true,
+      dialog: false,
+      dialog_editar:false,
+      dialog_delete:false,
+      id_item_delete:'',
+      headers: [
+        {
+          text: "Nombre",
+          align: "start",
+          sortable: false,
+          value: "nombre"
+        },
+        { text: "Descripcion", value: "descripcion" },
+        { text: "Categoria", value: "categoria" },
+        { text: "Subcategoria", value: "subcategoria" },
+        { text: "Precio (S/.)", value: "precio" },
+        { text: "Unidad", value: "unidad" },
+        { text: "Stock", value: "stock" },
+        { text: "Acciones", value: "actions", sortable: false }
+      ],
+      products: [],
+      editedIndex: -1,
+      newItem: {
+        name: "",
+        category: "",
+        subcategory: "",
+        price: "",
+        stock: "",
+        image: "",
+        id_puesto:"",
+        id_comerciante:"",
+        descripcion:"",
       },
-      { text: "Descripcion", value: "descripcion" },
-      { text: "Categoria", value: "categoria" },
-      { text: "Subcategoria", value: "subcategoria" },
-      { text: "Precio (S/.)", value: "precio" },
-      { text: "Unidad", value: "unidad" },
-      { text: "Stock", value: "stock" },
-      { text: "Acciones", value: "actions", sortable: false }
-    ],
-    products: [],
-    editedIndex: -1,
-    newItem: {
-      name: "",
-      category: "",
-      subcategory: "",
-      price: "",
-      stock: "",
-      image: "",
-      id_user:"",
-      descripcion:"",
-    },
-    editItem: {
-      id:"",
-      nombre: "",
-      category: "",
-      subcategory: "",
-      price: "",
-      stock: "",
-      image: "",
-      id_user:"",
-      descripcion:'',
+      editItem: {
+        id:"",
+        nombre: "",
+        category: "",
+        subcategory: "",
+        price: "",
+        stock: "",
+        image: "",
+        id_puesto:"",
+        id_comerciante:"",
+        descripcion:'',
+      }
     }
-  }),
+  },
   watch: {
     // dialog(val) {
     //   val || this.close();
@@ -275,7 +278,7 @@ export default {
   methods: {
     getProductosXPuesto(){
       let me = this;
-      axios.get("api/apiComercianteProductos/"+me.id_user).then(function(response) {
+      axios.get("api/apiComercianteProductos/"+me.id_puesto).then(function(response) {
           me.products=response.data.data;
       }).catch(function(error) {
         console.log(error);
@@ -306,7 +309,6 @@ export default {
         axios.get("api/apiProducto/" + $id_subcategoria)
         .then(function(response) {
           me.arrayProductos = response.data.data;
-          me.newItem.descripcion=response.data.descripcion;
         })
         .catch(function(error) {
           // handle error
@@ -318,8 +320,13 @@ export default {
         let $id_producto= ($tipo=='edit') ? me.editItem.nombre : me.newItem.nombre;
         axios.get("api/apiUnidadMedida/" + $id_producto)
         .then(function(response) {
-          console.log(response.data.data.precio);
-          me.newItem.price = 'S/.'+response.data.data.precio+' x '+ response.data.data.nombre;
+          if($tipo=='edit'){
+              me.editItem.descripcion=response.data.data.descripcion;
+              me.editItem.price = 'S/.'+response.data.data.precio+' x '+ response.data.data.nombre;
+          }else{
+            me.newItem.descripcion=response.data.data.descripcion;
+            me.newItem.price = 'S/.'+response.data.data.precio+' x '+ response.data.data.nombre;
+          }
         })
         .catch(function(error) {
           // handle error
@@ -328,7 +335,8 @@ export default {
     },
     crearProducto() {
       let vue= this;
-      vue.newItem.id_user=vue.id_user;
+      vue.newItem.id_puesto=vue.id_puesto;
+      vue.newItem.id_comerciante=vue.id_comerciante;
       axios.post("/api/apiComercianteProductos", {
             data: vue.newItem
       }).then(function(response) {
@@ -339,7 +347,7 @@ export default {
         vue.newItem.category='';
         vue.newItem.subcategory='';
         vue.newItem.price='';
-        vue.newItem.id_user='';
+        vue.newItem.id_puesto='';
         Swal.fire({
           icon: "success",
           title:
@@ -362,13 +370,13 @@ export default {
         vue.newItem.category='';
         vue.newItem.subcategory='';
         vue.newItem.price='';
-        vue.newItem.id_user='';
+        vue.newItem.id_puesto='';
         vue.editItem.name='';
         vue.editItem.stock=0;
         vue.editItem.category='';
         vue.editItem.subcategory='';
         vue.editItem.price='';
-        vue.editItem.id_user='';
+        vue.editItem.id_puesto='';
         vue.arraySubcategoria=[];
         vue.arrayProductos=[];
     },
@@ -401,7 +409,8 @@ export default {
         vue.editItem.subcategory=item.id_subcategoria;
         vue.editItem.nombre=item.id_producto ;
         vue.editItem.price='S/.'+item.precio+' x '+item.unidad;
-        vue.editItem.id_user=vue.id_user;
+        vue.editItem.id_puesto=vue.id_puesto;
+        vue.editItem.id_comerciante=vue.id_comerciante;
         axios.get("api/apiSubCategoria/" +vue.editItem.category)
         .then(function(response) {
           vue.arraySubcategoria = response.data.data;
@@ -431,7 +440,7 @@ export default {
         vue.editItem.category='';
         vue.editItem.subcategory='';
         vue.editItem.price='';
-        vue.editItem.id_user='';
+        vue.editItem.id_puesto='';
         vue.getProductosXPuesto();        
         vue.dialog_editar=false;
         Swal.fire({

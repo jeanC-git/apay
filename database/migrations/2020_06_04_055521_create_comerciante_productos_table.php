@@ -17,10 +17,12 @@ class CreateComercianteProductosTable extends Migration
             $table->id();
             $table->string('stock'); 
             $table->bigInteger('id_comerciante')->unsigned();
+            $table->bigInteger('id_puesto')->unsigned();
             $table->bigInteger('id_producto')->unsigned();
             $table->timestamps();
             $table->foreign('id_comerciante')->references('id')->on('comerciantes'); 
             $table->foreign('id_producto')->references('id')->on('productos');
+            $table->foreign('id_puesto')->references('id')->on('puestos');
         });
     }
 

@@ -19,13 +19,7 @@
       </v-col>
     </v-row>
     </v-container>
-<<<<<<< HEAD
-
     <template v-slot:top>
-=======
-    <v-row>
-      <template >
->>>>>>> ef8c87a0d15400dcf4e29b12e58bc8b90616d1c7
         <v-card
           max-width="250"
           class="mx-auto"

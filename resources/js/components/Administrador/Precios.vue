@@ -346,7 +346,7 @@ export default {
       let data = new FormData();
       data.append("data", vue.newItem);
 
-      axios.post("/api/apiProducto", data).then(function(response) {
+      axios.post("/api/apiProducto",{data: vue.newItem}).then(function(response) {
         vue.getProductos();
         vue.dialog = false;
         vue.newItem.nombre = "";

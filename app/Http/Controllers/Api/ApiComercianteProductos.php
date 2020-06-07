@@ -14,7 +14,6 @@ class ApiComercianteProductos extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -35,15 +34,16 @@ class ApiComercianteProductos extends Controller
      */
     public function store(Request $request)
     {
-        $id_comerciante= Comerciante_productos::select('comerciantes.id')
-                                                ->join('comerciantes','comerciantes.id','=','comerciante_productos.id_comerciante')
-                                                ->where('comerciantes.id_user',$request->data['id_user'])
-                                                ->first();
+        // $id_comerciante= Comerciante_productos::select('comerciantes.id')
+        //                                         ->join('comerciantes','comerciantes.id','=','comerciante_productos.id_comerciante')
+        //                                         ->where('comerciantes.id_user',$request->data['id_user'])
+        //                                         ->first();
         $data = (object) $request->data;
         $producto = new Comerciante_productos();
         $producto->stock = $data->stock;
-        $producto->id_comerciante = $id_comerciante->id;
+        $producto->id_comerciante = $data->id_comerciante;
         $producto->id_producto = $data->nombre;
+        $producto->id_puesto = $data->id_puesto;
         $saved = $producto->save();
 
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
@@ -70,7 +70,7 @@ class ApiComercianteProductos extends Controller
         ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
         ->join('subcategorias', 'subcategorias.id', '=', 'productos.id_subcategoria')
         ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
-        ->where('comerciantes.id_user',$id)->get();
+        ->where('comerciante_productos.id_puesto','=',$id)->get();
         return response()->json(['data' => $categorias]);
     }
 
@@ -94,15 +94,12 @@ class ApiComercianteProductos extends Controller
      */
     public function update(Request $request, $id)
     {
-        $id_comerciante= Comerciante_productos::select('comerciantes.id')
-                                                ->join('comerciantes','comerciantes.id','=','comerciante_productos.id_comerciante')
-                                                ->where('comerciantes.id_user',$request->data['id_user'])
-                                                ->first();
         $data = (object) $request->data;
         $comerciante_productos = Comerciante_productos::find($data->id);
         $comerciante_productos->stock = $data->stock;
-        $comerciante_productos->id_comerciante = $id_comerciante->id;
+        $comerciante_productos->id_comerciante =$data->id_comerciante;
         $comerciante_productos->id_producto = $data->nombre;
+        $comerciante_productos->id_puesto = $data->id_puesto;
         $saved = $comerciante_productos->save();
         return ($saved) ? response()->json(['mensaje' => 'Updated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
