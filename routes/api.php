@@ -14,6 +14,8 @@ Route::apiResource('apiProducto', 'Api\ApiProducto');
 Route::apiResource('apiCategoria', 'Api\ApiCategoria');
 Route::apiResource('apiSubCategoria', 'Api\ApiSubCategoria');
 Route::apiResource('apiUnidadMedida', 'Api\ApiUnidadMedida');
+Route::apiResource('apiComerciante', 'Api\ApiComerciante');
 Route::apiResource('apiComercianteProductos', 'Api\ApiComercianteProductos');
+
 
 

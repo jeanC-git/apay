@@ -29,7 +29,7 @@ class ComercianteController extends Controller
                                                 ->where('comerciantes.id_user',$request->data['id_user'])
                                                 ->first();
         DB::table('puestos')->insert(
-            ['nombre' => $request->data['nombre_puesto'], 
+            ['nombre' => $request->data['nombre_puesto'],
             'cellphone' => $request->data['celular'],
             'numero' => $request->data['numero_puesto'],
             'id_comerciante' => $id_comerciante->id,
