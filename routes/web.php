@@ -19,13 +19,18 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
+
 Route::get('/mis-productos',function(){
     return view('comerciante.mis-productos');
 });
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
+Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_puestos');
 // RUTAS CONSUMIDOR
 Route::get('/catalogo', function () {
     return view('consumidor.catalogo');
+});
+Route::get('/informacion-personal', function () {
+    return view('consumidor.informacion-personal');
 });
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');

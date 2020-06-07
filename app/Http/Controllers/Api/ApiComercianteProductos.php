@@ -60,7 +60,7 @@ class ApiComercianteProductos extends Controller
         $categorias = Comerciante_productos::select(
             'comerciantes.id as id_comerciante', 
             'comerciante_productos.id as id','comerciante_productos.stock as stock',
-            'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto',
+            'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion',
             'unidades_medidas.nombre as unidad',
             'subcategorias.id as id_subcategoria','subcategorias.nombre as subcategoria',
             'categorias.id as id_categoria','categorias.nombre as categoria',
@@ -70,7 +70,6 @@ class ApiComercianteProductos extends Controller
         ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
         ->join('subcategorias', 'subcategorias.id', '=', 'productos.id_subcategoria')
         ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
-        
         ->where('comerciantes.id_user',$id)->get();
         return response()->json(['data' => $categorias]);
     }
@@ -95,7 +94,17 @@ class ApiComercianteProductos extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $id_comerciante= Comerciante_productos::select('comerciantes.id')
+                                                ->join('comerciantes','comerciantes.id','=','comerciante_productos.id_comerciante')
+                                                ->where('comerciantes.id_user',$request->data['id_user'])
+                                                ->first();
+        $data = (object) $request->data;
+        $comerciante_productos = Comerciante_productos::find($data->id);
+        $comerciante_productos->stock = $data->stock;
+        $comerciante_productos->id_comerciante = $id_comerciante->id;
+        $comerciante_productos->id_producto = $data->nombre;
+        $saved = $comerciante_productos->save();
+        return ($saved) ? response()->json(['mensaje' => 'Updated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
     /**

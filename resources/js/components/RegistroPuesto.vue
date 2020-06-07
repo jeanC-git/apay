@@ -1,6 +1,54 @@
 <template>
+
   <v-row align="center" justify="center">
-    <v-col class="mt-0" cols="12" sm="8" md="4">
+    <!-- CARD DE LOS PUESTOS -->
+      <v-card class="mx-auto" max-width="250" v-for="puesto in arrayPuestos" :key="puesto.id">
+        <v-img
+          class="white--text align-end"
+          height="200px"
+          src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2018/05/28/000506340W.jpg"
+        >
+          <v-card-title v-text="puesto.nombre"></v-card-title>
+        </v-img>
+        <v-card-subtitle class="pb-0" v-text="'Número de puesto :'+puesto.numero"></v-card-subtitle>
+        <v-card-text class="text--primary">
+          <div v-text="puesto.cellphone"></div>
+          <div v-text="'Categoria del puesto: ' +puesto.categoria">Whitsunday Island, Whitsunday Islands</div>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            color="orange"
+            text
+          >
+            Compartir
+          </v-btn>
+          <v-btn
+            color="orange"
+            text
+          >
+            Ver
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-card
+      class="mx-auto my-7"
+      max-width="344"
+        >
+        <v-card-text>
+          <p class="display-1 text--primary">
+            ¡Registra tu puesto!
+          </p>
+          <div class="text--primary d-flex justify-center">
+            <v-btn color="pink" fab x-large dark @click="modal_puesto()">
+                <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    <!-- CARD POR SI NO TIENE PUESTOS CREADO -->
+    
+    <!-- MODAL PARA REGISTRAR PUESTO -->
+    <v-dialog v-model="dialog_registro" width="500">
       <v-card class="elevation-12" color>
         <v-toolbar color="yellow darken-2" style="display: flex;justify-content: center;">
           <img src="\images\images_comerciante\form.svg" alt />
@@ -78,20 +126,24 @@
           </v-card-actions>
         </v-form>
       </v-card>
-    </v-col>
+    </v-dialog>
   </v-row>
 </template>
 <script>
 export default {
   props: ["id_user"],
   data: () => ({
+    dialog_registro:false,
     arrayCategorias:[],
+    numero_de_puestos:'',
+    arrayPuestos:[],
     base_url: "",
     puesto: {
       nombre_puesto: "",
       numero_puesto: "",
       celular: "",
-      categoria: ""
+      categoria: "",
+      id_user:'',
     },
     items: ["DNI", "Numero de pasaporte"],
     categorias: ["Abarrotes", "Frutas", "Verduras"],
@@ -123,7 +175,9 @@ export default {
       ],
       selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
     }
-  }),
+  }),created() {
+    this.puestosXusuario();
+  },
   mounted() {
     this.getCategorias();
   },
@@ -145,11 +199,18 @@ export default {
       let me = this;
       let validar = me.$refs.form.validate();
       if (validar) {
+        me.puesto.id_user=me.id_user;
         axios
           .post(me.base_url + "/comerciante/registrar_puesto", {
             data: me.puesto
           })
           .then(function(response) {
+            me.dialog_registro=false;
+            me.puesto.nombre_puesto='';
+            me.puesto.numero_puesto='';
+            me.puesto.celular='';
+            me.puesto.categoria='';
+            me.puestosXusuario();
             Swal.fire({
               icon: "success",
               title:
@@ -177,6 +238,16 @@ export default {
             "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
         });
       }
+    },modal_puesto(){
+      let me=this;
+      me.dialog_registro=true;
+    },puestosXusuario(){
+      let me = this;
+      axios.post('comerciante/verificar_puestos',{
+        data: me.id_user
+      }).then(function(response) {
+        me.arrayPuestos=response.data.data;
+      });
     }
   }
 };
