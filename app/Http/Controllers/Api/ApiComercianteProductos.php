@@ -14,6 +14,20 @@ class ApiComercianteProductos extends Controller
      */
     public function index()
     {
+        $categorias = Comerciante_productos::select(
+            'comerciantes.id as id_comerciante', 
+            'comerciante_productos.id as id','comerciante_productos.stock as stock',
+            'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion',
+            'unidades_medidas.nombre as unidad',
+            'subcategorias.id as id_subcategoria','subcategorias.nombre as subcategoria',
+            'categorias.id as id_categoria','categorias.nombre as categoria',
+            )
+        ->join('comerciantes', 'comerciante_productos.id_comerciante', '=', 'comerciantes.id')
+        ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')
+        ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
+        ->join('subcategorias', 'subcategorias.id', '=', 'productos.id_subcategoria')
+        ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')->get();
+        return response()->json(['data' => $categorias]);
     }
 
     /**
