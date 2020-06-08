@@ -1,7 +1,8 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="12" md="6">
+    <v-app-bar color="#ffff"
+      absolute >
+      <v-col cols="12" md="6" dark fab fixed right> 
         <v-text-field
         v-model="buscador"
         append-icon="mdi-magnify"
@@ -11,9 +12,9 @@
         v-on:keyup="buscar_producto()"
       ></v-text-field>
       </v-col>
-    </v-row>
+    </v-app-bar>
     <v-spacer></v-spacer>
-    <v-row>
+    <v-row class="mt-5" v-if="arrayProductos.length>0">
       <v-col cols="12" md="3" sm="6" v-for="producto in arrayProductos" :key="producto.id">
         <v-card
           class="mx-auto"
