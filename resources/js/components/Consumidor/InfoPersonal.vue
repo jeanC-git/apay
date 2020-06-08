@@ -1,11 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <v-app id="inspire">
-    <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-=======
   <v-card
     width="100%"
     color="#F5F5F7"
@@ -18,11 +11,8 @@
                 <v-list-item-title class="headline">Información Personal</v-list-item-title>
             </v-list-item-content>
       </v-list-item>
-
-      
       </v-col>
       <v-col cols="12" xs="10" sm="2">
-       
       </v-col>
     </v-row>
     </v-container>
@@ -33,24 +23,15 @@
           height="550"
           class="mx-auto"
           color="yellow darken-1"
->>>>>>> 43e3e377055570462899b6039562fdb284516c07
         >
-       
           <v-card-text>
             
             <v-img
             src="https://concepto.de/wp-content/uploads/2018/08/persona-e1533759204552.jpg"
             height="200"
-
           >
-<<<<<<< HEAD
             <v-card class="elevation-12" color="blue">
-=======
-          
-                     
           </v-img>
-
-
             <v-list-item two-line>
               <v-list-item-content>
                   <v-input
@@ -63,9 +44,7 @@
                      </v-btn>
                      <v-btn align="right"  icon color="green accent-3" type="button"> <v-icon>mdi-archive</v-icon> 
                      </v-btn> 
-     
                   </v-input>
-
                   <v-input
                       label="Masculino"
                       name="sexo"
@@ -76,9 +55,7 @@
                      </v-btn>
                      <v-btn align="right"  icon color="green accent-3" type="button"> <v-icon>mdi-archive</v-icon> 
                      </v-btn> 
-     
                   </v-input>
-
                   <v-input
                       Type="password"
                       label="Contraseña"
@@ -104,10 +81,7 @@
                      </v-btn>
                      <v-btn align="right"  icon color="green accent-3" type="button"> <v-icon>mdi-archive</v-icon> 
                      </v-btn> 
-     
                   </v-input>
-
-
                   <v-input
                       label="985451158"
                       name="Celular"
@@ -118,9 +92,7 @@
                      </v-btn>
                      <v-btn align="right"  icon color="green accent-3" type="button"> <v-icon>mdi-archive</v-icon> 
                      </v-btn> 
-     
                   </v-input>
-      
               </v-list-item-content>
             </v-list-item>
           </v-card-text>
@@ -128,34 +100,4 @@
       </template>
     </v-row>
   </v-card>
-</template>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 43e3e377055570462899b6039562fdb284516c07
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
 </template>

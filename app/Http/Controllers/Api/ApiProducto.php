@@ -23,11 +23,9 @@ class ApiProducto extends Controller
                     ->get();
         return response()->json(['data' => $productos]);
     }
-
     public function store(Request $request)
     {
         $data = (object) $request->data;
-
         $producto = new Producto();
         $producto->nombre = $data->nombre;
         $producto->descripcion = $data->descripcion;
@@ -35,7 +33,6 @@ class ApiProducto extends Controller
         $producto->id_subcategoria = $data->id_subcategoria;
         $producto->id_und_medida = $data->id_und_medida;
         $saved = $producto->save();
-
         if($data->foto!=null){
             $imagen_b64 = explode(',',$data->foto);
             $imagen= base64_decode($imagen_b64[1]);
@@ -46,8 +43,7 @@ class ApiProducto extends Controller
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $data = (object) $request->data;
         $producto = Producto::find($id);
         $producto->nombre = $data->nombre;
@@ -58,15 +54,11 @@ class ApiProducto extends Controller
         $saved = $producto->save();
         return ($saved) ? response()->json(['mensaje' => 'Updated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
-
-    public function destroy($id)
-    {
+    public function destroy($id){
         $producto = Producto::destroy($id);
         $delete = Storage::disk('productos')->delete($id.'.jpg');
-
         return ($producto) ? response()->json(['mensaje' => 'Eliminated :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
     }
-
     public function show($id){
         $productos = Producto::where('id_subcategoria','=',$id)->get();
         if(count($productos)>0){

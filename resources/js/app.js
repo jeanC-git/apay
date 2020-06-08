@@ -15,7 +15,7 @@ Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
 Vue.component('registro', require('./components/Registro.vue').default);
 
-Vue.component('informacion', require('./components/Consumidor/InfoPersonal.vue').default);
+// Vue.component('informacion', require('./components/Consumidor/InfoPersonal.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL COMERCIANTE
 Vue.component('registro-puesto', require('./components/Comerciante/RegistroPuesto.vue').default);
 Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').default);
