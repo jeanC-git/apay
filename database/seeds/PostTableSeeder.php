@@ -25,6 +25,7 @@ class PostTableSeeder extends Seeder
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
+                'dni' => '123456780',
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
                 'dni'   => rand ( 1000000, 9999999 )
@@ -38,6 +39,8 @@ class PostTableSeeder extends Seeder
         $user = User::create([
             'name' => $faker->firstname,
             'lastname'=>$faker->lastName,
+            'dni' => '123456780',
+
             'password'=>Hash::make('12345678'),
             'email' => 'admin@admin.com',
             'dni'   =>rand ( 1000000, 9999999 )
@@ -48,6 +51,8 @@ class PostTableSeeder extends Seeder
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
+                'dni' => '123456780',
+
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
                 'dni'   =>rand ( 1000000, 9999999 )

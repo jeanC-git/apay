@@ -1,11 +1,10 @@
 <template>
   <v-container>
     <v-row class="d-flex justify-start align-start mx-5" v-if="arrayPuestos==null">
-        <!-- TEXTO POR SI NO TIENEN PUESTOS -->
-        <div class="mx-4 my-7" max-width="250">
-          <p class="display-1 text--primary" v-text="text_info">
-          </p>
-        </div>
+      <!-- TEXTO POR SI NO TIENEN PUESTOS -->
+      <div class="mx-4 my-7" max-width="250">
+        <p class="display-1 text--primary" v-text="text_info"></p>
+      </div>
     </v-row>
     <v-row class="d-flex justify-start align-start mx-5" v-else>
       <!-- CARD POR SI YA TIENE PUESTOS CREADO -->
@@ -25,21 +24,14 @@
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab
-          v-for="puesto in arrayPuestos" :key="puesto.id"
-          :href="`#tab-${puesto.id}`"
-          v-text="puesto.nombre"
-        >
-        </v-tab>
-        <v-tab-item
           v-for="puesto in arrayPuestos"
           :key="puesto.id"
-          :value="'tab-' + puesto.id"
-        >
-          <v-card
-            flat
-            tile
-          >
-            <productos :id_puesto='puesto.id' :id_comerciante='puesto.id_comerciante'></productos>
+          :href="`#tab-${puesto.id}`"
+          v-text="puesto.nombre"
+        ></v-tab>
+        <v-tab-item v-for="puesto in arrayPuestos" :key="puesto.id" :value="'tab-' + puesto.id">
+          <v-card flat tile>
+            <productos :id_puesto="puesto.id" :id_comerciante="puesto.id_comerciante"></productos>
           </v-card>
         </v-tab-item>
       </v-tabs>
@@ -72,6 +64,26 @@
               :counter="6"
             ></v-text-field>
             <br />
+            <!-- <v-select
+                :items="items"
+                label="Documento de identidad"
+                color="green accent-3"
+                dense
+                prepend-icon="mdi-numeric"
+                mdi-account-box-outline
+                v-model="puesto.documento_personal"
+                :rules="reglasValidacion.selectRules"
+              ></v-select>
+              <v-text-field
+                label="Digitar el número"
+                name="numeroIdentidad"
+                type="text"
+                color="green accent-3"
+                prepend-icon="mdi-number"
+                v-model="puesto.numero_documento"
+                :rules="reglasValidacion.dniRules"
+                :counter="8"
+            ></v-text-field>-->
             <v-text-field
               label="Celular"
               name="celular"
@@ -83,6 +95,17 @@
               :counter="9"
             ></v-text-field>
             <br />
+            <!-- <v-select
+                :items="arrayCategorias"
+                label="Categoría"
+                color="green accent-3"
+                item-text="nombre"
+                item-value="id"
+                dense
+                v-model="puesto.categoria"
+                prepend-icon="mdi-storefront"
+                :rules="reglasValidacion.selectRules"
+            ></v-select>-->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -93,31 +116,25 @@
         </v-form>
       </v-card>
     </v-dialog>
-    <v-btn
-      bottom
-      color="pink"
-      dark
-      fab
-      fixed
-      right
-      @click="modal_puesto()"
-    >
+
+    <v-btn bottom color="pink" dark fab fixed right @click="modal_puesto()">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
   </v-container>
 </template>
 <script>
-import productos from './Mis-productos.vue';
+import productos from "./Mis-productos.vue";
 export default {
-  components:{
+  components: {
     productos
   },
   props: ["id_user"],
-  data(){
-    return{
-      text_info:'¡Registra tu puesto dandole click al (+)!',
+  data() {
+    return {
+      text_info: "¡Registra tu puesto dandole click al (+)!",
       tab: null,
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      text:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       icons: false,
       centered: false,
       grow: false,
@@ -126,17 +143,17 @@ export default {
       nextIcon: false,
       right: false,
       tabs: 3,
-      dialog_registro:false,
-      arrayCategorias:[],
-      mostrar_registro:false,
-      arrayPuestos:null,
+      dialog_registro: false,
+      arrayCategorias: [],
+      mostrar_registro: false,
+      arrayPuestos: null,
       base_url: "",
       puesto: {
         nombre_puesto: "",
         numero_puesto: "",
         celular: "",
         categoria: "",
-        id_user:'',
+        id_user: ""
       },
       items: ["DNI", "Numero de pasaporte"],
       categorias: ["Abarrotes", "Frutas", "Verduras"],
@@ -150,17 +167,19 @@ export default {
           v => !!v || "Campo requerido",
           v => /^[0-9]+$/i.test(v) || "No se permiten letras",
           v =>
-            v.length <= 9 || "El número de celular debe ser no mayor de 9 dígitos"
+            v.length <= 9 ||
+            "El número de celular debe ser no mayor de 9 dígitos"
         ],
         puestoRules: [
           v => !!v || "Campo requerido",
           v => /^[0-9]+$/i.test(v) || "No se permiten letras",
           v =>
-            v.length <= 6 || "El número del puesto debe ser no mayor de 6 dígitos"
+            v.length <= 6 ||
+            "El número del puesto debe ser no mayor de 6 dígitos"
         ],
         stringRules: [
           v => !!v || "Campo requerido",
-          v => /^[A-Z]+$/i.test(v) || "No se permiten números"
+          v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
         ],
         numberRules: [
           v => !!v || "Campo requerido",
@@ -168,21 +187,22 @@ export default {
         ],
         selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
       }
-    }
-  },created() {
+    };
+  },
+  created() {
     this.puestosXusuario();
   },
   mounted() {
     this.getCategorias();
   },
   methods: {
-    getCategorias(){
+    getCategorias() {
       let me = this;
       axios
         .get("api/apiCategoria")
         .then(function(response) {
           console.log(response.data.data);
-          me.arrayCategorias=response.data.data;
+          me.arrayCategorias = response.data.data;
         })
         .catch(function(error) {
           // handle error
@@ -193,17 +213,17 @@ export default {
       let me = this;
       let validar = me.$refs.form.validate();
       if (validar) {
-        me.puesto.id_user=me.id_user;
+        me.puesto.id_user = me.id_user;
         axios
           .post(me.base_url + "/comerciante/registrar_puesto", {
             data: me.puesto
           })
           .then(function(response) {
-            me.dialog_registro=false;
-            me.puesto.nombre_puesto='';
-            me.puesto.numero_puesto='';
-            me.puesto.celular='';
-            me.puesto.categoria='';
+            me.dialog_registro = false;
+            me.puesto.nombre_puesto = "";
+            me.puesto.numero_puesto = "";
+            me.puesto.celular = "";
+            me.puesto.categoria = "";
             me.puestosXusuario();
             Swal.fire({
               icon: "success",
@@ -232,18 +252,22 @@ export default {
             "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
         });
       }
-    },modal_puesto(){
-      let me=this;
-      me.dialog_registro=true;
-    },puestosXusuario(){
+    },
+    modal_puesto() {
       let me = this;
-      axios.post('comerciante/verificar_puestos',{
-        data: me.id_user
-      }).then(function(response) {
-        if(response.data.data.length>0){
-          me.arrayPuestos=response.data.data;
-        }
-      });
+      me.dialog_registro = true;
+    },
+    puestosXusuario() {
+      let me = this;
+      axios
+        .post("comerciante/verificar_puestos", {
+          data: me.id_user
+        })
+        .then(function(response) {
+          if (response.data.data.length > 0) {
+            me.arrayPuestos = response.data.data;
+          }
+        });
     }
   }
 };
