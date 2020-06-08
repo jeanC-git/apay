@@ -56,14 +56,6 @@
         <v-list-item-title>Negocios</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="/mis-productos">
-    <v-list-item-icon>
-        <v-icon color="grey darken-4">mdi-folder</v-icon>
-    </v-list-item-icon>
-    <v-list-item-content>
-        <v-list-item-title>Gestión de productos</v-list-item-title>
-    </v-list-item-content>
-</v-list-item>
 <v-list-item href="#">
     <v-list-item-icon>
         <v-icon color="grey darken-4">mdi-note</v-icon>

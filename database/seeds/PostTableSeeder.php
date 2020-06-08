@@ -14,11 +14,11 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
-            ['name' => 'administrador','guard_name' =>'web'],
-            ['name' => 'consumidor','guard_name' =>'web'],
-            ['name' => 'comerciante','guard_name' =>'web'],
-        ]);
+        // DB::table('roles')->insert([
+        //     ['name' => 'administrador','guard_name' =>'web'],
+        //     ['name' => 'consumidor','guard_name' =>'web'],
+        //     ['name' => 'comerciante','guard_name' =>'web'],
+        // ]);
 
         $faker= Faker::create();
         foreach (range(1,10) as $index) {
@@ -27,6 +27,7 @@ class PostTableSeeder extends Seeder
                 'lastname'=>$faker->lastName,
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
+                'dni'   => rand ( 1000000, 9999999 )
             ]);
             DB::table('consumidores')->insert([
                 'id_user' => $user->id,
@@ -39,6 +40,7 @@ class PostTableSeeder extends Seeder
             'lastname'=>$faker->lastName,
             'password'=>Hash::make('12345678'),
             'email' => 'admin@admin.com',
+            'dni'   =>rand ( 1000000, 9999999 )
         ]);
         $user->assignRole('administrador');
 
@@ -48,6 +50,7 @@ class PostTableSeeder extends Seeder
                 'lastname'=>$faker->lastName,
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
+                'dni'   =>rand ( 1000000, 9999999 )
             ]);
             DB::table('comerciantes')->insert([
                 'id_user' => $user->id,

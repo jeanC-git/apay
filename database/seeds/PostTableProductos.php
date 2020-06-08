@@ -51,6 +51,9 @@ class PostTableProductos extends Seeder
                     'id_categoria'  => $id_categoria->id],
                 ]);
             }
+            DB::table('unidades_medidas')->insert([
+                ['nombre'       => 'kg'],
+            ]);
 
     }
 }

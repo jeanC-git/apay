@@ -43,88 +43,56 @@
           </v-card>
         </v-tab-item>
       </v-tabs>
-      <!-- MODAL PARA REGISTRAR PUESTO -->
-      <v-dialog v-model="dialog_registro" width="500">
-        <v-card class="elevation-12" color>
-          <v-toolbar color="yellow darken-2" style="display: flex;justify-content: center;">
-            <img src="\images\images_comerciante\form.svg" alt />
-          </v-toolbar>
-          <v-form ref="form" @submit.prevent="registrar_puesto()">
-            <v-card-text>
-              <v-text-field
-                label="Nombre puesto"
-                name="nombre_puesto"
-                type="text"
-                color="green accent-3"
-                prepend-icon="mdi-storefront"
-                v-model="puesto.nombre_puesto"
-                :rules="reglasValidacion.stringRules"
-              ></v-text-field>
-              <v-text-field
-                label="Número de puesto"
-                name="numPuesto"
-                type="text"
-                color="green accent-3"
-                prepend-icon="mdi-store-24-hour"
-                v-model="puesto.numero_puesto"
-                :rules="reglasValidacion.puestoRules"
-                :counter="6"
-              ></v-text-field>
-              <br />
-              <!-- <v-select
-                :items="items"
-                label="Documento de identidad"
-                color="green accent-3"
-                dense
-                prepend-icon="mdi-numeric"
-                mdi-account-box-outline
-                v-model="puesto.documento_personal"
-                :rules="reglasValidacion.selectRules"
-              ></v-select>
-              <v-text-field
-                label="Digitar el número"
-                name="numeroIdentidad"
-                type="text"
-                color="green accent-3"
-                prepend-icon="mdi-number"
-                v-model="puesto.numero_documento"
-                :rules="reglasValidacion.dniRules"
-                :counter="8"
-              ></v-text-field> -->
-              <v-text-field
-                label="Celular"
-                name="celular"
-                type="value"
-                color="green accent-3"
-                prepend-icon="mdi-cellphone-android"
-                v-model="puesto.celular"
-                :rules="reglasValidacion.celularRules"
-                :counter="9"
-              ></v-text-field>
-              <br />
-              <!-- <v-select
-                :items="arrayCategorias"
-                label="Categoría"
-                color="green accent-3"
-                item-text="nombre"
-                item-value="id"
-                dense
-                v-model="puesto.categoria"
-                prepend-icon="mdi-storefront"
-                :rules="reglasValidacion.selectRules"
-              ></v-select> -->
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-flex justify-center>
-                <v-btn class="color: yellow darken-2" style="color : #9F9E9D" type="submit">Continuar</v-btn>
-              </v-flex>
-            </v-card-actions>
-          </v-form>
-        </v-card>
-      </v-dialog>
     </v-row>
-    
+    <!-- MODAL PARA REGISTRAR PUESTO -->
+    <v-dialog v-model="dialog_registro" width="500">
+      <v-card class="elevation-12" color>
+        <v-toolbar color="yellow darken-2" style="display: flex;justify-content: center;">
+          <img src="\images\images_comerciante\form.svg" alt />
+        </v-toolbar>
+        <v-form ref="form" @submit.prevent="registrar_puesto()">
+          <v-card-text>
+            <v-text-field
+              label="Nombre puesto"
+              name="nombre_puesto"
+              type="text"
+              color="green accent-3"
+              prepend-icon="mdi-storefront"
+              v-model="puesto.nombre_puesto"
+              :rules="reglasValidacion.stringRules"
+            ></v-text-field>
+            <v-text-field
+              label="Número de puesto"
+              name="numPuesto"
+              type="text"
+              color="green accent-3"
+              prepend-icon="mdi-store-24-hour"
+              v-model="puesto.numero_puesto"
+              :rules="reglasValidacion.puestoRules"
+              :counter="6"
+            ></v-text-field>
+            <br />
+            <v-text-field
+              label="Celular"
+              name="celular"
+              type="value"
+              color="green accent-3"
+              prepend-icon="mdi-cellphone-android"
+              v-model="puesto.celular"
+              :rules="reglasValidacion.celularRules"
+              :counter="9"
+            ></v-text-field>
+            <br />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-flex justify-center>
+              <v-btn class="color: yellow darken-2" style="color : #9F9E9D" type="submit">Continuar</v-btn>
+            </v-flex>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-dialog>
     <v-btn
       bottom
       color="pink"

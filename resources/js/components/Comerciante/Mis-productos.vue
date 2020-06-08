@@ -84,7 +84,12 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field color="green   accent-3" v-model="editItem.stock" label="Stock"></v-text-field>
+                <v-text-field color="green accent-3" 
+                  v-model="editItem.stock" 
+                  :rules="reglasValidacion.celularRules"
+                  :counter="9"
+                  label="Stock" >
+                </v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -267,13 +272,35 @@ export default {
         id_puesto:"",
         id_comerciante:"",
         descripcion:'',
+      },reglasValidacion: {
+        dniRules: [
+          v => !!v || "Campo requerido",
+          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+          v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
+        ],
+        celularRules: [
+          v => !!v || "Campo requerido",
+          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+          v =>
+            v.length <= 9 || "El número de celular debe ser no mayor de 9 dígitos"
+        ],
+        puestoRules: [
+          v => !!v || "Campo requerido",
+          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+          v =>
+            v.length <= 6 || "El número del puesto debe ser no mayor de 6 dígitos"
+        ],
+        stringRules: [
+          v => !!v || "Campo requerido",
+          v => /^[A-Z]+$/i.test(v) || "No se permiten números"
+        ],
+        numberRules: [
+          v => !!v || "Campo requerido",
+          v => /^[0-9]+$/i.test(v) || "No se permiten letras"
+        ],
+        selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
       }
     }
-  },
-  watch: {
-    // dialog(val) {
-    //   val || this.close();
-    // }
   },
   methods: {
     getProductosXPuesto(){
@@ -296,7 +323,7 @@ export default {
     getSubCategorias($tipo) {
       let me = this;
       let $id_categoria= ($tipo=='edit') ? me.editItem.category : me.newItem.category;
-      me.arrayProductos=[];
+      me.resetear_variable('edit_categoria');
       axios
         .get("api/apiSubCategoria/" + $id_categoria)
         .then(function(response) {
@@ -306,14 +333,11 @@ export default {
     getProducto($tipo){
         let me=this;
         let $id_subcategoria= ($tipo=='edit') ? me.editItem.subcategory : me.newItem.subcategory;
+        me.resetear_variable('edit_subcategoria');
         axios.get("api/apiProducto/" + $id_subcategoria)
         .then(function(response) {
           me.arrayProductos = response.data.data;
         })
-        .catch(function(error) {
-          // handle error
-          console.log(error);
-        });
     },
     getPrecioXunidad($tipo){
         let me=this;
@@ -411,6 +435,7 @@ export default {
         vue.editItem.price='S/.'+item.precio+' x '+item.unidad;
         vue.editItem.id_puesto=vue.id_puesto;
         vue.editItem.id_comerciante=vue.id_comerciante;
+        vue.editItem.descripcion=item.descripcion;
         axios.get("api/apiSubCategoria/" +vue.editItem.category)
         .then(function(response) {
           vue.arraySubcategoria = response.data.data;
@@ -418,7 +443,6 @@ export default {
         axios.get("api/apiProducto/" + vue.editItem.subcategory)
         .then(function(response) {
           vue.arrayProductos = response.data.data;
-          vue.editItem.descripcion=response.data.descripcion;
         });        
         vue.dialog_editar=true;
     },abrir_modal_crear(){
@@ -450,6 +474,21 @@ export default {
           timer: 1700
         });
       });
+    },resetear_variable(key){ 
+      let me =this;
+      me.editItem.descripcion="";
+      me.editItem.price="";
+      switch (key) {
+        case 'edit_subcategoria':
+            me.arrayProductos=[];
+          break;
+        case 'edit_categoria':
+            me.arraySubcategoria=[];
+            me.arrayProductos=[];
+          break;
+        default:
+          break;
+      }
     }
   },
   mounted() {
