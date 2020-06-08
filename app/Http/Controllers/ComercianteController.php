@@ -39,7 +39,7 @@ class ComercianteController extends Controller
     function Verificar_puestos(Request $request){
         $id_comerciante= DB::table('comerciantes')->select('comerciantes.id')
                             ->join('users','users.id','=','comerciantes.id_user')
-                            ->where('comerciantes.id_user',$request->data)
+                            ->where('comerciantes.id_user', $request->data)
                             ->first();
         $cantidad=DB::table('puestos')->select('puestos.*')
                             ->where('id_comerciante',$id_comerciante->id)->get();

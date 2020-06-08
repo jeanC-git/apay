@@ -25,6 +25,7 @@ class PostTableSeeder extends Seeder
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
+                'dni' => '123456780',
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
             ]);
@@ -37,6 +38,8 @@ class PostTableSeeder extends Seeder
         $user = User::create([
             'name' => $faker->firstname,
             'lastname'=>$faker->lastName,
+            'dni' => '123456780',
+
             'password'=>Hash::make('12345678'),
             'email' => 'admin@admin.com',
         ]);
@@ -46,6 +49,8 @@ class PostTableSeeder extends Seeder
             $user = User::create([
                 'name' => $faker->firstname,
                 'lastname'=>$faker->lastName,
+                'dni' => '123456780',
+
                 'password'=>Hash::make('12345678'),
                 'email' => $faker->unique()->freeEmail,
             ]);
