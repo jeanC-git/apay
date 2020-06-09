@@ -73,7 +73,7 @@ class ApiComercianteProductos extends Controller
             'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion',
             'unidades_medidas.nombre as unidad',
             'subcategorias.id as id_subcategoria','subcategorias.nombre as subcategoria',
-            'categorias.id as id_categoria','categorias.nombre as categoria',
+            'categorias.id as id_categoria','categorias.nombre as categoria'
             )
         ->join('comerciantes', 'comerciante_productos.id_comerciante', '=', 'comerciantes.id')
         ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')

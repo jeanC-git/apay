@@ -38,6 +38,9 @@ Route::get('/comerciantes', function () {
 Route::get('/precios', function () {
     return view('administrador.precios');
 });
+Route::get('/subida_masiva', function () {
+    return view('administrador.subida_masiva');
+});
 //RUTAS AUTENTIFICACION FACEBOOK
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
@@ -46,3 +49,4 @@ Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProvider
 Route::get('/inicio-sesion', function () {
     return view('inicio-sesion');
 });
+Route::post('/subida_excel','SubidaMasiva@subir');

@@ -14,11 +14,11 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('roles')->insert([
-        //     ['name' => 'administrador','guard_name' =>'web'],
-        //     ['name' => 'consumidor','guard_name' =>'web'],
-        //     ['name' => 'comerciante','guard_name' =>'web'],
-        // ]);
+        DB::table('roles')->insert([
+            ['name' => 'administrador','guard_name' =>'web'],
+            ['name' => 'consumidor','guard_name' =>'web'],
+            ['name' => 'comerciante','guard_name' =>'web'],
+        ]);
 
         $faker= Faker::create();
         foreach (range(1,10) as $index) {

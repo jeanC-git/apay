@@ -17,7 +17,7 @@ class ApiProducto extends Controller
                     ->select('productos.*', 'categorias.nombre as categoria',
                             'subcategorias.nombre as subcategoria',
                             'unidades_medidas.nombre as medida')
-                    ->join('subcategorias', 'productos.id_subcategoria', '=', 'subcategorias.id',)
+                    ->join('subcategorias', 'productos.id_subcategoria', '=', 'subcategorias.id')
                     ->join('categorias', 'subcategorias.id_categoria', '=', 'categorias.id')
                     ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
                     ->get();
