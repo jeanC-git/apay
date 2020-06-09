@@ -26,6 +26,7 @@ class SubidaProductos extends Model  implements ToCollection
         // $rows [$i][3] ->Unidad
         // $rows [$i][4] ->Subcategoria
         // $rows [$i][5] ->Categoria
+        // $rows [$i][6] ->Imagen
         for ($i=1; $i < count($rows) ; $i++) { 
             $categoria     = DB::table('categorias')
                             ->select('categorias.id')
@@ -68,6 +69,7 @@ class SubidaProductos extends Model  implements ToCollection
                 'precio' =>$rows [$i][2],
                 'id_subcategoria' =>$id_subca,
                 'id_und_medida' =>$id_unidades,
+                'foto'          =>$rows [$i][6]
             ]);
         }
     }

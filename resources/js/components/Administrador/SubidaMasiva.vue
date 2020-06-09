@@ -31,7 +31,11 @@ export default {
             axios
             .post("/subida_excel", data)
             .then(response => {
-                console.log(response.data);
+                Swal.fire(
+                'Se han subido correctamente todos los productos',
+                '',
+                'success'
+                )
             })
         } else {
             const Toast = Swal.mixin({
