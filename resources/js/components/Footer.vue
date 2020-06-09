@@ -7,7 +7,7 @@
       width="100%"
       flat
       tile
-      class="green accent-4 white--text text-center"
+      class="green accent-3 white--text text-center"
     >
       <v-card-text>
         <v-btn
@@ -21,7 +21,7 @@
       </v-card-text>
 
       <v-card-text class="white--text pt-0">
-      Equipo de Apay
+      Equipo de Apay para el desarrollo de aplicativos en mercados tradicionales.
       </v-card-text>
 
       <v-divider></v-divider>

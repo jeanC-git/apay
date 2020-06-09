@@ -19,178 +19,74 @@
                 <span class="name_apay">Apay</span>
             </div>
             <ul>
-                <li><a href="">Inicio</a></li>
-                <li><a href="">Caseros</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
                 <li><a href="">Alimentos</a></li>
+                <li><a href="/inicio-sesion">Iniciar Sesión</a></li>
             </ul>
         </div>
         <div class="nav-bg-fostrap">
             <div class="navbar-fostrap" onclick="mostrar_navbar()"> <span></span> <span></span> <span></span> </div>
-            <a href="" class="title-mobile">APAY</a>
+            <a href="#" class="title-mobile">APAY</a>
         </div>
     </nav>
     <v-app id="app">
-        <v-content>
-            <div class="ma-0 pa-0">
-                <template>
+    <template>
+        <v-row>
+            <v-col cols="12" class="mt-0 pa-0">        
+            <v-img src="images/Slides/slide1.png">
+            </v-col>
+        </v-row>
+
+        <template>
+        <div id="servicios">
+            <v-row class="yellow lighten-2">
+                <v-container>
                     <v-row>
-                        <v-col cols="12" class="pa-0">
-                            <v-app id="inspire"
-                                style="background-image:url('images/icons/banner.jpg');background-size: cover;background-position:center;background-repeat: no-repeat;">
-                                {{-- INICIO SESION --}}
-                                <v-content v-if="mostrar_inicio_sesion===true">
-                                    <v-container class="fill-height" fluid>
-                                        <v-row align="center" justify="center">
-                                            <v-col class="mt-0" cols="12" sm="8" md="4">
-                                                <v-card class="elevation-12">
-                                                    <v-toolbar color="yellow darken-1" dark flat>
-                                                        <v-toolbar-title class="grey--text darken-3">Iniciar Sesión
-                                                        </v-toolbar-title>
-                                                        <v-spacer></v-spacer>
-                                                        <a class="mx-4 white--text" icon href="{{ route('social.auth', 'facebook') }}">
-                                                            <v-icon size="40px">mdi-facebook-box</v-icon>
-                                                        </a>
-                                                        <a class="mx-4 white--text" icon href="{{ route('social.auth', 'google') }}">
-                                                            <v-icon size="40px">mdi-google</v-icon>
-                                                        </a>
-                                                    </v-toolbar>
-                                                    <form method="POST" action="{{ route('login') }}">
-                                                        @csrf
-                                                        <v-card-text>
-                                                            <v-text-field label="Correo electrónico" name="email"
-                                                                type="email" prepend-icon="mdi-account-circle"
-                                                                color="green accent-3"></v-text-field>
-                                                            <v-text-field color="green accent-3" id="password"
-                                                                label="Contraseña" name="password"
-                                                                :type="showPassword ? 'text' :'password'"
-                                                                prepend-icon="mdi-lock" :append-icon="showPassword ? 'mdi-eye' :
-                                                      'mdi-eye-off'" @click:append="showPassword =
-                                                      !showPassword"></v-text-field>
-                                                        </v-card-text>
-                                                        <v-card-actions outline tile>
-                                                            <v-spacer></v-spacer>
-                                                            <v-btn class='color: yellow darken-2'
-                                                                style='color : #9F9E9D'
-                                                                @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
-                                                                Registrarse</v-btn>
-                                                            <v-spacer></v-spacer>
-                                                            <v-btn type="submit" class='color: yellow darken-2'
-                                                                style='color : #9F9E9D'>
-                                                                Ingresar
-                                                            </v-btn>
-                                                        </v-card-actions>
-                                                    </form>
-                                                </v-card>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-content>
-                                {{-- REGISTRAR USUARIO --}}
-                                <v-content v-else>
-                                    <v-container class="fill-height" fluid>
-                                        <v-row align="center" justify="center">
-                                            <v-col class="mt-0" cols="12" sm="8" md="4">
-                                                <v-card class="elevation-12" color="">
-                                                    <v-toolbar color="yellow darken-1" dark>
-                                                        <v-btn icon color="grey"
-                                                            @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
-                                                            <v-icon>mdi-arrow-left</v-icon>
-                                                        </v-btn>
-                                                        </v-flex>
-                                                        <v-card-actions>
-                                                            <v-toolbar-title class="grey--text darken-3">Registrate
-                                                            </v-toolbar-title>
-                                                        </v-card-actions>
-                                                        <v-spacer></v-spacer>
-                                                            <a class="mx-4 white--text" icon href="{{ route('social.auth', 'facebook') }}">
-                                                                <v-icon size="40px">mdi-facebook-box</v-icon>
-                                                            </a>
-                                                            <a class="mx-4 white--text" icon href="{{ route('social.auth', 'google') }}">
-                                                                <v-icon size="40px">mdi-google</v-icon>
-                                                            </a>
-                                                    </v-toolbar>
-                                                    <form method="POST" action="{{ route('register') }}">
-                                                        @csrf
-                                                        <v-card-text>
-                                                            <v-text-field label="Nombre" name="name" type="text"
-                                                                color="green accent-3"></v-text-field>
-
-                                                            <v-text-field label="Apellido" name="lastname" type="text"
-                                                                color="green accent-3"></v-text-field>
-                                                            <v-text-field label="Correo electrónico" name="email"
-                                                                type="text" color="green accent-3"></v-text-field>
-
-                                                            <v-text-field label="Contraseña" name="password"
-                                                                :type="showPassword ? 'text' :'password'" :append-icon="showPassword ? 'mdi-eye' :
-                                                                'mdi-eye-off'" @click:append="showPassword =
-                                                                !showPassword" color="green accent-3"></v-text-field>
-                                                            <v-text-field color="green accent-3"
-                                                                label="Confirmar contraseña"
-                                                                name="password_confirmation"
-                                                                :type="showValidatePassword ? 'text' :'password'"
-                                                                :append-icon="showValidatePassword ? 'mdi-eye' :
-                                                                'mdi-eye-off'" @click:append="showValidatePassword =
-                                                                !showValidatePassword"></v-text-field>
-                                                        </v-card-text>
-                                                        <v-card-actions>
-                                                            <v-flex justify-center>
-                                                                <div id='example-3' style="text-align:center">
-                                                                    <v-btn color="light" small
-                                                                        @click.stop="dialog = true">
-                                                                        Términos y Condiciones
-                                                                    </v-btn>
-                                                                </div>
-                                                            </v-flex>
-                                                        </v-card-actions>
-                                                        <v-flex justify-center style="text-align:center">
-                                                            <small style='color :red; font-size:0.8rem'
-                                                                v-if="btn_registro==true">*Es necesario aceptar los
-                                                                Términos y Condiciones para registrarte.</small>
-                                                            <small style='color :green; font-size:0.8rem' v-else>Gracias
-                                                                por aceptar nuestros Términos y Condiciones !</small>
-                                                        </v-flex>
-                                                        <v-card-actions>
-                                                            <v-spacer></v-spacer>
-                                                            <v-flex justify-center>
-                                                                <v-btn class='color: yellow darken-2'
-                                                                    style='color : #9F9E9D' type="submit"
-                                                                    :disabled="btn_registro">
-                                                                    Continuar</v-btn>
-                                                            </v-flex>
-                                                        </v-card-actions>
-                                                    </form>
-                                                </v-card>
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-content>
-                            </v-app>
+                        <v-col cols="12">
+                            <h1 class="text-center title">Nuestros servicios</h1>
+                        </v-col>
+                        <v-col cols="12" md="4" xs="12">
+                            <v-icon x-large color="pink accent-3" class="d-block text-center">mdi-heart</v-icon>
+                            <p class="text-center font-weight-bold">Encuentra tus alimentos en un solo lugar.
+                            </p>
+                        </v-col>
+                        <v-col cols="12" md="4" xs="12">
+                            <v-icon x-large color="green accent-2" class="d-block text-center">mdi-star
+                            </v-icon>
+                            <p class="text-center font-weight-bold">Te contactamos con tu casero(a)-clientes.
+                            </p>
+                        </v-col>
+                        <v-col cols="12" md="4" xs="12">
+                            <v-icon x-large color="blue-grey darken-3" class="d-block text-center">mdi-thumb-up
+                            </v-icon>
+                            <p class="text-center font-weight-bold">Precio estandar al mercado sugerido.</p>
                         </v-col>
                     </v-row>
-                    <v-row class="green accent-2">
-                        <v-container>
-                            <v-row>
-                                <v-col cols="12">
-                                    <h1 class="text-center">Nuestros servicios</h1>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="pink accent-3" class="d-block text-center">mdi-heart</v-icon>
-                                    <p class="text-center font-weight-bold">Encuentra tus alimentos en un solo lugar.
-                                    </p>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="yellow darken-1" class="d-block text-center">mdi-star
-                                    </v-icon>
-                                    <p class="text-center font-weight-bold">Te contactamos con tu casero(a)-clientes.
-                                    </p>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="blue-grey darken-3" class="d-block text-center">mdi-thumb-up
-                                    </v-icon>
-                                    <p class="text-center font-weight-bold">Precio estandar al mercado sugerido.</p>
-                                </v-col>
-                            </v-row>
-                        </v-container>
+                    <v-row>
+                        <v-col cols="12">
+                        <v-divider class="green accent-2"></v-divider>
+                        <h1 class="text-center text-lg title ma-3" style="color-text:#263238">Que productos puedes encontrar en este mercado 😍</h1>                   
+                        </v-col>
+                        <v-col cols="12" md="6">
+                        <p class="text-center font-weight-bold text-md body-1" color="blue-grey darken-3">
+                            En este mercado encontraras los vegetales entre frutas ya sean secos o frescos. Las verduras chinas o 
+                            criollas. Además, entre lacteos y derivados como queso, yogurth. También, puedes encontrar la sección de carnes
+                            con pollos en trozos o enteros; res molido, trozo o lomitos; cerdo ya sea en chuletas. Y la sección de mariscos y pescados.
+                            Por otra parte, encontraras la sección de pastelería para tus postres dulces o salados y entre golosinas.
+                        </p>
+                        </v-col>
+                        <v-col cols="12" md="6">
+                        <p class="text-center font-weight-bold text-md"> 
+                            🍉 FRUTAS <br>
+                            🍆 VERDURAS <br>
+                            🍖 CARNES POLLO/RES/CERDO <br>
+                            🍤 PESCADOS Y MARISCOS <br>
+                            🍯 PASTELERIA Y GOLOSINAS <br>
+                            🍳 ABARROTES <br>
+                            🍶 LÁCTEOS <br>
+                        </p>
+                        </v-col>
                     </v-row>
                 </template>
             </div>
@@ -262,9 +158,9 @@
         </v-row>
     </v-app>
 
-    <script>
-        function mostrar_navbar() {
-            document.querySelector('.nav-fostrap').classList.toggle('visible');
-        };
-    </script>
 </body>
+<script>
+    function mostrar_navbar() {
+        document.querySelector('.nav-fostrap').classList.toggle('visible');
+    };
+</script>

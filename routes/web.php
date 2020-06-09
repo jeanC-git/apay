@@ -41,3 +41,8 @@ Route::get('/precios', function () {
 //RUTAS AUTENTIFICACION FACEBOOK
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');
+
+//RUTAS LIBRES
+Route::get('/inicio-sesion', function () {
+    return view('inicio-sesion');
+});

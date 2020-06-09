@@ -111,18 +111,6 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <!-- <v-col cols="12" sm="12" md="12">
-                <v-file-input
-                  color="green accent-3"
-                  filled
-                  prepend-icon="mdi-camera"
-                  v-model="newItem.image"
-                  label="Foto"
-                ></v-file-input>
-              </v-col> -->
-              <!-- <v-col cols="12" sm="12" md="12">
-                <v-text-field color="green accent-3" v-model="newItem.name" label="Nombre"></v-text-field>
-              </v-col> -->
               <v-col class="d-flex" cols="12" sm="6">
                 <v-select
                   :items="arrayCategorias"

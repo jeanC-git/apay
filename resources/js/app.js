@@ -9,7 +9,6 @@ Vue.use(Vuetify);
 //REGISTRO DE COMPONENTES
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 //REGISTRO DE COMPONENTES LIBRES
-Vue.component('navbar-component', require('./components/NavBarComponent.vue').default);
 Vue.component('inicio', require('./components/Inicio.vue').default);
 Vue.component('pie', require('./components/Footer.vue').default);
 Vue.component('inicio-sesion', require('./components/Inicio-sesion.vue').default);
