@@ -55,9 +55,9 @@
                     <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
                         <span style='color : #9F9E9D' class="hidden-sm-and-down">Bienvenido, {{auth()->user()->name}}</span>
                     </v-toolbar-title>
-                    <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Buscar producto"
+                    {{-- <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Buscar producto"
                         class="hidden-sm-and-down">
-                    </v-text-field>
+                    </v-text-field> --}}
                     <v-spacer></v-spacer>
                     <v-btn icon>
                         <v-icon>mdi-bell</v-icon>
@@ -76,6 +76,6 @@
             </v-app>
         </template>
     </v-app>
-    
+
 </body>
 </html>
