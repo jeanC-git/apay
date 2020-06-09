@@ -37,7 +37,7 @@ class ApiProducto extends Controller
             $imagen_b64 = explode(',',$data->foto);
             $imagen= base64_decode($imagen_b64[1]);
             $path = Storage::disk('productos')->put($producto->id.'.jpg',$imagen);
-            $producto->foto = $producto->id.'.jpg';
+            $producto->foto = 'images/productos/'.$producto->id.'.jpg';
             $producto->save();
         }
         return ($saved) ? response()->json(['mensaje' => 'Created :) '], 200) : response()->json(['mensaje' => 'Error :( '], 404);
