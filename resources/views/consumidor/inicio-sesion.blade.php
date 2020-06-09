@@ -19,9 +19,10 @@
                 <span class="name_apay">Apay</span>
             </div>
             <ul>
-                <li><a href="">Inicio</a></li>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
                 <li><a href="">Alimentos</a></li>
-                <li><a href="">Iniciar Sesión</a></li>
+                <li><a href="/inicio-sesion">Iniciar Sesión</a></li>
             </ul>
         </div>
         <div class="nav-bg-fostrap">
@@ -70,7 +71,8 @@
                                                         </v-card-text>
                                                         <v-card-actions outline tile>
                                                             <v-spacer></v-spacer>
-                                                            <v-btn class='color: yellow darken-2'
+                                                            <v-btn text
+                                                                class='color: yellow darken-2'
                                                                 style='color : #9F9E9D'
                                                                 @click="mostrar_inicio_sesion = !mostrar_inicio_sesion">
                                                                 Registrarse</v-btn>
@@ -167,36 +169,8 @@
                                 </v-content>
                             </v-app>
                         </v-col>
-                    </v-row>
-                    <v-row class="green accent-2">
-                        <v-container>
-                            <v-row>
-                                <v-col cols="12">
-                                    <h1 class="text-center">Nuestros servicios</h1>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="pink accent-3" class="d-block text-center">mdi-heart</v-icon>
-                                    <p class="text-center font-weight-bold">Encuentra tus alimentos en un solo lugar.
-                                    </p>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="yellow darken-1" class="d-block text-center">mdi-star
-                                    </v-icon>
-                                    <p class="text-center font-weight-bold">Te contactamos con tu casero(a)-clientes.
-                                    </p>
-                                </v-col>
-                                <v-col cols="12" md="4" xs="12">
-                                    <v-icon x-large color="blue-grey darken-3" class="d-block text-center">mdi-thumb-up
-                                    </v-icon>
-                                    <p class="text-center font-weight-bold">Precio estandar al mercado sugerido.</p>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-row>
-                </template>
-            </div>
+                    </v-row>             
             <pie></pie>
-            <banner></banner>
         </v-content>
 
         <v-row justify="center">
