@@ -23,7 +23,7 @@
                   ></v-text-field>
 
                   <v-text-field
-                    color="green accent-1"
+                    color="green accent-3"
                     id="password"
                     label="Contraseña"
                     name="password"
@@ -38,11 +38,12 @@
               </v-card-text>
               <v-card-actions outline tile>
                 <v-spacer></v-spacer>
-                <v-btn
+                <v-btn text
                   class="color: yellow darken-2"
                   style="color : #9F9E9D"
-                  @click="cambiar_registro"
-                >Registrarse</v-btn>
+                  @click="cambiar_registro">
+                  Registrarse
+                  </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn class="color: yellow darken-2" style="color : #9F9E9D">Ingresar</v-btn>
               </v-card-actions>

@@ -1,86 +1,109 @@
 <template>
-  <v-card
-    width="100%"
-    color="#F5F5F7"
-  >
-    <v-container>
-      <v-row>
-      <v-col cols="12" xs="9" sm="10">
-        <v-list-item>
-            <v-list-item-content>
-                <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
-            </v-list-item-content>
-      </v-list-item>
-      </v-col>
-      <v-col cols="12" xs="3" sm="2">
-        <v-btn icon color="green accent-3">
-          <v-icon>mdi-cart</v-icon>
-        </v-btn>
-      </v-col>
-    </v-row>
-    </v-container>
-    <template v-slot:top>
-        <v-card
-          max-width="250"
-          class="mx-auto"
-          color="green accent-3"
-        >
+  <div height="100%" width="100%">
+    <v-app-bar color="#ffff" absolute >
+      <v-col cols="12" md="4" xs="9" sm="10">
           <v-list-item>
-            <v-list-item-avatar color="grey"></v-list-item-avatar>
-            <v-list-item-content>
-              <v-list-item-title>Nombre del casero</v-list-item-title>
-              <v-list-item-subtitle>Num puesto</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-img
-            src="https://www.lavanguardia.com/r/GODO/LV/p4/WebSite/2017/05/18/Recortada/img_ysaiz_20160908-162606_imagenes_lv_getty_istock_22114092_small-k7HC-U422720718631MyF-992x558@LaVanguardia-Web.jpg"
-
-          ></v-img>
-
-          <v-card-text>
-            <v-list-item two-line>
               <v-list-item-content>
-                  <v-list-item-subtitle>Nombre del producto</v-list-item-subtitle>
-                  <v-list-item-subtitle>Precio</v-list-item-subtitle>
-                  <v-list-item-subtitle>Disponibilidad</v-list-item-subtitle>
+                  <v-list-item-title class="headline" >Lleva lo que necesites</v-list-item-title>
+              </v-list-item-content>
+        </v-list-item>
+      </v-col>
+      <v-col cols="12" md="6" dark fab fixed right> 
+        <v-text-field
+        v-model="buscador"
+        append-icon="mdi-magnify"
+        label="Busca tu producto"
+        single-line
+        hide-details
+        v-on:keyup="buscar_producto()"
+      ></v-text-field>
+      </v-col>
+        <v-col cols="12" md="2" xs="3" sm="2" class="d-flex justify-end">
+          <v-btn icon color="green accent-3" >
+                <v-icon>mdi-cart</v-icon>
+          </v-btn>
+        </v-col>
+    </v-app-bar>
+    <br>
+    <v-card width="100%" color="#F5F5F7" class="mt-5 pl-3 pt-2" height="100vh" >
+      <v-row  v-if="arrayProductos.length>0" class="d-flex justify-start">
+        <v-col  cols="12" md="3" sm="6" v-for="producto in arrayProductos" :key="producto.id">
+          <v-card
+            width="100%"
+            class="mx-auto"
+            color="green accent-3"
+          >
+            <v-list-item>
+              <v-list-item-avatar>
+                <v-img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTz7rBk4Y8uVtnkJt-2kB48cLh5VAL7lDVad1xCihsOyIbuhq9&usqp=CAU"
+                ></v-img>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title v-text="producto.nombre_puesto"></v-list-item-title>
+                <v-list-item-subtitle v-text="producto.numero_puesto"></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-fab-transition>
-              <v-btn
-                  color="yellow darken-1"      
-                  right
-                  fab
-                  @click="addToCart"
-                >
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
-            </v-fab-transition>
-          </v-card-actions>
-        </v-card>
-      </template>
-  </v-card>
+            <v-img
+              :src="'images/productos/'+producto.foto"
+              height="100"
+            ></v-img>
+            <v-card-text>
+              <v-list-item two-line>
+                <v-list-item-content>
+                    <v-list-item-subtitle v-text="producto.nombre"></v-list-item-subtitle>
+                    <v-list-item-subtitle v-text="'S/. '+producto.precio+' x '+ producto.unidad">Precio</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if="arrayProductos.length>0">Disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle v-else>No disponible</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-fab-transition>
+                <v-btn
+                    color="yellow darken-1"      
+                    right
+                    fab
+                  >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-fab-transition>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-card>
+  </div>
 </template>
-
 <script>
 export default {
-  data: {
-    cart:[],
-  },
-  computed:{
-    cartAmount(){
-      return this.cart.length
+  data: () => ({
+    arrayProductos:[],
+    dialog_stock:false,
+    buscador:'',
+  }),mounted() {
+    this.get_productos();
+  },methods: {
+    get_productos(){
+      let me = this;
+      axios.get("api/apiComercianteProductos").then(function(response) {
+        console.log(response.data.data);
+        me.arrayProductos=response.data.data;
+      });
+    },buscar_producto(){
+      let me=this;
+      me.arrayProductos=[];
+      let buscador=me.buscador;
+      if(buscador==''){
+        me.get_productos();
+      }else{
+        axios.get("api/apiProductosConsumidor/"+me.buscador).then(function(response) {
+          console.log(response.data.data);
+          me.arrayProductos=response.data.data;
+        });
+      }
     }
   },
-  methods:{
-    selectedProduct(){
-
-    },
-    addToCart(){
-      thi.cart.push(this.selectedProduct)
-    }
-  }
-}
+};
 </script>

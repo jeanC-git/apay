@@ -4,12 +4,10 @@
       <v-container
         class="fill-height"
         fluid
-
         >
         <v-row
           align="center"
           justify="center"
-
         >
           <v-col class="mt-0"
             cols="12"
@@ -21,12 +19,9 @@
               <v-toolbar
                 color="yellow darken-1"
                 dark
- 
               >
                 <v-toolbar-title   class="grey--text darken-3">Registrate</v-toolbar-title>
-                <v-spacer></v-spacer>
-                
-                  
+                <v-spacer></v-spacer>                
                   <v-btn
                   v-for="icon in icons"
                   :key="icon"
@@ -45,22 +40,18 @@
                       type="text"
                       color="green accent-3"
                     ></v-text-field>
-
                     <v-text-field
                       label="Apellido"
                       name="apellido"
                       type="text"
                       color="green accent-3"
-                    ></v-text-field>
-                  
+                    ></v-text-field>                 
                     <v-text-field
                       label="Correo electrónico"
                       name="login"
                       type="text"
-                      color="green accent-3"
-                    
+                      color="green accent-3"                  
                     ></v-text-field>
-
                     <v-text-field
                       id="password"
                       label="Contraseña"
@@ -72,7 +63,6 @@
                       !showPassword"
                       color="green accent-3"
                     ></v-text-field>
-
                     <v-text-field
                       color="green accent-3"
                       id="password"
@@ -103,12 +93,10 @@
                  style = 'color : #9F9E9D' 
                  >Continuar</v-btn>
                 </v-flex>
-               </v-card-actions>
-              
+               </v-card-actions>           
                 <v-flex justify-center class="black--text pt-0">
                   <div id='example-3'
-                    style="text-align:center">
-                   
+                    style="text-align:center">                  
                    <label>¿Ya tienes cuenta?</label>
                    <br>
                   </div>
