@@ -201,7 +201,7 @@ export default {
       axios
         .get("api/apiCategoria")
         .then(function(response) {
-          console.log(response.data.data);
+          //   console.log(response.data.data);
           me.arrayCategorias = response.data.data;
         })
         .catch(function(error) {

@@ -86,7 +86,7 @@
                 <v-text-field
                   color="green accent-3"
                   v-model="editItem.stock"
-                  :rules="reglasValidacion.stock"
+                  :rules="reglas.stock"
                   :counter="9"
                   label="Stock"
                 ></v-text-field>
@@ -121,6 +121,7 @@
                     item-text="nombre"
                     item-value="id"
                     v-model="newItem.category"
+                    :rules="reglas.select"
                     @change="getSubCategorias('crear')"
                   ></v-select>
                 </v-col>
@@ -134,6 +135,7 @@
                     color="green accent-3"
                     v-model="newItem.subcategory"
                     @change="getProducto('crear')"
+                    :rules="reglas.select"
                   ></v-select>
                 </v-col>
                 <v-col class="d-flex" cols="12" sm="6">
@@ -145,6 +147,7 @@
                     outlined
                     color="green accent-3"
                     v-model="newItem.nombre"
+                    :rules="reglas.select"
                     @change="getPrecioXunidad('crear')"
                   ></v-select>
                 </v-col>
@@ -169,7 +172,7 @@
                     color="green   accent-3"
                     v-model="newItem.stock"
                     label="Stock"
-                    :rules="reglasValidacion.stock"
+                    :rules="reglas.stock"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -248,39 +251,12 @@ export default {
         id_comerciante: "",
         descripcion: ""
       },
-      reglasValidacion: {
-        dniRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
-        ],
-        celularRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v =>
-            v.length <= 9 ||
-            "El número de celular debe ser no mayor de 9 dígitos"
-        ],
-        puestoRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v =>
-            v.length <= 6 ||
-            "El número del puesto debe ser no mayor de 6 dígitos"
-        ],
-        stringRules: [
-          v => !!v || "Campo requerido",
-          v => /^[A-Z]+$/i.test(v) || "No se permiten números"
-        ],
-        numberRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras"
-        ],
+      reglas: {
         stock: [
           v => !!v || "Campo requerido",
           v => v > 0 || "El stock no puede ser 0 o un valor negativo."
         ],
-        selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
+        select: [v => !!v || "Debe seleccionar una opción de la lista"]
       }
     };
   },
@@ -299,9 +275,14 @@ export default {
     getCategorias() {
       let me = this;
       me.arrayProductos = [];
-      axios.get("api/apiCategoria").then(function(response) {
-        me.arrayCategorias = response.data.data;
-      });
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          me.arrayCategorias = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     getSubCategorias($tipo) {
       let me = this;
@@ -446,7 +427,6 @@ export default {
         });
     },
     editarItem(item) {
-      console.log(item);
       let vue = this;
       vue.editItem.id = item.id;
       vue.editItem.stock = item.stock;

@@ -14,10 +14,11 @@
       <v-btn class="ma-2" tile outlined color="success" @click="mostrar_agregar_modal()">
         <v-icon left>mdi-plus</v-icon>Nuevo Comerciante
       </v-btn>
+      <!-- CREAR COMERCIANTE -->
       <v-dialog v-model="modal_nuevo_item" max-width="50%">
         <v-card>
           <v-card-title>Agregar nuevo comerciante</v-card-title>
-          <v-form ref="form" @submit.prevent="agregarItem()">
+          <v-form ref="formnew" @submit.prevent="agregarItem()">
             <v-card-text>
               <v-text-field
                 class="mt-2"
@@ -25,6 +26,7 @@
                 color="green accent-3"
                 append-icon="mdi-alphabetical"
                 v-model="nuevoItem.name"
+                :rules="reglas.nom_ape"
                 required
               ></v-text-field>
               <v-text-field
@@ -33,6 +35,7 @@
                 color="green accent-3"
                 append-icon="mdi-alphabetical"
                 v-model="nuevoItem.lastname"
+                :rules="reglas.nom_ape"
                 required
               ></v-text-field>
               <v-text-field
@@ -41,6 +44,7 @@
                 color="green accent-3"
                 append-icon="mdi-numeric"
                 v-model="nuevoItem.dni"
+                :rules="reglas.dni"
                 required
               ></v-text-field>
               <v-text-field
@@ -49,6 +53,7 @@
                 color="green accent-3"
                 append-icon="mdi-email"
                 v-model="nuevoItem.email"
+                :rules="reglas.email"
                 required
               ></v-text-field>
             </v-card-text>
@@ -60,10 +65,11 @@
           </v-form>
         </v-card>
       </v-dialog>
+      <!-- EDITAR COMERCIANTE -->
       <v-dialog v-model="modal_edit_item" max-width="50%">
         <v-card>
           <v-card-title>Editar comerciante</v-card-title>
-          <v-form ref="form" @submit.prevent="editarItem()">
+          <v-form ref="formedit" @submit.prevent="editarItem()">
             <v-card-text>
               <v-text-field
                 class="mt-2"
@@ -71,6 +77,7 @@
                 color="green accent-3"
                 append-icon="mdi-alphabetical"
                 v-model="editItem.name"
+                :rules="reglas.nom_ape"
                 required
               ></v-text-field>
               <v-text-field
@@ -79,6 +86,7 @@
                 color="green accent-3"
                 append-icon="mdi-alphabetical"
                 v-model="editItem.lastname"
+                :rules="reglas.nom_ape"
                 required
               ></v-text-field>
               <v-text-field
@@ -87,6 +95,7 @@
                 color="green accent-3"
                 append-icon="mdi-numeric"
                 v-model="editItem.dni"
+                :rules="reglas.dni"
                 required
               ></v-text-field>
               <v-text-field
@@ -95,6 +104,7 @@
                 color="green accent-3"
                 append-icon="mdi-email"
                 v-model="editItem.email"
+                :rules="reglas.email"
                 required
               ></v-text-field>
             </v-card-text>
@@ -140,6 +150,21 @@
 <script>
 export default {
   data: () => ({
+    reglas: {
+      dni: [
+        v => !!v || "Campo requerido",
+        v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+        v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
+      ],
+      nom_ape: [
+        v => !!v || "Campo requerido",
+        v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
+      ],
+      email: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ]
+    },
     buscador: "",
     loading: true,
     modal_nuevo_item: false,
@@ -206,43 +231,82 @@ export default {
     },
     agregarItem() {
       let vue = this;
-
-      axios
-        .post("api/apiComerciante", { data: vue.nuevoItem })
-        .then(response => {
-          vue.modal_nuevo_item = false;
-          vue.nuevoItem = {
-            nombre: "",
-            apellidos: "",
-            email: "",
-            dni: ""
-          };
-          vue.initialize();
-        })
-        .catch(function(error) {
-          // handle error
-          console.log(error);
+      let validar = vue.$refs.formnew.validate();
+      if (validar) {
+        axios
+          .post("api/apiComerciante", { data: vue.nuevoItem })
+          .then(response => {
+            vue.modal_nuevo_item = false;
+            vue.nuevoItem = {
+              nombre: "",
+              apellidos: "",
+              email: "",
+              dni: ""
+            };
+            vue.initialize();
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+          });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
         });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
+        });
+      }
     },
     editarItem() {
       let vue = this;
-      axios
-        .put("api/apiComerciante/" + vue.editItem.id, {
-          data: vue.editItem
-        })
-        .then(function(response) {
-          vue.modal_edit_item = false;
-          vue.editItem = {
-            nombre: "",
-            apellidos: "",
-            email: "",
-            dni: ""
-          };
-          vue.initialize();
-        })
-        .catch(function(error) {
-          console.log(error);
+      let validar = vue.$refs.formedit.validate();
+      if (validar) {
+        axios
+          .put("api/apiComerciante/" + vue.editItem.id, {
+            data: vue.editItem
+          })
+          .then(function(response) {
+            vue.modal_edit_item = false;
+            vue.editItem = {
+              nombre: "",
+              apellidos: "",
+              email: "",
+              dni: ""
+            };
+            vue.initialize();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
         });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
+        });
+      }
     },
     eliminarItem() {
       let vue = this;

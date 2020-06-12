@@ -4,7 +4,7 @@
       Gestor de consumidores
       <v-spacer></v-spacer>
       <v-text-field
-        v-model="search"
+        v-model="buscador"
         append-icon="mdi-magnify"
         label="Buscar consumidor"
         single-line
