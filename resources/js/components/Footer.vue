@@ -24,7 +24,7 @@
       Equipo de Apay para el desarrollo de aplicativos en mercados tradicionales.
       </v-card-text>
 
-      <v-divider></v-divider>
+      <v-divider color="white"></v-divider>
 
       <v-card-text class="white--text">
         {{ new Date().getFullYear() }} — <strong>Curso de Integrador</strong>

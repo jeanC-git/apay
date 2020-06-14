@@ -169,14 +169,16 @@
                                 </v-content>
                             </v-app>
                         </v-col>
-                    </v-row>             
-            <pie></pie>
+                    </v-row> 
+                </template>            
+                <pie></pie>
+            </div>
         </v-content>
 
         <v-row justify="center">
             <v-dialog v-model="dialog" max-width="60%">
                 <v-card>
-                    <v-card-title class="headline green accent-2" style='color : #9F9E9D'>TÉRMINOS Y CONDICIONES
+                    <v-card-title class="headline green accent-3">TÉRMINOS Y CONDICIONES
                     </v-card-title>
                     <v-divider></v-divider>
                     <v-card-text>
@@ -220,14 +222,11 @@
                             como: Correo electrónico, Número de celular, Apellidos y nombres y Tipo y número de
                             documento de identidad.</li><br>
                     </v-card-text>
-
                     <v-card-actions>
                         <v-spacer></v-spacer>
-
                         <v-btn color="green darken-1" text @click="tyc(false,true)">
                             No acepto
                         </v-btn>
-
                         <v-btn color="green accent-2" @click="tyc(false,false)" style='color : #9F9E9D'>
                             Acepto
                         </v-btn>
