@@ -1,18 +1,30 @@
 <template>
-    <v-container>
+    <v-responsive>
         <v-card width="100%">
-            <h1 class="ml-2">
-                Subida masiva
-            </h1>
-            <div  class="ml-2">
-                <p>Por este medio podras hacer la subida masiva de productos mediante un Excel</p>
-            </div>
-            <v-file-input show-size counter  label="Suba el archivo" v-model="file"></v-file-input>
-            <div class="my-2 pb-2 d-flex justify-center">
-                <v-btn depressed large color="primary" @click="SubidaMasiva()">Subir</v-btn>
-            </div>
-        </v-card>
-    </v-container>
+        <v-container>
+            <v-row>
+                <v-col cols="12" xs="12" md="12">
+                    <v-card-title class="headline">Subida masiva</v-card-title>
+                </v-col>
+                <v-col cols="12" xs="12" md="12">
+                    <v-card-text>
+                        <p>Por este medio podras hacer la subida masiva de productos mediante un Excel</p>
+                        <v-file-input show-size label="Suba el archivo" v-model="file" color="green accent-3"></v-file-input>
+                    </v-card-text>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col cols="12" xs="12" md="12">
+                    <v-card-actions>
+                        <v-btn block color="green accent-2" @click="SubidaMasiva()">
+                            <v-icon>mdi-arrow-up-bold</v-icon> Subir
+                        </v-btn>
+                    </v-card-actions>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-card>   
+    </v-responsive>
 </template>
 <script>
 export default {
