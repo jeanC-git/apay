@@ -7,6 +7,7 @@
         v-model="search"
         append-icon="mdi-magnify"
         label="Buscar consumidor"
+        color="green accent-3"
         single-line
         hide-details
       ></v-text-field>
@@ -20,10 +21,11 @@
       :loading="loading"
       loading-text="Cargando datos"
       :search="buscador"
+      color="green accent-3"
     >
       <template v-slot:item.actions="{ item }">
         <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon> -->
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small @click="deleteItem(item)" color="green accent-4">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-card>
