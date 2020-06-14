@@ -1,6 +1,6 @@
 <template >
   <v-card width="100%">
-    <v-card-title>
+    <v-card-title class="headline">
       Gestor de comerciantes
       <v-spacer></v-spacer>
       <v-text-field
@@ -18,7 +18,7 @@
         <v-dialog v-model="modal_nuevo_item" max-width="50%">
           <v-card>
             <v-container>
-              <v-card-title>Agregar nuevo comerciante
+              <v-card-title class="headline">Agregar nuevo comerciante
                 <v-spacer></v-spacer>
                 <v-btn color="green accent-3" text @click="modal_nuevo_item = false"><v-icon>mdi-close</v-icon></v-btn>
               </v-card-title>
@@ -67,7 +67,7 @@
         <v-dialog v-model="modal_edit_item" max-width="50%">
           <v-card>
             <v-container>
-              <v-card-title>Editar comerciante
+              <v-card-title class="headline">Editar comerciante
                 <v-spacer></v-spacer>
                 <v-btn color="green accent-3" text @click="modal_edit_item = false"><v-icon>mdi-close</v-icon></v-btn>
               </v-card-title>
@@ -116,7 +116,7 @@
         <v-dialog v-model="modal_delete_item" max-width="50%">
           <v-card>
             <v-container>
-              <v-card-title>Eliminar comerciante</v-card-title>
+              <v-card-title class="headline">Eliminar comerciante</v-card-title>
               <v-form ref="form" @submit.prevent="eliminarItem()">
                 <v-card-text class="red--text">Está seguro de eliminar este comerciante ?</v-card-text>
                 <v-card-actions>

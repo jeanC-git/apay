@@ -1,6 +1,6 @@
 <template >
   <v-card width="100%">
-    <v-card-title>
+    <v-card-title class="headline">
       Gestor de consumidores
       <v-spacer></v-spacer>
       <v-text-field

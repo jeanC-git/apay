@@ -16,11 +16,14 @@
           <template v-slot:top>
             <v-container>
               <v-row>
-                <v-col cols="12" md="4" xs="12" style="display: flex;align-items: center;">
-                  <v-toolbar-title style="font-size: 1.6rem">CONTROL DE PRECIOS</v-toolbar-title>
+                <v-col cols="12" md="4" xs="12">
+                  <v-toolbar-title class="headline">Control de precios</v-toolbar-title>
                 </v-col>
+              </v-row>
+              <v-row>
                 <v-col cols="12" md="4" xs="12">
                   <v-select
+                    color="green accent-3"
                     v-model="search"
                     single-line
                     hide-details
@@ -33,39 +36,46 @@
                   <v-text-field
                     v-model="buscador"
                     append-icon="mdi-magnify"
+                    color="green accent-3"
                     label="Buscador"
                     single-line
                     hide-details
                     @keyup.enter="editarPrecio"
-                  ></v-text-field>
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12" md="4" xs="12">
                 </v-col>
               </v-row>
               <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on }">
-                  <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Producto</v-btn>
+                  <v-btn rounded color="yellow darken-1" class="mb-2" v-on="on"><v-icon left>mdi-plus</v-icon>Nuevo Producto</v-btn>
                 </template>
                 <v-card>
-                  <v-card-title>
-                    <span class="headline">Agregar producto</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
+                  <v-container>
+                    <v-card-title>
+                      <span class="headline">Agregar producto</span>
+                      <v-spacer></v-spacer>
+                      <v-btn color="green accent-3" text @click="close"><v-icon>mdi-close</v-icon></v-btn>
+                    </v-card-title>
+                    <v-card-text>
                       <v-row>
-                        <v-col cols="12" sm="12" md="6">
-                          <v-text-field v-model="newItem.nombre" label="Nombre" required></v-text-field>
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
+                          <v-text-field v-model="newItem.nombre" label="Nombre" required color="green accent-3"></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="12" md="6">
-                          <v-text-field v-model="newItem.descripcion" label="Descripción" required></v-text-field>
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
+                          <v-text-field v-model="newItem.descripcion" label="Descripción" required color="green accent-3"></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="12" md="6">
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
                           <v-text-field
                             v-model="newItem.precio"
                             :rules="rules.precioRules"
                             label="Precio"
                             required
+                            color="green accent-3" 
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="12" md="6">
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
                           <v-select
                             :items="arrayMedidas"
                             label="Unidad de medida"
@@ -77,7 +87,7 @@
                             required
                           ></v-select>
                         </v-col>
-                        <v-col cols="12" sm="12" md="6">
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
                           <v-select
                             :items="arrayCategorias"
                             label="Categoría"
@@ -90,7 +100,7 @@
                             required
                           ></v-select>
                         </v-col>
-                        <v-col cols="12" sm="12" md="6">
+                        <v-col cols="12" sm="12" md="6" class="ma-0">
                           <v-select
                             :items="arraySubcategoria"
                             label="SubCategoría"
@@ -102,39 +112,39 @@
                             required
                           ></v-select>
                         </v-col>
-                        <v-col cols="12" sm="12" md="12">
-                          <!-- <v-file-input
-                            show-size
-                            chips
-                            label="Imagen del producto"
-                            v-model="newItem.foto"
+                        <v-col cols="12" sm="12" md="12" class="ma-0">
+                          <v-file-input
+                            show-size                        
+                            label="Foto del producto"
                             @change="validarImagen"
-                            accept=".jpg, .jpeg, .png"
-                          ></v-file-input>-->
-                          <input type="file" @change="validarImagen" />
+                            color="green accent-3"
+                          >
+                          </v-file-input>
+                          <!--<input type="file" @change="validarImagen" />-->
                         </v-col>
                       </v-row>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                    <v-btn color="blue darken-1" text @click="save">Guardar</v-btn>
-                  </v-card-actions>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-btn block color="green accent-2" class="ma-0" @click="save">Guardar</v-btn>
+                    </v-card-actions>
+                  </v-container>
                 </v-card>
               </v-dialog>
             </v-container>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon small @click="abrirModalEdit(item)">mdi-pencil</v-icon>
-            <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+            <v-icon small @click="abrirModalEdit(item)" color="yellow darken-1">mdi-pencil</v-icon>
+            <v-icon small @click="deleteItem(item)" color="green accent-4">mdi-delete</v-icon>
           </template>
         </v-data-table>
       </v-col>
     </v-row>
     <v-dialog v-model="modal" max-width="50%">
       <v-card>
-        <v-card-title>Editar precio del producto : {{productoEdit.nombre}}</v-card-title>
+        <v-card-title class="headline">Editar precio del producto : {{productoEdit.nombre}}
+          <v-spacer></v-spacer>
+          <v-btn text @click="modal = false"><v-icon>mdi-close</v-icon></v-btn>
+        </v-card-title>
         <v-form ref="form" @submit.prevent="editarPrecio()">
           <v-card-text>
             <v-text-field
@@ -148,25 +158,20 @@
             ></v-text-field>
           </v-card-text>
           <v-card-actions>
-            <v-btn outlined small text @click="modal = false">Cancelar</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn small color="green accent-2" type="submit">Guardar</v-btn>
+            <v-btn block color="green accent-2" type="submit">Guardar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
     <v-dialog v-model="dialog_delete" width="500">
       <v-card>
-        <v-card-title class="headline yellow lighten-2" primary-title>Eliminar producto</v-card-title>
-
-        <v-card-text class="mt-4">¿Esta seguro de eliminar el producto?</v-card-text>
-
+        <v-card-title class="headline" primary-title>Eliminar producto</v-card-title>
+        <v-card-text class="red--text">¿Esta seguro de eliminar el producto?</v-card-text>
         <v-divider></v-divider>
-
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog_delete = false">Cancelar</v-btn>
-          <v-btn color="red lighten-2" text @click="eliminar_producto()">Aceptar</v-btn>
+          <v-btn outlined small text color="yellow darken-1" @click="dialog_delete = false">No</v-btn>
+          <v-btn small color="green accent-2" @click="eliminar_producto()">Sí</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -242,7 +247,7 @@ export default {
     getProductos() {
       let vue = this;
       vue.loading = true;
-      axios.get("/api/apiProducto").then(response => {
+      axios.get("/0/apiProducto").then(response => {
         vue.productos = response.data.data;
         setTimeout(() => {
           vue.loading = false;
