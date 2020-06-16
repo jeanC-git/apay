@@ -64,26 +64,6 @@
               :counter="6"
             ></v-text-field>
             <br />
-            <!-- <v-select
-                :items="items"
-                label="Documento de identidad"
-                color="green accent-3"
-                dense
-                prepend-icon="mdi-numeric"
-                mdi-account-box-outline
-                v-model="puesto.documento_personal"
-                :rules="reglasValidacion.selectRules"
-              ></v-select>
-              <v-text-field
-                label="Digitar el número"
-                name="numeroIdentidad"
-                type="text"
-                color="green accent-3"
-                prepend-icon="mdi-number"
-                v-model="puesto.numero_documento"
-                :rules="reglasValidacion.dniRules"
-                :counter="8"
-            ></v-text-field>-->
             <v-text-field
               label="Celular"
               name="celular"
@@ -95,29 +75,16 @@
               :counter="9"
             ></v-text-field>
             <br />
-            <!-- <v-select
-                :items="arrayCategorias"
-                label="Categoría"
-                color="green accent-3"
-                item-text="nombre"
-                item-value="id"
-                dense
-                v-model="puesto.categoria"
-                prepend-icon="mdi-storefront"
-                :rules="reglasValidacion.selectRules"
-            ></v-select>-->
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-flex justify-center>
-              <v-btn class="color: yellow darken-2" style="color : #9F9E9D" type="submit">Continuar</v-btn>
-            </v-flex>
+              <v-btn block color= "yellow darken-2" type="submit">Aceptar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
 
-    <v-btn bottom color="pink" dark fab fixed right @click="modal_puesto()">
+    <v-btn bottom color="green accent-3" dark fab fixed right @click="modal_puesto()">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
   </v-container>

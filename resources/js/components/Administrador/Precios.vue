@@ -113,14 +113,14 @@
                           ></v-select>
                         </v-col>
                         <v-col cols="12" sm="12" md="12" class="ma-0">
-                          <v-file-input
-                            show-size                        
-                            label="Foto del producto"
+                          <!--<v-file-input
+                            label="Suba la foto"
+                            filled
+                            prepend-icon="mdi-camera"
                             @change="validarImagen"
-                            color="green accent-3"
                           >
-                          </v-file-input>
-                          <!--<input type="file" @change="validarImagen" />-->
+                          </v-file-input>-->
+                          <input type="file" @change="validarImagen" />
                         </v-col>
                       </v-row>
                     </v-card-text>
