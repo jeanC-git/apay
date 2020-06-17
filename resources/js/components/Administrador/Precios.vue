@@ -165,13 +165,13 @@
     </v-dialog>
     <v-dialog v-model="dialog_delete" width="500">
       <v-card>
-        <v-card-title class="headline" primary-title>Eliminar producto</v-card-title>
+        <v-card-title class="headline yellow lighten-2" primary-title>Eliminar producto</v-card-title>
         <v-card-text class="red--text">¿Esta seguro de eliminar el producto?</v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn outlined small text color="yellow darken-1" @click="dialog_delete = false">No</v-btn>
-          <v-btn small color="green accent-2" @click="eliminar_producto()">Sí</v-btn>
+          <v-btn text color="red" @click="dialog_delete = false">No</v-btn>
+          <v-btn text color="green accent-3" @click="eliminar_producto()">Sí</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

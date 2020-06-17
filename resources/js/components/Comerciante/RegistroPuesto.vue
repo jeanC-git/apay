@@ -10,7 +10,7 @@
       <!-- CARD POR SI YA TIENE PUESTOS CREADO -->
       <v-tabs
         v-model="tab"
-        background-color="deep-purple accent-4"
+        background-color="green accent-4"
         class="elevation-2"
         dark
         :centered="centered"
@@ -38,7 +38,7 @@
     </v-row>
     <!-- MODAL PARA REGISTRAR PUESTO -->
     <v-dialog v-model="dialog_registro" width="500">
-      <v-card class="elevation-12" color>
+      <v-card class="elevation-12">
         <v-toolbar color="yellow darken-2" style="display: flex;justify-content: center;">
           <img src="\images\images_comerciante\form.svg" alt />
         </v-toolbar>

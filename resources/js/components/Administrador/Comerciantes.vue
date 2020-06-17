@@ -115,17 +115,15 @@
         </v-dialog>
         <v-dialog v-model="modal_delete_item" max-width="50%">
           <v-card>
-            <v-container>
-              <v-card-title class="headline">Eliminar comerciante</v-card-title>
+              <v-card-title class="headline yellow lighten-2">Eliminar comerciante</v-card-title>
               <v-form ref="form" @submit.prevent="eliminarItem()">
-                <v-card-text class="red--text">Está seguro de eliminar este comerciante ?</v-card-text>
+                <v-card-text class="red--text">¿Está seguro de eliminar este comerciante ?</v-card-text>
                 <v-card-actions>
-                  <v-btn outlined small text @click="modal_delete_item = false" color="yellow darken-1">No</v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn small color="green accent-2" type="submit">Sí</v-btn>
+                  <v-btn text @click="modal_delete_item = false" color="red">No</v-btn>
+                  <v-btn text color="green accent-3" type="submit">Sí</v-btn>
                 </v-card-actions>
               </v-form>
-            </v-container>
           </v-card>
         </v-dialog>
     </v-card-title>
