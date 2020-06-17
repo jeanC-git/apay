@@ -114,7 +114,7 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="6" md="6">
                   <v-select
                     :items="arrayCategorias"
                     label="Categoría"
@@ -127,7 +127,7 @@
                     @change="getSubCategorias('crear')"
                   ></v-select>
                 </v-col>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="6" md="6">
                   <v-select
                     :items="arraySubcategoria"
                     label="Sub-Categoría"
@@ -140,7 +140,7 @@
                     :rules="reglas.select"
                   ></v-select>
                 </v-col>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="12" md="12">
                   <v-select
                     :items="arrayProductos"
                     label="Nombre del producto"
@@ -153,21 +153,9 @@
                     @change="getPrecioXunidad('crear')"
                   ></v-select>
                 </v-col>
+                <hr />
                 <v-col cols="12" sm="12" md="12">
-                  <v-text-field
-                    color="green accent-3"
-                    disabled
-                    v-model="newItem.descripcion"
-                    label="Descripción del producto"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-text-field
-                    color="green accent-3"
-                    disabled
-                    v-model="newItem.price"
-                    label="Precio"
-                  ></v-text-field>
+                  <p class="h4 text-center" style="font-size:2rem">{{newItem.price}}</p>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
@@ -316,14 +304,16 @@ export default {
           if ($tipo == "edit") {
             me.editItem.descripcion = response.data.data.descripcion;
             me.editItem.price =
-              "S/." +
+              response.data.data.prodNom +
+              " - S/." +
               response.data.data.precio +
               " x " +
               response.data.data.nombre;
           } else {
             me.newItem.descripcion = response.data.data.descripcion;
             me.newItem.price =
-              "S/." +
+              response.data.data.prodNom +
+              " - S/." +
               response.data.data.precio +
               " x " +
               response.data.data.nombre;
