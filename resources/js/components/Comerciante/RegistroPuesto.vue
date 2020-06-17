@@ -78,7 +78,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-              <v-btn block color= "yellow darken-2" type="submit">Aceptar</v-btn>
+            <v-btn block color="yellow darken-2" type="submit">Aceptar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -100,8 +100,6 @@ export default {
     return {
       text_info: "¡Registra tu puesto dandole click al (+)!",
       tab: null,
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       icons: false,
       centered: false,
       grow: false,

@@ -41,92 +41,99 @@
                     single-line
                     hide-details
                     @keyup.enter="editarPrecio"
-                  >
-                  </v-text-field>
+                  ></v-text-field>
                 </v-col>
-                <v-col cols="12" md="4" xs="12">
-                </v-col>
+                <v-col cols="12" md="4" xs="12"></v-col>
               </v-row>
               <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on }">
-                  <v-btn rounded color="yellow darken-1" class="mb-2" v-on="on"><v-icon left>mdi-plus</v-icon>Nuevo Producto</v-btn>
+                  <v-btn rounded color="yellow darken-1" class="mb-2" v-on="on">
+                    <v-icon left>mdi-plus</v-icon>Nuevo Producto
+                  </v-btn>
                 </template>
                 <v-card>
                   <v-container>
                     <v-card-title>
                       <span class="headline">Agregar producto</span>
                       <v-spacer></v-spacer>
-                      <v-btn color="green accent-3" text @click="close"><v-icon>mdi-close</v-icon></v-btn>
+                      <v-btn color="green accent-3" text @click="close">
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
                     </v-card-title>
-                    <v-card-text>
-                      <v-row>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-text-field v-model="newItem.nombre" label="Nombre" required color="green accent-3"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-text-field v-model="newItem.descripcion" label="Descripción" required color="green accent-3"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-text-field
-                            v-model="newItem.precio"
-                            :rules="rules.precioRules"
-                            label="Precio"
-                            required
-                            color="green accent-3" 
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-select
-                            :items="arrayMedidas"
-                            label="Unidad de medida"
-                            outlined
-                            color="green accent-3"
-                            item-text="nombre"
-                            item-value="id"
-                            v-model="newItem.id_und_medida"
-                            required
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-select
-                            :items="arrayCategorias"
-                            label="Categoría"
-                            outlined
-                            color="green accent-3"
-                            item-text="nombre"
-                            item-value="id"
-                            v-model="newItem.id_categoria"
-                            @change="getSubCategorias()"
-                            required
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="6" class="ma-0">
-                          <v-select
-                            :items="arraySubcategoria"
-                            label="SubCategoría"
-                            item-text="nombre"
-                            item-value="id"
-                            outlined
-                            color="green accent-3"
-                            v-model="newItem.id_subcategoria"
-                            required
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="12" md="12" class="ma-0">
-                          <!--<v-file-input
-                            label="Suba la foto"
-                            filled
-                            prepend-icon="mdi-camera"
-                            @change="validarImagen"
-                          >
-                          </v-file-input>-->
-                          <input type="file" @change="validarImagen" />
-                        </v-col>
-                      </v-row>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-btn block color="green accent-2" class="ma-0" @click="save">Guardar</v-btn>
-                    </v-card-actions>
+                    <v-form ref="formnew" @submit.prevent="save()">
+                      <v-card-text>
+                        <v-row>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-text-field
+                              v-model="newItem.nombre"
+                              label="Nombre"
+                              required
+                              color="green accent-3"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-text-field
+                              v-model="newItem.descripcion"
+                              label="Descripción"
+                              required
+                              color="green accent-3"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-text-field
+                              v-model="newItem.precio"
+                              :rules="reglas.precioRules"
+                              label="Precio"
+                              required
+                              color="green accent-3"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-select
+                              :items="arrayMedidas"
+                              label="Unidad de medida"
+                              outlined
+                              color="green accent-3"
+                              item-text="nombre"
+                              item-value="id"
+                              v-model="newItem.id_und_medida"
+                              required
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-select
+                              :items="arrayCategorias"
+                              label="Categoría"
+                              outlined
+                              color="green accent-3"
+                              item-text="nombre"
+                              item-value="id"
+                              v-model="newItem.id_categoria"
+                              @change="getSubCategorias()"
+                              required
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="6" class="ma-0">
+                            <v-select
+                              :items="arraySubcategoria"
+                              label="SubCategoría"
+                              item-text="nombre"
+                              item-value="id"
+                              outlined
+                              color="green accent-3"
+                              v-model="newItem.id_subcategoria"
+                              required
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="12" sm="12" md="12" class="ma-0">
+                            <input type="file" @change="validarImagen" />
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn block color="green accent-2" class="ma-0" type="submit">Guardar</v-btn>
+                      </v-card-actions>
+                    </v-form>
                   </v-container>
                 </v-card>
               </v-dialog>
@@ -141,9 +148,12 @@
     </v-row>
     <v-dialog v-model="modal" max-width="50%">
       <v-card>
-        <v-card-title class="headline">Editar precio del producto : {{productoEdit.nombre}}
+        <v-card-title class="headline">
+          Editar precio del producto : {{productoEdit.nombre}}
           <v-spacer></v-spacer>
-          <v-btn text @click="modal = false"><v-icon>mdi-close</v-icon></v-btn>
+          <v-btn text @click="modal = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-card-title>
         <v-form ref="form" @submit.prevent="editarPrecio()">
           <v-card-text>

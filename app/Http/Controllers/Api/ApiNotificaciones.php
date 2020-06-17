@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\UnidadMedida;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
-class ApiUnidadMedida extends Controller
+use App\Notificaciones;
+use Illuminate\Http\Request;
+use App\Events\ListaRecibida;
+use App\Http\Controllers\Controller;
+
+class ApiNotificaciones extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,7 @@ class ApiUnidadMedida extends Controller
      */
     public function index()
     {
-        $unidad_medida = UnidadMedida::all();
-        return response()->json(['data' => $unidad_medida]);
+
     }
 
     /**
@@ -47,11 +48,9 @@ class ApiUnidadMedida extends Controller
      */
     public function show($id)
     {
-        $unidades = UnidadMedida::select('unidades_medidas.*', 'productos.precio','productos.descripcion', 'productos.nombre as prodNom')
-                                ->join('productos', 'unidades_medidas.id', '=', 'productos.id_und_medida')
-                                ->where('productos.id',$id)
-                                ->first();
-        return response()->json(['data' => $unidades]);
+        $notificaciones = Notificaciones::find($id);
+        broadcast( new ListaRecibida('hola', $id) );
+        return response()->json(['data' => $notificaciones]);
     }
 
     /**
@@ -87,5 +86,4 @@ class ApiUnidadMedida extends Controller
     {
         //
     }
-
 }
