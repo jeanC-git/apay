@@ -19,7 +19,7 @@
       ></v-text-field>
       </v-col>
         <v-col cols="12" md="2" xs="3" sm="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" >
+          <v-btn icon color="green accent-3" @click="ventana_lista = true">
                 <v-icon>mdi-cart</v-icon>
           </v-btn>
         </v-col>
@@ -74,10 +74,74 @@
         </v-col>
       </v-row>
     </v-card>
+    <template>
+      <v-dialog
+        v-model="ventana_lista"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        scrollable
+      >
+          <v-card tile>
+            <v-toolbar
+              flat
+              dark
+              color="yellow darken-1"
+            >
+              <v-toolbar-title>Mi lista</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn
+                  dark
+                  text
+                  color="grey darken-3"
+                  @click="ventana_lista = false"
+                >
+                  Procesar
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-btn
+                color="green accent-3"
+                icon
+                dark
+                @click="ventana_lista = false"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-card-text>
+              <v-list
+                three-line
+                subheader
+              >
+                <v-subheader>User Controls</v-subheader>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Content filtering</v-list-item-title>
+                    <v-list-item-subtitle>Set the content filtering level to restrict apps that can be downloaded</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Password</v-list-item-title>
+                    <v-list-item-subtitle>Require password for purchase or use password to restrict purchase</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+
+            <div style="flex: 1 1 auto;"></div>
+          </v-card>
+      </v-dialog>
+    </template>
   </div>
 </template>
 <script>
 export default {
+  props: {
+      ventana_lista: false,
+  },
   data: () => ({
     arrayProductos:[],
     dialog_stock:false,
