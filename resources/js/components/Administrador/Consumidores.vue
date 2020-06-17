@@ -1,17 +1,17 @@
 <template >
   <v-card width="100%">
-    <v-card-title>
+    <v-card-title class="headline">
       Gestor de consumidores
       <v-spacer></v-spacer>
       <v-text-field
         v-model="buscador"
         append-icon="mdi-magnify"
         label="Buscar consumidor"
+        color="green accent-3"
         single-line
         hide-details
       ></v-text-field>
     </v-card-title>
-
     <v-data-table
       :headers="headers"
       :items="consumidores"
@@ -20,10 +20,11 @@
       :loading="loading"
       loading-text="Cargando datos"
       :search="buscador"
+      color="green accent-3"
     >
       <template v-slot:item.actions="{ item }">
         <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon> -->
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small @click="deleteItem(item)" color="green accent-4">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-card>

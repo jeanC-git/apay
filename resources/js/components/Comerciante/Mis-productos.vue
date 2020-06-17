@@ -4,8 +4,8 @@
       <v-list-item-content>
         <v-list-item-title class="headline">Gestiona a tus productos</v-list-item-title>
       </v-list-item-content>
-      <v-btn fab color="yellow darken-1" @click="abrir_modal_crear()">
-        <v-icon dark>mdi-plus</v-icon>
+      <v-btn rounded color="yellow darken-1" @click="abrir_modal_crear()">
+        <v-icon dark>mdi-plus</v-icon>Añadir alimento
       </v-btn>
     </v-list-item>
     <template></template>
@@ -70,6 +70,7 @@
                 <v-text-field
                   color="green accent-3"
                   disabled
+                  class="black--text"
                   v-model="editItem.descripcion"
                   label="Descripción del producto"
                 ></v-text-field>
@@ -78,6 +79,7 @@
                 <v-text-field
                   color="green accent-3"
                   disabled
+                  class="red--text"
                   v-model="editItem.price"
                   label="Precio"
                 ></v-text-field>
@@ -102,7 +104,7 @@
         <v-form ref="form" @submit.prevent="crearProducto()">
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn type="submit" color="green accent-3" text @click="crearProducto()">
+            <v-btn type="submit" color="green accent-3" text>
               <v-icon>mdi-content-save-all</v-icon>
             </v-btn>
             <v-btn color="green accent-3" text @click="close">
@@ -185,12 +187,12 @@
     <v-dialog v-model="dialog_delete" width="500">
       <v-card>
         <v-card-title class="headline yellow lighten-2" primary-title>Eliminar producto</v-card-title>
-        <v-card-text class="mt-4">¿Esta seguro de eliminar el producto?</v-card-text>
+        <v-card-text class="mt-4 red--text">¿Esta seguro de eliminar el producto?</v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog_delete = false">Cancelar</v-btn>
-          <v-btn color="red lighten-2" text @click="eliminar_producto()">Aceptar</v-btn>
+          <v-btn color="red" text @click="dialog_delete = false">No</v-btn>
+          <v-btn color="green accent-3" text @click="eliminar_producto()">Sí</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
