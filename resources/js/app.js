@@ -27,7 +27,6 @@ Vue.component('consumidores', require('./components/Administrador/Consumidores.v
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);
 Vue.component('precios-admin', require('./components/Administrador/Precios.vue').default);
 Vue.component('subida', require('./components/Administrador/SubidaMasiva.vue').default);
-
 const app = new Vue({
     el: '#app',
     //añade la instancia de Vuetify como parámetro en la de Vue

@@ -36,7 +36,7 @@
             <v-list-item>
               <v-list-item-avatar>
                 <v-img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQTz7rBk4Y8uVtnkJt-2kB48cLh5VAL7lDVad1xCihsOyIbuhq9&usqp=CAU"
+                  src="https://img2.freepng.es/20180623/iqh/kisspng-computer-icons-avatar-social-media-blog-font-aweso-avatar-icon-5b2e99c40ce333.6524068515297806760528.jpg"
                 ></v-img>
               </v-list-item-avatar>
               <v-list-item-content>
@@ -45,13 +45,13 @@
               </v-list-item-content>
             </v-list-item>
             <v-img
-              :src="'images/productos/'+producto.foto"
+              :src="producto.foto"
               height="100"
             ></v-img>
             <v-card-text>
               <v-list-item two-line>
                 <v-list-item-content>
-                    <v-list-item-subtitle v-text="producto.nombre"></v-list-item-subtitle>
+                    <v-list-item-subtitle v-text="producto.nombre+' - '+producto.descripcion"></v-list-item-subtitle>
                     <v-list-item-subtitle v-text="'S/. '+producto.precio+' x '+ producto.unidad">Precio</v-list-item-subtitle>
                     <v-list-item-subtitle v-if="arrayProductos.length>0">Disponible</v-list-item-subtitle>
                     <v-list-item-subtitle v-else>No disponible</v-list-item-subtitle>
