@@ -19,7 +19,7 @@
       ></v-text-field>
       </v-col>
         <v-col cols="12" md="2" xs="3" sm="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" >
+          <v-btn icon color="green accent-3" @click="abrir_modalProductos">
                 <v-icon>mdi-cart</v-icon>
           </v-btn>
         </v-col>
@@ -65,8 +65,9 @@
                     color="yellow darken-1"      
                     right
                     fab
+                    @click="añadir_carrito(producto)"
                   >
-                  <v-icon>mdi-plus</v-icon>
+                  <v-icon >mdi-plus</v-icon>
                 </v-btn>
               </v-fab-transition>
             </v-card-actions>
@@ -74,14 +75,76 @@
         </v-col>
       </v-row>
     </v-card>
+    <!-- MODAL LISTA DE PRODUCTOS -->
+      <v-dialog
+        v-model="dialog_productos"
+        fullscreen
+        hide-overlay
+        transition="dialog-bottom-transition"
+        scrollable
+        >
+        <v-card >
+        <v-toolbar
+            flat
+            dark
+            color="primary"
+            tile max-height="80px"
+          >
+            <v-btn
+            icon
+            dark
+            @click="dialog_productos = false"
+            >
+            <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title>Lista de compras</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn
+                  dark
+                  text
+                  @click="dialog = false"
+                  v-text="'Guardar'"
+              ></v-btn>
+            </v-toolbar-items>
+        </v-toolbar>
+        <v-card-text>
+            <v-list
+            three-line
+            subheader
+            >
+            <v-list disabled  >
+              <v-subheader>Productos</v-subheader>
+              <v-list-item-group  color="primary" >
+                <v-list-item  v-for="producto_lista in array_producto_carrito" :key="producto_lista.id">
+                  <div class="m-3" v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></div>
+                  <div style="display:flex">
+                    <v-icon color="green">mdi-plus</v-icon>
+                    <v-text-field max-width="10px" v-text="10" ></v-text-field>
+                    <v-icon color="red">mdi-minus</v-icon>
+                  </div>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+            </v-list>
+            <v-divider></v-divider>
+        </v-card-text>
+        <div style="flex: 1 1 auto;"></div>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
+    dialog_productos:false,
+    notifications: false,
+    sound: true,
+    widgets: false,
     arrayProductos:[],
     dialog_stock:false,
     buscador:'',
+    array_producto_carrito:[],
   }),mounted() {
     this.get_productos();
   },methods: {
@@ -103,6 +166,13 @@ export default {
           me.arrayProductos=response.data.data;
         });
       }
+    },abrir_modalProductos(){
+      let me = this;
+      me.dialog_productos=true;
+    },añadir_carrito(producto){
+      let me = this;
+      me.array_producto_carrito.push(producto);
+      console.log(me.array_producto_carrito);
     }
   },
 };
