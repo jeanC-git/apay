@@ -247,7 +247,7 @@ export default {
     getProductos() {
       let vue = this;
       vue.loading = true;
-      axios.get("/0/apiProducto").then(response => {
+      axios.get("/api/apiProducto").then(response => {
         vue.productos = response.data.data;
         setTimeout(() => {
           vue.loading = false;

@@ -104,7 +104,7 @@
         <v-form ref="form" @submit.prevent="crearProducto()">
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn type="submit" color="green accent-3" text @click="crearProducto()">
+            <v-btn type="submit" color="green accent-3" text>
               <v-icon>mdi-content-save-all</v-icon>
             </v-btn>
             <v-btn color="green accent-3" text @click="close">
