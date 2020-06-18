@@ -103,7 +103,7 @@
               <v-btn
                   dark
                   text
-                  @click="dialog = false"
+                  @click="dialog_productos = false"
                   v-text="'Guardar'"
               ></v-btn>
             </v-toolbar-items>
@@ -113,15 +113,20 @@
             three-line
             subheader
             >
-            <v-list disabled  >
+            <v-list  >
               <v-subheader>Productos</v-subheader>
               <v-list-item-group  color="primary" >
-                <v-list-item  v-for="producto_lista in array_producto_carrito" :key="producto_lista.id">
-                  <div class="m-3" v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></div>
-                  <div style="display:flex">
-                    <v-icon color="green">mdi-plus</v-icon>
-                    <v-text-field max-width="10px" v-text="10" ></v-text-field>
-                    <v-icon color="red">mdi-minus</v-icon>
+                <div v-if="array_producto_carrito.length>0" >
+                {{array_producto_carrito[0].cantidad}}
+                </div>
+                <v-list-item  v-for="(producto_lista,index) in array_producto_carrito" :key="producto_lista.id" >
+                  <div class="mx-2"  v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></div>
+                  <div class="mx-2" v-text="producto_lista.precio"></div>
+                  <div class="d-flex" >
+                    <v-btn style="border:1px solid"  icon @click="cambiar_cantidad(index,'plus')" > <v-icon color="green" >mdi-plus</v-icon></v-btn>
+                    <v-text-field v-model="producto_lista.cantidad"></v-text-field>
+                    <!-- <span style="border:1px solid gray;border-radius:11px" class="d-flex justify-center align-center mx-3 px-2" max-width="10px" v-text="producto_lista.cantidad" ></span> -->
+                    <v-icon color="red" @click="cambiar_cantidad(index,'minus')" >mdi-minus</v-icon>
                   </div>
                 </v-list-item>
               </v-list-item-group>
@@ -153,6 +158,9 @@ export default {
       axios.get("api/apiComercianteProductos").then(function(response) {
         console.log(response.data.data);
         me.arrayProductos=response.data.data;
+        me.arrayProductos.forEach(element => {
+          element.cantidad=1;
+        });
       });
     },buscar_producto(){
       let me=this;
@@ -172,7 +180,15 @@ export default {
     },añadir_carrito(producto){
       let me = this;
       me.array_producto_carrito.push(producto);
-      console.log(me.array_producto_carrito);
+    },cambiar_cantidad(index,tipo){
+      let me = this;
+      console.log(me.array_producto_carrito[index].cantidad);
+      if (tipo=='plus') {
+        me.array_producto_carrito[index].cantidad ++;
+      }
+      // cantidad = (tipo=='plus') ? cantidad+1 : cantidad-1 ;
+      console.log(me.array_producto_carrito[index].cantidad);
+
     }
   },
 };
