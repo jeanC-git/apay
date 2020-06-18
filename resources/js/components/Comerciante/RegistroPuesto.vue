@@ -40,7 +40,7 @@
     <v-dialog v-model="dialog_registro" width="500">
       <v-card class="elevation-12">
         <v-toolbar color="yellow darken-2" style="display: flex;justify-content: center;">
-          <img src="\images\images_comerciante\form.svg" alt />
+          <img src="\images\images_comerciante\form.svg" alt="icono de tienda"/>
         </v-toolbar>
         <v-form ref="form" @submit.prevent="registrar_puesto()">
           <v-card-text>
@@ -128,14 +128,14 @@ export default {
         dniRules: [
           v => !!v || "Campo requerido",
           v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
+          v => v.length <= 8 || "El DNI no debe ser mayor de 8 dígitos"
         ],
         celularRules: [
           v => !!v || "Campo requerido",
           v => /^[0-9]+$/i.test(v) || "No se permiten letras",
           v =>
             v.length <= 9 ||
-            "El número de celular debe ser no mayor de 9 dígitos"
+            "El número de celular no debe ser mayor de 9 dígitos"
         ],
         puestoRules: [
           v => !!v || "Campo requerido",

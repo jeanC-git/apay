@@ -20,7 +20,9 @@
             <v-container>
               <v-card-title class="headline">Agregar nuevo comerciante
                 <v-spacer></v-spacer>
-                <v-btn color="green accent-3" text @click="modal_nuevo_item = false"><v-icon>mdi-close</v-icon></v-btn>
+                <v-btn color="green accent-3" text @click="modal_nuevo_item = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
               </v-card-title>
               <v-form ref="form" @submit.prevent="agregarItem()">
                 <v-card-text>
@@ -30,6 +32,7 @@
                     color="green accent-3"
                     append-icon="mdi-alphabetical"
                     v-model="nuevoItem.name"
+                    :rules="reglasValidacion.stringRules"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -37,6 +40,7 @@
                     label="Apellidos"
                     color="green accent-3"
                     append-icon="mdi-alphabetical"
+                    :rules="reglasValidacion.stringRules"
                     v-model="nuevoItem.lastname"
                     required
                   ></v-text-field>
@@ -46,6 +50,8 @@
                     color="green accent-3"
                     append-icon="mdi-numeric"
                     v-model="nuevoItem.dni"
+                    :rules="reglasValidacion.dniRules"
+                    :counter="8"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -79,6 +85,7 @@
                     color="green accent-3"
                     append-icon="mdi-alphabetical"
                     v-model="editItem.name"
+                    :rules="reglasValidacion.stringRules"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -87,6 +94,7 @@
                     color="green accent-3"
                     append-icon="mdi-alphabetical"
                     v-model="editItem.lastname"
+                    :rules="reglasValidacion.stringRules"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -95,6 +103,8 @@
                     color="green accent-3"
                     append-icon="mdi-numeric"
                     v-model="editItem.dni"
+                    :rules="reglasValidacion.dniRules"
+                    :counter="8"
                     required
                   ></v-text-field>
                   <v-text-field
@@ -117,7 +127,7 @@
           <v-card>
               <v-card-title class="headline yellow lighten-2">Eliminar comerciante</v-card-title>
               <v-form ref="form" @submit.prevent="eliminarItem()">
-                <v-card-text class="red--text">¿Está seguro de eliminar este comerciante ?</v-card-text>
+                <v-card-text class="red--text">¿Está seguro que desea eliminar este comerciante ?</v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn text @click="modal_delete_item = false" color="red">No</v-btn>
@@ -177,7 +187,18 @@ export default {
       email: "",
       dni: ""
     },
-    id_deleteItem: ""
+    id_deleteItem: "",
+    reglasValidacion: {
+      dniRules: [
+        v => !!v || "Campo requerido",
+        v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+        v => v.length < 9 || "El DNI debe ser no mayor de 8 dígitos"
+      ],
+      stringRules: [
+        v => !!v || "Campo requerido",
+        v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
+      ],
+    },
   }),
   created() {
     this.initialize();
