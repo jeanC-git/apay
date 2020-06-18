@@ -13,8 +13,8 @@ class ApiComercianteProductos extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $categorias = Comerciante_productos::select(
-            'comerciantes.id as id_comerciante', 
+        $productos = Comerciante_productos::select(
+            'comerciantes.id as id_comerciante',
             'comerciante_productos.id as id','comerciante_productos.stock as stock',
             'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion','productos.foto as foto',
             'unidades_medidas.nombre as unidad',
@@ -30,7 +30,11 @@ class ApiComercianteProductos extends Controller
         ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
         ->orderBy('stock', 'desc')
         ->get();
-        return response()->json(['data' => $categorias]);
+        $collectProductos = collect($productos);
+        foreach ($collectProductos as $producto) {
+            $producto->cantidad = 1;
+        }
+        return response()->json(['data' => $collectProductos]);
     }
 
     /**
@@ -40,7 +44,7 @@ class ApiComercianteProductos extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -68,7 +72,7 @@ class ApiComercianteProductos extends Controller
      */
     public function show($id){
         $categorias = Comerciante_productos::select(
-            'comerciantes.id as id_comerciante', 
+            'comerciantes.id as id_comerciante',
             'comerciante_productos.id as id','comerciante_productos.stock as stock',
             'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion',
             'unidades_medidas.nombre as unidad',
