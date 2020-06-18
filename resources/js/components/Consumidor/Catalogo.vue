@@ -124,8 +124,7 @@
                   <div class="mx-2" v-text="producto_lista.precio"></div>
                   <div class="d-flex" >
                     <v-btn style="border:1px solid"  icon @click="cambiar_cantidad(index,'plus')" > <v-icon color="green" >mdi-plus</v-icon></v-btn>
-                    <v-text-field v-model="producto_lista.cantidad"></v-text-field>
-                    <!-- <span style="border:1px solid gray;border-radius:11px" class="d-flex justify-center align-center mx-3 px-2" max-width="10px" v-text="producto_lista.cantidad" ></span> -->
+                    <span style="border:1px solid gray;border-radius:11px" class="d-flex justify-center align-center mx-3 px-2" max-width="10px" v-text="producto_lista.cantidad"></span>
                     <v-icon color="red" @click="cambiar_cantidad(index,'minus')" >mdi-minus</v-icon>
                   </div>
                 </v-list-item>
@@ -143,11 +142,7 @@
 export default {
   data: () => ({
     dialog_productos:false,
-    notifications: false,
-    sound: true,
-    widgets: false,
     arrayProductos:[],
-    dialog_stock:false,
     buscador:'',
     array_producto_carrito:[],
   }),mounted() {
@@ -156,7 +151,6 @@ export default {
     get_productos(){
       let me = this;
       axios.get("api/apiComercianteProductos").then(function(response) {
-        console.log(response.data.data);
         me.arrayProductos=response.data.data;
         me.arrayProductos.forEach(element => {
           element.cantidad=1;
@@ -170,7 +164,6 @@ export default {
         me.get_productos();
       }else{
         axios.get("api/apiProductosConsumidor/"+me.buscador).then(function(response) {
-          console.log(response.data.data);
           me.arrayProductos=response.data.data;
         });
       }

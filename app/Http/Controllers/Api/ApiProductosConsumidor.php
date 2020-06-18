@@ -24,7 +24,14 @@ class ApiProductosConsumidor extends Controller
      */
     public function create()
     {
-        //
+        $data = (object) $request->data;
+        $producto = new Producto();
+        $producto->nombre = $data->nombre;
+        $producto->descripcion = $data->descripcion;
+        $producto->precio = $data->precio;
+        $producto->id_subcategoria = $data->id_subcategoria;
+        $producto->id_und_medida = $data->id_und_medida;
+        $saved = $producto->save();
     }
 
     /**
@@ -45,7 +52,7 @@ class ApiProductosConsumidor extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $categorias = Comerciante_productos::select(
+        $comerciante = Comerciante_productos::select(
             'comerciantes.id as id_comerciante',
             'comerciante_productos.id as id','comerciante_productos.stock as stock',
             'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion','productos.foto as foto',
