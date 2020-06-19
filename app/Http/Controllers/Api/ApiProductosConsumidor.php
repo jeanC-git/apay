@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Comerciante_productos;
+use App\Listas;
+use App\Detalle_listas;
+use App\Consumidor;
+use App\Notificaciones;
+use App\Events\ListaRecibida;
 class ApiProductosConsumidor extends Controller
 {
     /**
@@ -24,14 +29,7 @@ class ApiProductosConsumidor extends Controller
      */
     public function create()
     {
-        $data = (object) $request->data;
-        $producto = new Producto();
-        $producto->nombre = $data->nombre;
-        $producto->descripcion = $data->descripcion;
-        $producto->precio = $data->precio;
-        $producto->id_subcategoria = $data->id_subcategoria;
-        $producto->id_und_medida = $data->id_und_medida;
-        $saved = $producto->save();
+       
     }
 
     /**
@@ -42,7 +40,37 @@ class ApiProductosConsumidor extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user_id=$request->data_horario['user_id'];
+        $id_consumidor=Consumidor::where('id_user',$user_id)->first();
+        
+        $lista = new Listas();
+        $lista->total_lista = '1997';
+        $lista->fecha_entrega = '1000-01-01';
+        $lista->id_horario = '1';
+        $lista->id_consumidor = $id_consumidor->id;
+        $saved = $lista->save();
+        $lista_id = $lista->id; 
+        $precio;
+        foreach ($request->data_lista as $value) {
+            $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$value['id_comerciante'])
+                            ->where('id_producto',$value['id_producto'])
+                            ->first();
+            $detalle_lista = new Detalle_listas();
+            $detalle_lista->estado = '1';
+            $detalle_lista->precio = $value['precio'];
+            $detalle_lista->cantidad = $value['cantidad'];
+            $detalle_lista->id_comerciante_producto = $id_comerciante_producto->id;
+            $detalle_lista->id_lista = $lista_id;
+            $saved = $detalle_lista->save();
+            broadcast( new ListaRecibida('Se ha agregado un producto a la lista', $value['id_comerciante']));
+        }
+        // $notificaciones = new Notificaciones();
+        // $notificaciones->mensaje = '1';
+        // $notificaciones->tipo = $value['precio'];
+        // $notificaciones->usuario_destino = $value['cantidad'];
+        // $notificaciones->id_user = $user_id;
+        
+        return "ok ._.";
     }
 
     /**

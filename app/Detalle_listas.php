@@ -9,6 +9,6 @@ class Detalle_listas extends Model
     protected $table = 'detalle_listas';
 
     protected $fillable = [
-        'id', 'estado', 'precio','cantidad','id_comerciante_producto','lista','created_at', 'updated_at'
+        'id', 'estado', 'precio','cantidad','id_comerciante_producto','id_lista','created_at', 'updated_at'
     ];
 }
