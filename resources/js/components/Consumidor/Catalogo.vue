@@ -1,14 +1,14 @@
 <template>
   <div height="100%" width="100%">
     <v-app-bar color="#ffff" absolute>
-      <v-col cols="12" md="4" xs="9" sm="10">
+      <v-col cols="12" xs="12" sm="6" md="4" >
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="headline">Lleva lo que necesites</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-col>
-      <v-col cols="12" md="6" dark fab fixed right>
+      <v-col cols="12" xs="12" sm="6" md="6" dark fab fixed right>
         <v-text-field
           v-model="buscador"
           append-icon="mdi-magnify"
@@ -26,8 +26,8 @@
     </v-app-bar>
     <br />
     <v-card width="100%" color="#F5F5F7" class="mt-5 pl-3 pt-2 d-flex justify-center" height="100vh" >
-      <v-row style="border:1px solid red" v-if="arrayProductos.length>0" class="d-flex justify-start">
-        <v-col style="border:1px solid green;height:50%" cols="12"   xs="12" sm="6" md="3" v-for="producto in arrayProductos" :key="producto.id">
+      <v-row v-if="arrayProductos.length>0" class="d-flex justify-start">
+        <v-col style="height:50%" cols="12"   xs="12" sm="6" md="3" v-for="producto in arrayProductos" :key="producto.id">
           <v-card width="100%" class="mx-auto" color="green accent-3">
             <v-list-item>
               <v-list-item-avatar>
@@ -81,7 +81,7 @@
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog_productos = false" v-text="'Guardar'"></v-btn>
+            <v-btn dark text @click="guardar_data()" v-text="'Guardar'"></v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
@@ -152,6 +152,7 @@
 </template>
 <script>
 export default {
+  props: ["id_user"],
   data: () => ({
     dialog_productos: false,
     arrayProductos: [],
@@ -247,6 +248,45 @@ export default {
             })
         break
       }
+    },guardar_data(){
+      Swal.fire({
+        title: "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+        cancelButtonText:"<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>",
+      }).then((result) => {
+        if (result.value) {
+          let me = this;
+          let lista=  me.carrito_compras;
+          let horario={
+            user_id:me.id_user
+          } 
+          console.log(lista);
+          axios.post('api/apiProductosConsumidor',{data_lista : lista,data_horario:horario})
+          .then(function(response){
+            me.carrito_compras=[];
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: false,
+                onOpen: toast => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title:
+                  "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
+              });
+          })
+        }
+      })
     }
   }
 };
