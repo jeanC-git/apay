@@ -1,30 +1,25 @@
 <template>
-  <div height="100%" width="100%">
-    <v-app-bar color="#ffff" absolute height="auto" dense>
-      <v-row>
-        <v-col cols="12" xs="12" sm="10" md="4">
-          <p class="h1">Lleva lo que necesites</p>
-        </v-col>
-        <v-col cols="12" xs="6" sm="8" md="6" dark fab fixed right>
-          <v-text-field
-            v-model="buscador"
-            append-icon="mdi-magnify"
-            label="Busca tu producto"
-            single-line
-            hide-details
-            v-on:keyup="buscar_producto()"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" xs="6" sm="4" md="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" @click="abrir_modalProductos">
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
+  <div>
+    <v-app-bar color="white" absolute style="position: sticky;
+  top: 10%;">
+      <v-text-field
+        v-model="buscador"
+        append-icon="mdi-magnify"
+        label="Busca tu producto"
+        single-line
+        dense
+        clearable
+        hide-details
+        v-on:keyup="buscar_producto()"
+      ></v-text-field>
+
+      <v-btn icon color="green accent-3" @click="abrir_modalProductos">
+        <v-icon>mdi-cart</v-icon>
+      </v-btn>
     </v-app-bar>
 
-    <v-container class="mt-5">
-      <v-card :elevation="'0'" color="white" class="mt-5 pl-3 pt-2">
+    <v-container fluid>
+      <v-card :elevation="'0'" color="white" class="pl-3 pt-2" style="margin-top:0">
         <v-row v-for="(array, index) in arrayProductos_3_en_3" :key="index">
           <v-col
             cols="12"
@@ -221,7 +216,8 @@ export default {
     dialog_productos: false,
     arrayProductos_3_en_3: [],
     buscador: "",
-    carrito_compras: []
+    carrito_compras: [],
+    sticky: true
   }),
   mounted() {
     this.get_productos();
