@@ -10,6 +10,7 @@ use App\Detalle_listas;
 use App\Consumidor;
 use App\Notificaciones;
 use App\Events\ListaRecibida;
+use  App\Comerciante;
 class ApiProductosConsumidor extends Controller
 {
     /**
@@ -62,7 +63,8 @@ class ApiProductosConsumidor extends Controller
             $detalle_lista->id_comerciante_producto = $id_comerciante_producto->id;
             $detalle_lista->id_lista = $lista_id;
             $saved = $detalle_lista->save();
-            broadcast( new ListaRecibida('Se ha agregado un producto a la lista', $value['id_comerciante']));
+            $id_usuario_comerciante=Comerciante::find($value['id_comerciante']);
+            broadcast( new ListaRecibida('Se ha agregado un producto a la lista',$id_usuario_comerciante->id_user));
         }
         // $notificaciones = new Notificaciones();
         // $notificaciones->mensaje = '1';

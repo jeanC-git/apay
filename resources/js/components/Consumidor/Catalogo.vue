@@ -16,16 +16,23 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" xs="6" sm="4" md="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" @click="abrir_modalProductos">
-            <v-icon>mdi-cart</v-icon>
-          </v-btn>
+         
+            <v-btn icon color="green accent-3" @click="abrir_modalProductos">
+               <v-badge
+                  color="deep-purple accent-4"
+                  :content="carrito_compras.length"
+                  transition="slide-x-transition"
+                >
+                <v-icon>mdi-cart</v-icon>
+              </v-badge>
+            </v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
 
     <v-container class="mt-5">
       <v-card :elevation="'0'" color="white" class="mt-5 pl-3 pt-2">
-        <v-row v-for="(array, index) in arrayProductos_3_en_3" :key="index">
+        <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
           <v-col
             cols="12"
             xs="12"
@@ -93,7 +100,7 @@
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog_productos = false" v-text="'Guardar'"></v-btn>
+            <v-btn dark text @click="guardar_data()"  v-text="'Guardar'"></v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
@@ -217,9 +224,10 @@
 </template>
 <script>
 export default {
+  props: ["id_user"],
   data: () => ({
     dialog_productos: false,
-    arrayProductos_3_en_3: [],
+    arrayProductos_n_en_n: [],
     buscador: "",
     carrito_compras: []
   }),
@@ -230,7 +238,7 @@ export default {
     get_productos() {
       let me = this;
       axios.get("api/apiComercianteProductos").then(function(response) {
-        me.arrayProductos_3_en_3 = response.data.data;
+        me.arrayProductos_n_en_n = response.data.data;
       });
     },
     buscar_producto() {
@@ -257,7 +265,7 @@ export default {
       const found = me.carrito_compras.find(
         element => element.id == producto.id
       );
-      console.log(found);
+
       if (found == undefined) {
         me.carrito_compras.push(producto);
         const Toast = Swal.mixin({
@@ -298,8 +306,7 @@ export default {
           break;
         case "eliminar":
           Swal.fire({
-            title:
-              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de eliminar el producto de la lista?</p>",
+            title:"<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de eliminar el producto de la lista?</p>",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -310,15 +317,59 @@ export default {
               "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
           }).then(result => {
             if (result.value) {
-              const found = me.arrayProductos.find(
-                element => element.id == me.carrito_compras[producto_index].id
-              );
+              let found;
+              me.arrayProductos_n_en_n.forEach(element => {
+                  found = element.find(
+                  element => element.id == me.carrito_compras[producto_index].id
+                );
+              });
+              console.log(found);
               found.cantidad = 1;
               me.carrito_compras.splice(producto_index, 1);
             }
           });
           break;
       }
+    }
+    ,guardar_data(){
+      Swal.fire({
+        title: "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+        cancelButtonText:"<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>",
+      }).then((result) => {
+        if (result.value) {
+          let me = this;
+          let lista=  me.carrito_compras;
+          let horario={
+            user_id:me.id_user
+          } 
+          console.log(lista);
+          axios.post('api/apiProductosConsumidor',{data_lista : lista,data_horario:horario})
+          .then(function(response){
+            me.carrito_compras=[];
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: false,
+                onOpen: toast => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title:
+                  "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
+              });
+          })
+        }
+      })
     }
   }
 };
