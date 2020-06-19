@@ -30,11 +30,14 @@ class ApiComercianteProductos extends Controller
         ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
         ->orderBy('stock', 'desc')
         ->get();
+
         $collectProductos = collect($productos);
         foreach ($collectProductos as $producto) {
             $producto->cantidad = 1;
         }
-        return response()->json(['data' => $collectProductos]);
+        // AGRUPAR DE 3 EN 3 CON chunk(3)
+        $groups = $collectProductos->chunk(4);
+        return response()->json(['data' => $groups->toArray()]);
     }
 
     /**
