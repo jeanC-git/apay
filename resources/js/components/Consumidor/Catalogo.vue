@@ -1,23 +1,53 @@
 <template>
-  <div width="100%">
-    <v-app-bar color="white" absolute style="position: sticky;
-  top: 10%;">
+  <div>
+    <v-app-bar color="white" absolute style="position: sticky; top: 10%;" height="auto">
       <v-row>
-        <v-col cols="12" xs="12" sm="10" md="4">
-          <p class="h1">Lleva lo que necesites</p>
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1">
+          <v-select
+            :items="arrayCategoria"
+            v-model="filtroCategoria"
+            @change="getSubCategorias(), buscar_producto()"
+            item-text="nombre"
+            item-value="id"
+            label="Categoria"
+            hide-details
+            class="pt-1"
+            color="#69F0AE"
+          ></v-select>
         </v-col>
-        <v-col cols="12" xs="6" sm="8" md="6" dark fab fixed right>
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1">
+          <v-select
+            :items="arraySubcategoria"
+            v-model="filtroSubCategoria"
+            @change="buscar_producto()"
+            item-text="nombre"
+            item-value="id"
+            label="Subcategoria"
+            hide-details
+            class="pt-1"
+            color="#69F0AE"
+            no-data-text="Elija una categoría"
+          ></v-select>
+        </v-col>
+        <v-col cols="12" xs="12" sm="12" md="4" lg="4" class="pt-1">
           <v-text-field
+            class="pt-1"
             v-model="buscador"
             append-icon="mdi-magnify"
             label="Busca tu producto"
             single-line
             hide-details
             v-on:keyup="buscar_producto()"
+            color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" xs="6" sm="4" md="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" @click="abrir_modalProductos">
+        <v-col cols="12" xs="12" sm="12" md="1" lg="1" class="text-center pt-3 pb-0">
+          <v-btn small outlined rounded color="red" @click="limpiar_filtros()" class="text-center">
+            <v-icon class="mr-1">mdi-close</v-icon>Filtros
+          </v-btn>
+        </v-col>
+        <v-col cols="12" xs="12" sm="12" md="1" lg="1" class="text-center pt-1 pb-0">
+          <v-btn icon color="green accent-3" @click="abrir_modalProductos" class="pt-1">
             <v-badge
               color="deep-purple accent-4"
               :content="carrito_compras.length >0 ? carrito_compras.length : '0' "
@@ -30,8 +60,8 @@
       </v-row>
     </v-app-bar>
 
-    <v-container class="mt-5">
-      <v-card :elevation="'0'" color="white" class="mt-5 pl-3 pt-2">
+    <v-container v-if="arrayProductos_n_en_n.length>0">
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-5 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
           <v-col
             cols="12"
@@ -79,6 +109,30 @@
                   </v-btn>
                 </v-fab-transition>
               </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-container>
+    <v-container v-else>
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-0 pr-3">
+        <v-row>
+          <v-col
+            cols="12"
+            xs="12"
+            sm="12"
+            md="12"
+            lg="12"
+            style="display:flex; justify-content:center;"
+          >
+            <v-card class="text-center" style="padding-top: 10%" height="70vh" width="81vw">
+              <v-card-text>
+                <p
+                  class="text-center"
+                  style="font-size: 1.5rem"
+                >No hay productos disponibles, verifique sus filtros.</p>
+                <v-icon x-large>mdi-emoticon-sad</v-icon>
+              </v-card-text>
             </v-card>
           </v-col>
         </v-row>
@@ -227,33 +281,64 @@ export default {
   props: ["id_user"],
   data: () => ({
     dialog_productos: false,
-    arrayProductos_n_en_n: [],
     buscador: "",
-    carrito_compras: []
+    arrayProductos_n_en_n: [],
+    carrito_compras: [],
+    arrayCategoria: [],
+    arraySubcategoria: [],
+    filtroCategoria: "",
+    filtroSubCategoria: ""
   }),
   mounted() {
     this.get_productos();
+    this.getCategorias();
   },
   methods: {
+    getCategorias() {
+      let me = this;
+      me.arrayProductos = [];
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          me.arrayCategoria = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getSubCategorias() {
+      let me = this;
+      axios
+        .get("api/apiSubCategoria/" + me.filtroCategoria)
+        .then(function(response) {
+          me.arraySubcategoria = response.data.data;
+        });
+    },
     get_productos() {
       let me = this;
       axios.get("api/apiComercianteProductos").then(function(response) {
         me.arrayProductos_n_en_n = response.data.data;
       });
     },
+    limpiar_filtros() {
+      let me = this;
+      me.buscador = "";
+      me.filtroCategoria = "";
+      me.filtroSubCategoria = "";
+      me.buscar_producto();
+    },
     buscar_producto() {
       let me = this;
-      me.arrayProductos = [];
-      let buscador = me.buscador;
-      if (buscador == "") {
-        me.get_productos();
-      } else {
-        axios
-          .get("api/apiProductosConsumidor/" + me.buscador)
-          .then(function(response) {
-            me.arrayProductos = response.data.data;
-          });
-      }
+      me.arrayProductos_n_en_n = [];
+      axios
+        .post("api/apiBuscadorProducto/", {
+          filtro: me.buscador,
+          categoria: me.filtroCategoria,
+          subcategoria: me.filtroSubCategoria
+        })
+        .then(function(response) {
+          me.arrayProductos_n_en_n = response.data.data;
+        });
     },
     abrir_modalProductos() {
       let me = this;
@@ -324,7 +409,6 @@ export default {
                   element => element.id == me.carrito_compras[producto_index].id
                 );
               });
-              console.log(found);
               found.cantidad = 1;
               me.carrito_compras.splice(producto_index, 1);
             }
@@ -351,7 +435,6 @@ export default {
           let horario = {
             user_id: me.id_user
           };
-          console.log(lista);
           axios
             .post("api/apiProductosConsumidor", {
               data_lista: lista,

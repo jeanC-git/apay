@@ -12,6 +12,7 @@
           loading-text="Cargando datos..."
           :footer-props="footerProps"
           no-data-text="No hay productos para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
+          no-results-text="No hay productos para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
         >
           <template v-slot:top>
             <v-container>

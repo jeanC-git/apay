@@ -21,6 +21,9 @@
       loading-text="Cargando datos"
       :search="buscador"
       color="green accent-3"
+      :footer-props="footerProps"
+      no-data-text="No hay consumidores para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
+      no-results-text="No hay consumidores para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
     >
       <template>
         <v-icon small color="green accent-4">mdi-delete</v-icon>
@@ -31,6 +34,12 @@
 <script>
 export default {
   data: () => ({
+    footerProps: {
+      itemsPerPageText: "Resultados por página",
+      pageText: "",
+      itemsPerPageOptions: [5, 10, 15, 20, -1],
+      itemsPerPageAllText: "Todos"
+    },
     buscador: "",
     loading: false,
     headers: [

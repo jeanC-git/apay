@@ -18,9 +18,10 @@ class ApiProductosConsumidor extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        dd($request->all());
+        dd($filtro, $categoria, $subcategoria);
     }
 
     /**
@@ -30,7 +31,7 @@ class ApiProductosConsumidor extends Controller
      */
     public function create()
     {
-       
+
     }
 
     /**
@@ -43,14 +44,14 @@ class ApiProductosConsumidor extends Controller
     {
         $user_id=$request->data_horario['user_id'];
         $id_consumidor=Consumidor::where('id_user',$user_id)->first();
-        
+
         $lista = new Listas();
         $lista->total_lista = '1997';
         $lista->fecha_entrega = '1000-01-01';
         $lista->id_horario = '1';
         $lista->id_consumidor = $id_consumidor->id;
         $saved = $lista->save();
-        $lista_id = $lista->id; 
+        $lista_id = $lista->id;
         $precio;
         foreach ($request->data_lista as $value) {
             $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$value['id_comerciante'])
@@ -71,7 +72,7 @@ class ApiProductosConsumidor extends Controller
         // $notificaciones->tipo = $value['precio'];
         // $notificaciones->usuario_destino = $value['cantidad'];
         // $notificaciones->id_user = $user_id;
-        
+
         return "ok ._.";
     }
 
@@ -98,7 +99,7 @@ class ApiProductosConsumidor extends Controller
         ->orderBy('stock', 'desc')
         ->where('productos.nombre','like','%'.$id.'%')
         ->get();
-        return response()->json(['data' => $categorias]);
+        return response()->json(['data' => $comerciante]);
     }
 
     /**
