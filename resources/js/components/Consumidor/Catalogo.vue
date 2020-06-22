@@ -87,7 +87,7 @@
     >
       <v-card>
         <v-toolbar flat dark color="yellow darken-1" tile max-height="80px">
-           <v-toolbar-title>Mi lista</v-toolbar-title>
+           <v-toolbar-title>Mi lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn
