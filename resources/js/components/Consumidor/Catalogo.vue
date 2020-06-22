@@ -148,7 +148,6 @@
                     >
                       <v-btn
                         icon
-                        style="border:1px solid"
                         @click="modificar_lista(index,'eliminar')"
                       >
                         <v-icon color="green accent-4">mdi-delete</v-icon>
