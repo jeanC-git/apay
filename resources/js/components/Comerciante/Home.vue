@@ -11,7 +11,7 @@
         <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>-->
     </v-toolbar>
-    <v-list>
+    <!-- <v-list>
       <v-list-item v-for="item in items" :key="item.title">
         <v-list-item-icon>
           <v-icon v-if="item.icon" color="yellow">mdi-star</v-icon>
@@ -25,7 +25,7 @@
           <v-img :src="item.avatar"></v-img>
         </v-list-item-avatar>
       </v-list-item>
-    </v-list>
+    </v-list>-->
   </v-card>
 </template>
 

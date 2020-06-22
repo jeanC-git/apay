@@ -158,6 +158,21 @@
 <script>
 export default {
   data: () => ({
+    reglas: {
+      dni: [
+        v => !!v || "Campo requerido",
+        v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+        v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
+      ],
+      nom_ape: [
+        v => !!v || "Campo requerido",
+        v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
+      ],
+      email: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ]
+    },
     buscador: "",
     loading: true,
     modal_nuevo_item: false,
@@ -235,43 +250,82 @@ export default {
     },
     agregarItem() {
       let vue = this;
-
-      axios
-        .post("api/apiComerciante", { data: vue.nuevoItem })
-        .then(response => {
-          vue.modal_nuevo_item = false;
-          vue.nuevoItem = {
-            nombre: "",
-            apellidos: "",
-            email: "",
-            dni: ""
-          };
-          vue.initialize();
-        })
-        .catch(function(error) {
-          // handle error
-          console.log(error);
+      let validar = vue.$refs.formnew.validate();
+      if (validar) {
+        axios
+          .post("api/apiComerciante", { data: vue.nuevoItem })
+          .then(response => {
+            vue.modal_nuevo_item = false;
+            vue.nuevoItem = {
+              nombre: "",
+              apellidos: "",
+              email: "",
+              dni: ""
+            };
+            vue.initialize();
+          })
+          .catch(function(error) {
+            // handle error
+            console.log(error);
+          });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
         });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
+        });
+      }
     },
     editarItem() {
       let vue = this;
-      axios
-        .put("api/apiComerciante/" + vue.editItem.id, {
-          data: vue.editItem
-        })
-        .then(function(response) {
-          vue.modal_edit_item = false;
-          vue.editItem = {
-            nombre: "",
-            apellidos: "",
-            email: "",
-            dni: ""
-          };
-          vue.initialize();
-        })
-        .catch(function(error) {
-          console.log(error);
+      let validar = vue.$refs.formedit.validate();
+      if (validar) {
+        axios
+          .put("api/apiComerciante/" + vue.editItem.id, {
+            data: vue.editItem
+          })
+          .then(function(response) {
+            vue.modal_edit_item = false;
+            vue.editItem = {
+              nombre: "",
+              apellidos: "",
+              email: "",
+              dni: ""
+            };
+            vue.initialize();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
         });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
+        });
+      }
     },
     eliminarItem() {
       let vue = this;

@@ -4,7 +4,7 @@
       Gestor de consumidores
       <v-spacer></v-spacer>
       <v-text-field
-        v-model="search"
+        v-model="buscador"
         append-icon="mdi-magnify"
         label="Buscar consumidor"
         color="green accent-3"
@@ -12,7 +12,6 @@
         hide-details
       ></v-text-field>
     </v-card-title>
-
     <v-data-table
       :headers="headers"
       :items="consumidores"
@@ -23,9 +22,8 @@
       :search="buscador"
       color="green accent-3"
     >
-      <template v-slot:item.actions="{ item }">
-        <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon> -->
-        <v-icon small @click="deleteItem(item)" color="green accent-4">mdi-delete</v-icon>
+      <template>
+        <v-icon small color="green accent-4">mdi-delete</v-icon>
       </template>
     </v-data-table>
   </v-card>

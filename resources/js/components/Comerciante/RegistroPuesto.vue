@@ -78,7 +78,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-              <v-btn block color= "yellow darken-2" type="submit">Aceptar</v-btn>
+            <v-btn block color="yellow darken-2" type="submit">Aceptar</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -100,8 +100,6 @@ export default {
     return {
       text_info: "¡Registra tu puesto dandole click al (+)!",
       tab: null,
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       icons: false,
       centered: false,
       grow: false,
@@ -168,7 +166,7 @@ export default {
       axios
         .get("api/apiCategoria")
         .then(function(response) {
-          console.log(response.data.data);
+          //   console.log(response.data.data);
           me.arrayCategorias = response.data.data;
         })
         .catch(function(error) {
@@ -242,7 +240,6 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
-
 /* .font-sacramento { */
 /* font-family: "Sacramento", cursive; */
 /* font-size: 3rem; */

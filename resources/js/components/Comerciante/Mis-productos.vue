@@ -88,7 +88,7 @@
                 <v-text-field
                   color="green accent-3"
                   v-model="editItem.stock"
-                  :rules="reglasValidacion.stock"
+                  :rules="reglas.stock"
                   :counter="9"
                   label="Stock"
                 ></v-text-field>
@@ -114,7 +114,7 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="6" md="6">
                   <v-select
                     :items="arrayCategorias"
                     label="Categoría"
@@ -123,10 +123,11 @@
                     item-text="nombre"
                     item-value="id"
                     v-model="newItem.category"
+                    :rules="reglas.select"
                     @change="getSubCategorias('crear')"
                   ></v-select>
                 </v-col>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="6" md="6">
                   <v-select
                     :items="arraySubcategoria"
                     label="Sub-Categoría"
@@ -136,9 +137,10 @@
                     color="green accent-3"
                     v-model="newItem.subcategory"
                     @change="getProducto('crear')"
+                    :rules="reglas.select"
                   ></v-select>
                 </v-col>
-                <v-col class="d-flex" cols="12" sm="6">
+                <v-col class="d-flex" cols="12" sm="12" md="12">
                   <v-select
                     :items="arrayProductos"
                     label="Nombre del producto"
@@ -147,31 +149,20 @@
                     outlined
                     color="green accent-3"
                     v-model="newItem.nombre"
+                    :rules="reglas.select"
                     @change="getPrecioXunidad('crear')"
                   ></v-select>
                 </v-col>
+                <hr />
                 <v-col cols="12" sm="12" md="12">
-                  <v-text-field
-                    color="green accent-3"
-                    disabled
-                    v-model="newItem.descripcion"
-                    label="Descripción del producto"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                  <v-text-field
-                    color="green accent-3"
-                    disabled
-                    v-model="newItem.price"
-                    label="Precio"
-                  ></v-text-field>
+                  <p class="h4 text-center" style="font-size:2rem">{{newItem.price}}</p>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                   <v-text-field
                     color="green   accent-3"
                     v-model="newItem.stock"
                     label="Stock"
-                    :rules="reglasValidacion.stock"
+                    :rules="reglas.stock"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -250,39 +241,12 @@ export default {
         id_comerciante: "",
         descripcion: ""
       },
-      reglasValidacion: {
-        dniRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v => v.length <= 8 || "El DNI debe ser no mayor de 8 dígitos"
-        ],
-        celularRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v =>
-            v.length <= 9 ||
-            "El número de celular debe ser no mayor de 9 dígitos"
-        ],
-        puestoRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v =>
-            v.length <= 6 ||
-            "El número del puesto debe ser no mayor de 6 dígitos"
-        ],
-        stringRules: [
-          v => !!v || "Campo requerido",
-          v => /^[A-Z]+$/i.test(v) || "No se permiten números"
-        ],
-        numberRules: [
-          v => !!v || "Campo requerido",
-          v => /^[0-9]+$/i.test(v) || "No se permiten letras"
-        ],
+      reglas: {
         stock: [
           v => !!v || "Campo requerido",
           v => v > 0 || "El stock no puede ser 0 o un valor negativo."
         ],
-        selectRules: [v => !!v || "Debe seleccionar una opción de la lista"]
+        select: [v => !!v || "Debe seleccionar una opción de la lista"]
       }
     };
   },
@@ -301,9 +265,14 @@ export default {
     getCategorias() {
       let me = this;
       me.arrayProductos = [];
-      axios.get("api/apiCategoria").then(function(response) {
-        me.arrayCategorias = response.data.data;
-      });
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          me.arrayCategorias = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     getSubCategorias($tipo) {
       let me = this;
@@ -335,14 +304,16 @@ export default {
           if ($tipo == "edit") {
             me.editItem.descripcion = response.data.data.descripcion;
             me.editItem.price =
-              "S/." +
+              response.data.data.prodNom +
+              " - S/." +
               response.data.data.precio +
               " x " +
               response.data.data.nombre;
           } else {
             me.newItem.descripcion = response.data.data.descripcion;
             me.newItem.price =
-              "S/." +
+              response.data.data.prodNom +
+              " - S/." +
               response.data.data.precio +
               " x " +
               response.data.data.nombre;
@@ -448,7 +419,6 @@ export default {
         });
     },
     editarItem(item) {
-      console.log(item);
       let vue = this;
       vue.editItem.id = item.id;
       vue.editItem.stock = item.stock;

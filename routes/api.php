@@ -17,3 +17,6 @@ Route::apiResource('apiUnidadMedida', 'Api\ApiUnidadMedida');
 Route::apiResource('apiComerciante', 'Api\ApiComerciante');
 Route::apiResource('apiComercianteProductos', 'Api\ApiComercianteProductos');
 Route::apiResource('apiProductosConsumidor', 'Api\ApiProductosConsumidor');
+
+
+Route::apiResource('apiNotificaciones', 'Api\ApiNotificaciones');

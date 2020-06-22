@@ -4,7 +4,6 @@
     <catalago></catalago>
     @elseif(@Auth::user()->hasRole('comerciante'))
     <home-comerciante></home-comerciante>
-
     @elseif(@Auth::user()->hasRole('administrador'))
         <consumidores></consumidores>
     @endif
