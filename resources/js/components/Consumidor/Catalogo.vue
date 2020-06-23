@@ -164,19 +164,16 @@
                 color="green accent-4"
                 style="font-size:1.3rem"
                 text
-                class="pt-3"
                 v-text="'#Productos: '+ sumarCantTotal"
               ></v-btn>
               <v-btn
                 color="green accent-4"
                 style="font-size:1.3rem"
                 text
-                class="pt-3"
-                v-text="'Total: S/. '+ sumarCantTotal"
+                v-text="'Total: S/. '+ sumartTotales"
               ></v-btn>
             </v-col>
           </v-row>
-
           <v-list three-line subheader>
             <v-list style="overflow:auto" min-width="600px">
               <v-list-item-group color="primary">
