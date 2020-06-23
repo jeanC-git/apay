@@ -30,7 +30,7 @@ class ApiBuscadorProducto extends Controller
     }
 
     /**
-     * MOSTRAR PRODUCTOS POR FILTROS : CATEGORIA, SUBCATEGORIA Y FILTRO
+     * MOSTRAR PRODUCTOS FILTRANDO POR : CATEGORIA, SUBCATEGORIA Y FILTRO
      *
      */
     public function store(Request $request)
@@ -41,7 +41,8 @@ class ApiBuscadorProducto extends Controller
                     ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')
                     ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
                     ->join('subcategorias', 'subcategorias.id', '=', 'productos.id_subcategoria')
-                    ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria');
+                    ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
+                    ->join('puestos', 'puestos.id', '=', 'comerciante_productos.id_puesto');
         if ((int)$request->categoria > 0) {
             $query->where('categorias.id','=', (int) $request->categoria);
         }
@@ -57,7 +58,8 @@ class ApiBuscadorProducto extends Controller
             'productos.nombre as nombre','productos.precio as precio','productos.id as id_producto','productos.descripcion','productos.foto as foto',
             'unidades_medidas.nombre as unidad',
             'subcategorias.id as id_subcategoria','subcategorias.nombre as subcategoria',
-            'categorias.id as id_categoria','categorias.nombre as categoria'])
+            'categorias.id as id_categoria','categorias.nombre as categoria',
+            'puestos.nombre as nombre_puesto','puestos.numero as numero_puesto'])
             ->orderBy('stock', 'desc')
             ->get();
 

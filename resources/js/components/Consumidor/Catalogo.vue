@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-container v-if="arrayProductos_n_en_n.length>0">
-      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-5 pr-3">
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-1 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
           <v-col
             cols="12"
@@ -144,20 +144,39 @@
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
-      scrollable
     >
       <v-card>
-        <v-toolbar flat dark color="primary" tile max-height="80px">
+        <v-toolbar dark color="green accent-3" dense>
           <v-btn icon dark @click="dialog_productos = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="guardar_data()" v-text="'Guardar'"></v-btn>
+            <v-btn depressed color="green accent-4" @click="guardar_data()" v-text="'Enviar'"></v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
+          <v-row>
+            <v-col cols="12" xs="12" sm="12" md="6" lg="6"></v-col>
+            <v-col cols="12" xs="12" sm="12" md="6" lg="6" class="text-right">
+              <v-btn
+                color="green accent-4"
+                style="font-size:1.3rem"
+                text
+                class="pt-3"
+                v-text="'#Productos: '+ sumarCantTotal"
+              ></v-btn>
+              <v-btn
+                color="green accent-4"
+                style="font-size:1.3rem"
+                text
+                class="pt-3"
+                v-text="'Total: S/. '+ sumarCantTotal"
+              ></v-btn>
+            </v-col>
+          </v-row>
+
           <v-list three-line subheader>
             <v-list style="overflow:auto" min-width="600px">
               <v-list-item-group color="primary">
@@ -287,8 +306,31 @@ export default {
     arrayCategoria: [],
     arraySubcategoria: [],
     filtroCategoria: "",
-    filtroSubCategoria: ""
+    filtroSubCategoria: "",
+    total_carrito: 0,
+    total_cant_carrito: 0
   }),
+  computed: {
+    sumartTotales() {
+      let me = this;
+      me.total_carrito = 0;
+      me.carrito_compras.forEach(producto => {
+        let totalxproducto = producto.cantidad * producto.precio;
+        // TOTAL SOLES DE LA LISTA
+        me.total_carrito = me.total_carrito + totalxproducto;
+      });
+      return Math.round(me.total_carrito * 100) / 100;
+    },
+    sumarCantTotal() {
+      let me = this;
+      me.total_cant_carrito = 0;
+      me.carrito_compras.forEach(producto => {
+        // TOTAL CANTIDAD PRODUCTOS DE LA LISTA
+        me.total_cant_carrito++;
+      });
+      return me.total_cant_carrito;
+    }
+  },
   mounted() {
     this.get_productos();
     this.getCategorias();

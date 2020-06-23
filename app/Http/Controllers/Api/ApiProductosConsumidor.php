@@ -65,7 +65,7 @@ class ApiProductosConsumidor extends Controller
             $detalle_lista->id_lista = $lista_id;
             $saved = $detalle_lista->save();
             $id_usuario_comerciante=Comerciante::find($value['id_comerciante']);
-            broadcast( new ListaRecibida('Se ha agregado un producto a la lista',$id_usuario_comerciante->id_user));
+            broadcast( new ListaRecibida('Acaba de recibir un nuevo pedido',$id_usuario_comerciante->id_user));
         }
         // $notificaciones = new Notificaciones();
         // $notificaciones->mensaje = '1';
