@@ -51,6 +51,7 @@ class ApiUnidadMedida extends Controller
                                 ->join('productos', 'unidades_medidas.id', '=', 'productos.id_und_medida')
                                 ->where('productos.id',$id)
                                 ->first();
+                                
         return response()->json(['data' => $unidades]);
     }
 

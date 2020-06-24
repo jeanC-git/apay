@@ -150,6 +150,7 @@
                     color="green accent-3"
                     v-model="newItem.nombre"
                     :rules="reglas.select"
+                    item-disabled="disabled"
                     @change="getPrecioXunidad('crear')"
                   ></v-select>
                 </v-col>
@@ -288,7 +289,7 @@ export default {
     getProducto($tipo) {
       let me = this;
       let $id_subcategoria =
-        $tipo == "edit" ? me.editItem.subcategory : me.newItem.subcategory;
+      $tipo == "edit" ? me.editItem.subcategory : me.newItem.subcategory+':'+me.id_puesto;
       me.resetear_variable("edit_subcategoria");
       axios.get("api/apiProducto/" + $id_subcategoria).then(function(response) {
         me.arrayProductos = response.data.data;
@@ -312,7 +313,7 @@ export default {
           } else {
             me.newItem.descripcion = response.data.data.descripcion;
             me.newItem.price =
-              response.data.data.prodNom +
+              response.data.data.descripcion +
               " - S/." +
               response.data.data.precio +
               " x " +

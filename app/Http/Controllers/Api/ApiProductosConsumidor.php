@@ -11,6 +11,7 @@ use App\Consumidor;
 use App\Notificaciones;
 use App\Events\ListaRecibida;
 use  App\Comerciante;
+use App\Horario;
 class ApiProductosConsumidor extends Controller
 {
     /**
@@ -57,6 +58,10 @@ class ApiProductosConsumidor extends Controller
                 $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$arrayxcomerciante[$i]['id_comerciante'])
                 ->where('id_producto',$arrayxcomerciante[$i]['id_producto'])
                 ->first();
+                //GUARDAR_STOCK
+                $id_comerciante_producto->stock=$id_comerciante_producto->stock-$arrayxcomerciante[$i]['cantidad'];
+                $id_comerciante_producto->save();
+                //GUARDAR DETALLE LISTA
                 $detalle_lista = new Detalle_listas();
                 $detalle_lista->estado = '1';
                 $detalle_lista->precio = $arrayxcomerciante[$i]['precio'];
@@ -76,8 +81,10 @@ class ApiProductosConsumidor extends Controller
                 }
             }
         }
-        
-
+        //DISMUNIR CANTIDAD DE PERSONAS
+        $horario= Horario::find($request->info['hora']);
+        $horario->cupo=$horario->cupo-1;
+        $horario->save();
         return "ok ._.";
     }
 

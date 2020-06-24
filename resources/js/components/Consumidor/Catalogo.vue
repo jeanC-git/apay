@@ -341,9 +341,17 @@ export default {
       }
       if (me.carrito_compras.length > b + 1) {
         if (a != me.carrito_compras[b + 1].numero_puesto) {
+          if(a == me.carrito_compras[b - 1].numero_puesto){
+            return false;
+          }else{
+            return true;
+          }
           return true;
-        } else if (a != me.carrito_compras[b - 1].numero_puesto) {
+        } else if(a != me.carrito_compras[b - 1].numero_puesto) {
           return true;
+        }else{
+          console.log(a+'ningun if');
+          return false;
         }
       } else {
         if (a != me.carrito_compras[b - 1].numero_puesto) {
@@ -413,24 +421,10 @@ export default {
       if (found == undefined) {
         me.carrito_compras.push(producto);
         me.ordenar_carrito();
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: false,
-          onOpen: toast => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title:
-            "<p style='font-family: Arial, sans-serif'>Se ha añadido el producto a la lista</p>"
-        });
+        me.mostrar_Toast('El producto se ha añadido al carrito');
       } else {
         found.cantidad++;
+        me.mostrar_Toast('Se ha agregado una unidad al producto');
       }
     },
     modificar_lista(producto_index, tipo) {
@@ -519,17 +513,20 @@ export default {
             "<p style='font-family: Arial, sans-serif'>No tiene productos agregado al carrito</p>"
         });
       }
-    },ordenar_carrito(){
+    },
+    ordenar_carrito(){
       let me =this;
       me.carrito_compras.sort(function(a,b){
         return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
       });
-    },cambiar_horarioXfecha(){
+    },
+    cambiar_horarioXfecha(){
       let me=this;
       axios.get('api/apiHorario/'+me.date).then(function(response){
         me.arrayHorario=response.data.data;
       })
-    },enviar_lista(){
+    },
+    enviar_lista(){
       let me=this;
       Swal.fire({
           title:
@@ -555,28 +552,33 @@ export default {
               data_lista: lista,
               info: info
             }).then(function(response) {
+              me.dialog_horario=false;
               me.carrito_compras = [];
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: false,
-                onOpen: toast => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                }
-              });
-              Toast.fire({
-                icon: "success",
-                title:
-                  "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
-              });
+              me.mostrar_Toast('Se ha enviado la lista correctamente');
             });
           }
         });
-    },groupBy(xs, f) {
+    },
+    groupBy(xs, f) {
       return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
+    },
+    mostrar_Toast(mensaje){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title:
+          "<p style='font-family: Arial, sans-serif'>"+mensaje+"</p>"
+      });
     }
   }
 };
