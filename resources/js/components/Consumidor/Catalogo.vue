@@ -185,8 +185,8 @@
                 </tr>
               </thead>
               <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
-                <td colspan="6" v-if="comprobar_puesto(producto_lista.numero_puesto,index)">
-                  {{producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto}}
+                <td colspan="6" v-if="comprobar_puesto(producto_lista.numero_puesto,index)" class="txt_puesto">
+                  {{producto_lista.nombre_puesto+' #'+ producto_lista.numero_puesto}}
                 </td>
                 <tr >
                   <td class="text-center">
@@ -484,3 +484,10 @@ export default {
   }
 };
 </script>
+<style>
+.txt_puesto{
+  font-weight: bold;
+  font-size: 1.5rem !important;
+  text-decoration-line: underline;
+}
+</style>
