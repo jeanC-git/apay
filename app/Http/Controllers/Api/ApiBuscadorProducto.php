@@ -68,7 +68,7 @@ class ApiBuscadorProducto extends Controller
             $producto->cantidad = 1;
         }
         // AGRUPAR DE n EN n CON chunk(n)
-        $groups = $collectProductos->chunk(4);
+        $groups = $collectProductos->chunk(3);
 
         return response()->json(['data' => $groups->toArray()]);
     }
