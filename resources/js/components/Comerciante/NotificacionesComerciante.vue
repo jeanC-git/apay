@@ -18,6 +18,7 @@
       :expand-on-hover="false"
       absolute
       height="100vh"
+      width="300"
     >
       <v-list dense nav class="py-0">
         <v-list-item two-line class="px-0">
@@ -67,11 +68,40 @@ export default {
     Echo.private("lista-recibida." + this.id_user).listen(
       "ListaRecibida",
       e => {
+        this.emitirToast(
+          "top-end",
+          2500,
+          "success",
+          `<p style='font-family: Arial, sans-serif'>${e.mensaje}</p>`
+        );
         this.getNotificaciones();
       }
     );
   },
   methods: {
+    emitirToast(position, timer, icon, title) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer,
+        timerProgressBar: false,
+        showClass: {
+          popup: "animate__animated animate__fadeInRight"
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutRight"
+        },
+        onOpen: toast => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: icon,
+        title: title
+      });
+    },
     getNotificaciones() {
       let vue = this;
       axios

@@ -34,19 +34,7 @@ class PostTableSeeder extends Seeder
                 'id_user' => $user->id,
             ]);
             $user->assignRole('consumidor');
-
         }
-        $user = User::create([
-            'name' => $faker->firstname,
-            'lastname'=>$faker->lastName,
-            'dni' => '123456780',
-
-            'password'=>Hash::make('12345678'),
-            'email' => 'admin@admin.com',
-            'dni'   =>rand ( 1000000, 9999999 )
-        ]);
-        $user->assignRole('administrador');
-
         foreach (range(1,10) as $index) {
             $user = User::create([
                 'name' => $faker->firstname,
@@ -62,5 +50,41 @@ class PostTableSeeder extends Seeder
             ]);
             $user->assignRole('comerciante');
         }
+
+        // USUARIO ADMINISTRADOR
+        $user = User::create([
+            'name' => $faker->firstname,
+            'lastname'=>$faker->lastName,
+            'dni' => '123456780',
+
+            'password'=>Hash::make('12345678'),
+            'email' => 'admin@admin.com',
+            'dni'   =>rand ( 1000000, 9999999 )
+        ]);
+        $user->assignRole('administrador');
+
+        // USUARIO COMERCIANTE
+        $user_comerciante = User::create([
+            'name' => $faker->firstname,
+            'lastname'=>$faker->lastName,
+            'dni' => '123456780',
+
+            'password'=>Hash::make('12345678'),
+            'email' => 'comerciante@comerciante.com',
+            'dni'   =>rand ( 1000000, 9999999 )
+        ]);
+        $user_comerciante->assignRole('comerciante');
+
+        // USUARIO CONSUMIDOR
+        $user_consumidor = User::create([
+            'name' => $faker->firstname,
+            'lastname'=>$faker->lastName,
+            'dni' => '123456780',
+
+            'password'=>Hash::make('12345678'),
+            'email' => 'consumidor@consumidor.com',
+            'dni'   =>rand ( 1000000, 9999999 )
+        ]);
+        $user_consumidor->assignRole('consumidor');
     }
 }
