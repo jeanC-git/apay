@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width:100% !important">
     <v-app-bar color="white" absolute style="position: sticky; top: 10%;" height="auto">
       <v-row>
         <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1">
@@ -61,7 +61,7 @@
     </v-app-bar>
 
     <v-container v-if="arrayProductos_n_en_n.length>0">
-      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-1 pr-3">
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
           <v-col
             cols="12"
