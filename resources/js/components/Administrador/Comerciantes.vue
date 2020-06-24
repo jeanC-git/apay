@@ -33,6 +33,7 @@
                   color="green accent-3"
                   append-icon="mdi-alphabetical"
                   v-model="nuevoItem.name"
+                  :rules="reglas.nom_ape"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -41,6 +42,7 @@
                   color="green accent-3"
                   append-icon="mdi-alphabetical"
                   v-model="nuevoItem.lastname"
+                  :rules="reglas.nom_ape"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -49,6 +51,7 @@
                   color="green accent-3"
                   append-icon="mdi-numeric"
                   v-model="nuevoItem.dni"
+                  :rules="reglas.dni"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -57,6 +60,7 @@
                   color="green accent-3"
                   append-icon="mdi-email"
                   v-model="nuevoItem.email"
+                  :rules="reglas.email"
                   required
                 ></v-text-field>
               </v-card-text>

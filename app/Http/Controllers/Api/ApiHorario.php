@@ -23,6 +23,7 @@ class ApiHorario extends Controller
         $fecha_fin = Carbon::now()->endOfWeek();
         $horario;
         if($date!=='domingo'){
+            // $fecha_ini = $fecha_ini->addDay();
             $horario = Horario::whereBetween('fecha_inicio',[$fecha_ini,$fecha_fin])->get();
         }else{
             $fecha_ini = $fecha_ini->addWeek();

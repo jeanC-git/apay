@@ -145,15 +145,17 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dark color="green accent-3" dense>
-          <v-btn icon dark @click="dialog_productos = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+        <v-toolbar flat dark color="yellow darken-1" tile max-height="80px">
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn depressed color="green accent-4" @click="guardar_data()" v-text="'Enviar'"></v-btn>
+            <v-btn dark
+                  text
+                  color="grey darken-3"  @click="guardar_data()" v-text="'Enviar'"></v-btn>
           </v-toolbar-items>
+          <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-toolbar>
         <v-card-text>
           <v-row>
@@ -178,10 +180,10 @@
               <thead>
                 <tr>
                   <th class="text-center">#</th>
-                  <th class="text-center"  style="min-width:180px;">Productos</th>
-                  <th class="text-center"  style="min-width:160px;">Precio</th>
-                  <th class="text-center"  style="min-width:169px;">Cantidad</th>
-                  <th class="text-center"  style="min-width:120px;">Costo</th>
+                  <th class="text-center" style="min-width:180px;">Productos</th>
+                  <th class="text-center" style="min-width:160px;">Precio</th>
+                  <th class="text-center" style="min-width:169px;">Cantidad</th>
+                  <th class="text-center" style="min-width:120px;">Costo</th>
                 </tr>
               </thead>
               <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
@@ -190,17 +192,19 @@
                 </td>
                 <tr >
                   <td class="text-center">
-                    <v-btn
-                      icon
-                      style="border:1px solid"
-                      @click="modificar_lista(index,'eliminar')"
-                    >
+                    <v-btn icon style="border:1px solid" @click="modificar_lista(index,'eliminar')">
                       <v-icon color="red">mdi-delete</v-icon>
                     </v-btn>
                   </td>
-                  <td class="text-center" v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></td>
-                  <td class="text-center" v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"></td>
-                  <td class=" d-flex justify-center align-center"  >
+                  <td
+                    class="text-center"
+                    v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"
+                  ></td>
+                  <td
+                    class="text-center"
+                    v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"
+                  ></td>
+                  <td class="d-flex justify-center align-center">
                     <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
                       <v-icon color="red">mdi-minus</v-icon>
                     </v-btn>
@@ -216,8 +220,10 @@
                       <v-icon color="green">mdi-plus</v-icon>
                     </v-btn>
                   </td>
-                  <td class="text-center" v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100">
-                  </td>
+                  <td
+                    class="text-center"
+                    v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100"
+                  ></td>
                 </tr>
               </tbody>
             </template>
@@ -311,21 +317,21 @@ export default {
     this.getCategorias();
   },
   methods: {
-    comprobar_puesto(a,b){
-      let me=this;
-      if(b==0){
+    comprobar_puesto(a, b) {
+      let me = this;
+      if (b == 0) {
         return true;
       }
-      if(me.carrito_compras.length> (b+1) ){
-        if(a!=me.carrito_compras[b+1].numero_puesto){
+      if (me.carrito_compras.length > b + 1) {
+        if (a != me.carrito_compras[b + 1].numero_puesto) {
           return true;
-        }else if(a!=me.carrito_compras[b-1].numero_puesto){
+        } else if (a != me.carrito_compras[b - 1].numero_puesto) {
           return true;
         }
-      }else{
-        if(a!=me.carrito_compras[b-1].numero_puesto){
+      } else {
+        if (a != me.carrito_compras[b - 1].numero_puesto) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }
