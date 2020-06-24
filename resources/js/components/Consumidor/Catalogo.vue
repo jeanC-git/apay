@@ -65,7 +65,7 @@
           <v-col
             cols="12"
             xs="12"
-            sm="6"
+            sm="4"
             md="4"
             lg="4"
             v-for="producto in array"
@@ -178,29 +178,32 @@
               <thead>
                 <tr>
                   <th class="text-center">#</th>
-                  <th class="text-center"  style="min-width:180px;">Productos</th>
-                  <th class="text-center"  style="min-width:160px;">Precio</th>
-                  <th class="text-center"  style="min-width:169px;">Cantidad</th>
-                  <th class="text-center"  style="min-width:120px;">Costo</th>
+                  <th class="text-center" style="min-width:180px;">Productos</th>
+                  <th class="text-center" style="min-width:160px;">Precio</th>
+                  <th class="text-center" style="min-width:169px;">Cantidad</th>
+                  <th class="text-center" style="min-width:120px;">Costo</th>
                 </tr>
               </thead>
               <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
-                <td colspan="6" v-if="comprobar_puesto(producto_lista.numero_puesto,index)">
-                  {{producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto}}
-                </td>
-                <tr >
+                <td
+                  colspan="6"
+                  v-if="comprobar_puesto(producto_lista.numero_puesto,index)"
+                >{{producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto}}</td>
+                <tr>
                   <td class="text-center">
-                    <v-btn
-                      icon
-                      style="border:1px solid"
-                      @click="modificar_lista(index,'eliminar')"
-                    >
+                    <v-btn icon style="border:1px solid" @click="modificar_lista(index,'eliminar')">
                       <v-icon color="red">mdi-delete</v-icon>
                     </v-btn>
                   </td>
-                  <td class="text-center" v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></td>
-                  <td class="text-center" v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"></td>
-                  <td class=" d-flex justify-center align-center"  >
+                  <td
+                    class="text-center"
+                    v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"
+                  ></td>
+                  <td
+                    class="text-center"
+                    v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"
+                  ></td>
+                  <td class="d-flex justify-center align-center">
                     <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
                       <v-icon color="red">mdi-minus</v-icon>
                     </v-btn>
@@ -216,8 +219,10 @@
                       <v-icon color="green">mdi-plus</v-icon>
                     </v-btn>
                   </td>
-                  <td class="text-center" v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100">
-                  </td>
+                  <td
+                    class="text-center"
+                    v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100"
+                  ></td>
                 </tr>
               </tbody>
             </template>
@@ -245,7 +250,7 @@
             </v-row>
           </v-container>
         </v-form>
-    </v-dialog> -->
+    </v-dialog>-->
   </div>
 </template>
 <script>
@@ -253,7 +258,7 @@ export default {
   props: ["id_user"],
   data: () => ({
     dialog_productos: false,
-    dialog_horario:true,
+    dialog_horario: true,
     buscador: "",
     arrayProductos_n_en_n: [],
     carrito_compras: [],
@@ -290,21 +295,21 @@ export default {
     this.getCategorias();
   },
   methods: {
-    comprobar_puesto(a,b){
-      let me=this;
-      if(b==0){
+    comprobar_puesto(a, b) {
+      let me = this;
+      if (b == 0) {
         return true;
       }
-      if(me.carrito_compras.length> (b+1) ){
-        if(a!=me.carrito_compras[b+1].numero_puesto){
+      if (me.carrito_compras.length > b + 1) {
+        if (a != me.carrito_compras[b + 1].numero_puesto) {
           return true;
-        }else if(a!=me.carrito_compras[b-1].numero_puesto){
+        } else if (a != me.carrito_compras[b - 1].numero_puesto) {
           return true;
         }
-      }else{
-        if(a!=me.carrito_compras[b-1].numero_puesto){
+      } else {
+        if (a != me.carrito_compras[b - 1].numero_puesto) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }
@@ -475,9 +480,10 @@ export default {
             });
         }
       });
-    },ordenar_carrito(){
-      let me =this;
-      me.carrito_compras.sort(function(a,b){
+    },
+    ordenar_carrito() {
+      let me = this;
+      me.carrito_compras.sort(function(a, b) {
         return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
       });
     }

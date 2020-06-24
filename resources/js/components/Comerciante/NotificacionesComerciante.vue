@@ -1,12 +1,11 @@
 <template>
   <div>
-    <v-btn icon class="mr-2" @click="drawer = !drawer">
+    <v-btn icon class="mr-2" @click="drawer = !drawer; getNotificaciones()">
       <v-badge
         color="yellow accent-4"
         :content="notificaciones.length >0 ? notificaciones.length : '0' "
         :value="notificaciones.length >0 ? notificaciones.length : '0' "
         transition="slide-x-transition"
-        dark="true"
       >
         <v-icon>mdi-bell</v-icon>
       </v-badge>
