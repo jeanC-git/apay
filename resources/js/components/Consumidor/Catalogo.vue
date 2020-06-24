@@ -59,7 +59,6 @@
         </v-col>
       </v-row>
     </v-app-bar>
-
     <v-container v-if="arrayProductos_n_en_n.length>0">
       <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
@@ -174,122 +173,79 @@
               ></v-btn>
             </v-col>
           </v-row>
-          <v-list three-line subheader>
-            <v-list style="overflow:auto" min-width="600px">
-              <v-list-item-group color="primary">
-                <v-row container>
-                  <v-col cols="12" sm="1" xs="1" md="1" class="d-flex justify-center align-center">
-                    <v-subheader>#</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="1" xs="1" md="1" class="d-flex justify-center align-center">
-                    <v-subheader>Puesto</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="3" xs="3" md="3" class="d-flex justify-center align-center">
-                    <v-subheader>Productos</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="3" xs="3" md="3" class="d-flex justify-center align-center">
-                    <v-subheader>Precio</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="2" xs="2" md="2" class="d-flex justify-center align-center">
-                    <v-subheader>Cantidad</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="2" xs="2" md="2" class="d-flex justify-center align-center">
-                    <v-subheader>Costo</v-subheader>
-                  </v-col>
-                </v-row>
-                <v-list-item
-                  v-for="(producto_lista,index) in carrito_compras"
-                  :key="producto_lista.id"
-                  style="max-height:20px;padding:0"
-                >
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="1"
-                      xs="1"
-                      md="1"
-                      class="d-flex justify-center align-center"
+          <v-simple-table height="100%">
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center"  style="min-width:180px;">Productos</th>
+                  <th class="text-center"  style="min-width:160px;">Precio</th>
+                  <th class="text-center"  style="min-width:169px;">Cantidad</th>
+                  <th class="text-center"  style="min-width:120px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
+                <td colspan="6" v-if="comprobar_puesto(producto_lista.numero_puesto,index)">
+                  {{producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto}}
+                </td>
+                <tr >
+                  <td class="text-center">
+                    <v-btn
+                      icon
+                      style="border:1px solid"
+                      @click="modificar_lista(index,'eliminar')"
                     >
-                      <v-btn
-                        icon
-                        style="border:1px solid"
-                        @click="modificar_lista(index,'eliminar')"
-                      >
-                        <v-icon color="red">mdi-delete</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="1"
-                      xs="1"
-                      md="1"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div
-                        v-text="producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto"
-                      ></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="3"
-                      xs="3"
-                      md="3"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="3"
-                      xs="3"
-                      md="3"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      xs="2"
-                      md="2"
-                      class="d-flex justify-center align-center"
-                    >
-                      <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
-                        <v-icon color="red">mdi-minus</v-icon>
-                      </v-btn>
-                      <div style="max-width:60px;">
-                        <v-text-field
-                          style="text-align:center"
-                          @keyup="modificar_lista(index,'mayor')"
-                          v-model="producto_lista.cantidad"
-                          class="mx-3"
-                        ></v-text-field>
-                      </div>
-                      <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
-                        <v-icon color="green">mdi-plus</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      xs="2"
-                      md="2"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div
-                        v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100"
-                      ></div>
-                    </v-col>
-                  </v-row>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-list>
-          <v-divider></v-divider>
+                      <v-icon color="red">mdi-delete</v-icon>
+                    </v-btn>
+                  </td>
+                  <td class="text-center" v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></td>
+                  <td class="text-center" v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"></td>
+                  <td class=" d-flex justify-center align-center"  >
+                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
+                      <v-icon color="red">mdi-minus</v-icon>
+                    </v-btn>
+                    <div style="max-width:100px;">
+                      <v-text-field
+                        style="text-align:center"
+                        @keyup="modificar_lista(index,'mayor')"
+                        v-model="producto_lista.cantidad"
+                        class="mx-3"
+                      ></v-text-field>
+                    </div>
+                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
+                      <v-icon color="green">mdi-plus</v-icon>
+                    </v-btn>
+                  </td>
+                  <td class="text-center" v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100">
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
         </v-card-text>
-        <div style="flex: 1 1 auto;"></div>
       </v-card>
     </v-dialog>
+    <!-- MODAL DE HORARIO -->
+    <!-- <v-dialog v-model="dialog_horario"
+      fullscreen
+      hide-overlay
+      transition="dialog-bottom-transition" >
+        <v-form >
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+                md="4"
+              >
+                <v-text-field
+                  label="First name"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
+    </v-dialog> -->
   </div>
 </template>
 <script>
@@ -297,6 +253,7 @@ export default {
   props: ["id_user"],
   data: () => ({
     dialog_productos: false,
+    dialog_horario:true,
     buscador: "",
     arrayProductos_n_en_n: [],
     carrito_compras: [],
@@ -333,6 +290,25 @@ export default {
     this.getCategorias();
   },
   methods: {
+    comprobar_puesto(a,b){
+      let me=this;
+      if(b==0){
+        return true;
+      }
+      if(me.carrito_compras.length> (b+1) ){
+        if(a!=me.carrito_compras[b+1].numero_puesto){
+          return true;
+        }else if(a!=me.carrito_compras[b-1].numero_puesto){
+          return true;
+        }
+      }else{
+        if(a!=me.carrito_compras[b-1].numero_puesto){
+          return true;
+        }else{
+          return false;
+        }
+      }
+    },
     getCategorias() {
       let me = this;
       me.arrayProductos = [];
@@ -392,6 +368,7 @@ export default {
 
       if (found == undefined) {
         me.carrito_compras.push(producto);
+        me.ordenar_carrito();
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -443,11 +420,9 @@ export default {
           }).then(result => {
             if (result.value) {
               let found;
-              me.arrayProductos_n_en_n.forEach(element => {
-                found = element.find(
-                  element => element.id == me.carrito_compras[producto_index].id
-                );
-              });
+              found = me.carrito_compras.find(
+                element => element.id == me.carrito_compras[producto_index].id
+              );
               found.cantidad = 1;
               me.carrito_compras.splice(producto_index, 1);
             }
@@ -499,6 +474,11 @@ export default {
               });
             });
         }
+      });
+    },ordenar_carrito(){
+      let me =this;
+      me.carrito_compras.sort(function(a,b){
+        return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
       });
     }
   }
