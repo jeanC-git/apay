@@ -25,7 +25,7 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-card-title>
-            <v-form ref="form" @submit.prevent="agregarItem()">
+            <v-form ref="formnew" @submit.prevent="agregarItem()">
               <v-card-text>
                 <v-text-field
                   class="mt-2"
