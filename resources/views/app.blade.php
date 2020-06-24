@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Apay-Inicio</title>
+    <title>Apay</title>
     <script src="{{ URL::asset('js/app.js') }}" defer></script>
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
@@ -33,7 +33,7 @@
     <v-app id="app">
     <template>
         <v-row>
-            <v-col cols="12" class="mt-0 pa-0">        
+            <v-col cols="12" class="mt-0 pa-0">
                 <v-img src="images/Slides/slide1.png" responsive></v-img>
             </v-col>
         </v-row>
@@ -65,18 +65,18 @@
                         <v-row>
                             <v-col cols="12">
                             <v-divider class="green accent-2"></v-divider>
-                            <h1 class="text-center text-lg title ma-3" style="color-text:#263238">Que productos puedes encontrar en este mercado 😍</h1>                   
+                            <h1 class="text-center text-lg title ma-3" style="color-text:#263238">Que productos puedes encontrar en este mercado 😍</h1>
                             </v-col>
                             <v-col cols="12" md="6">
                             <p class="text-center font-weight-bold text-md body-1" color="blue-grey darken-3">
-                                En este mercado encontraras los vegetales entre frutas ya sean secos o frescos. Las verduras chinas o 
+                                En este mercado encontraras los vegetales entre frutas ya sean secos o frescos. Las verduras chinas o
                                 criollas. Además, entre lacteos y derivados como queso, yogurth. También, puedes encontrar la sección de carnes
                                 con pollos en trozos o enteros; res molido, trozo o lomitos; cerdo ya sea en chuletas. Y la sección de mariscos y pescados.
                                 Por otra parte, encontraras la sección de pastelería para tus postres dulces o salados y entre golosinas.
                             </p>
                             </v-col>
                             <v-col cols="12" md="6">
-                            <p class="text-center font-weight-bold text-md"> 
+                            <p class="text-center font-weight-bold text-md">
                                 🍉 FRUTAS <br>
                                 🍆 VERDURAS <br>
                                 🍖 CARNES POLLO/RES/CERDO <br>
@@ -126,11 +126,11 @@
                                                                 <v-text-field color="green accent-3" id="password"
                                                                     label="Contraseña" name="password"
                                                                     :type="showPassword ? 'text' :'password'"
-                                                                    prepend-icon="mdi-lock" :append-icon="showPassword ? 
+                                                                    prepend-icon="mdi-lock" :append-icon="showPassword ?
                                                                     'mdi-eye' :'mdi-eye-off'" @click:append="showPassword =!showPassword">
                                                                 </v-text-field>
                                                             </v-card-text>
-                                                            <v-card-actions>                                                           
+                                                            <v-card-actions>
                                                                 <v-row>
                                                                     <v-col cols="12" sm="12" md="12">
                                                                         <v-btn block type="submit" color="yellow darken-2">
@@ -145,7 +145,7 @@
                                                                         </v-btn>
                                                                     </v-col>
                                                                     <v-col cols="12" sm="12" md="8">
-                                                                        <v-btn block small text color="red">¿Olvidaste tu contraseña?</v-btn>           
+                                                                        <v-btn block small text color="red">¿Olvidaste tu contraseña?</v-btn>
                                                                     </v-col>
                                                                 </v-row>
                                                             </v-card-actions>
@@ -238,8 +238,8 @@
                                     </v-content>
                                 </v-app>
                             </v-col>
-                        </v-row> 
-                    </template>                                
+                        </v-row>
+                    </template>
                 </v-content>
                 <v-row justify="center">
                     <v-dialog v-model="dialog" max-width="60%">
@@ -303,7 +303,7 @@
         <pie></pie>
     </template>
     </v-app>
-    
+
 </body>
 <script>
     function mostrar_navbar() {

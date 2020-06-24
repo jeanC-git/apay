@@ -50,3 +50,7 @@ Route::get('/inicio-sesion', function () {
     return view('inicio-sesion');
 });
 Route::post('/subida_excel','SubidaMasiva@subir');
+
+//RUTA CREACION DE HORARIOS DE RECOJO DE LA SEMANA
+Route::get('/generar_horarios','HorariosSemana@crearHorarioSemana');
+
