@@ -60,7 +60,7 @@
       </v-row>
     </v-app-bar>
     <v-container v-if="arrayProductos_n_en_n.length>0">
-      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-1 pr-3">
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
           <v-col
             cols="12"
