@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Horario;
+use Carbon\Carbon;
 class ApiHorario extends Controller
 {
     /**
@@ -12,10 +13,24 @@ class ApiHorario extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct (){
+        Carbon::setLocale('es');
+    }
     public function index()
     {
-        $hora = Horario::get();
-        dd($hora);
+        $date = Carbon::now()->isoFormat('dddd');
+        $fecha_ini = Carbon::now()->startOfWeek();
+        $fecha_fin = Carbon::now()->endOfWeek();
+        $horario;
+        if($date!=='domingo'){
+            // $fecha_ini = $fecha_ini->addDay();
+            $horario = Horario::whereBetween('fecha_inicio',[$fecha_ini,$fecha_fin])->get();
+        }else{
+            $fecha_ini = $fecha_ini->addWeek();
+            $fecha_fin = $fecha_fin->addWeek();
+            $horario = Horario::whereBetween('fecha_inicio',[$fecha_ini,$fecha_fin])->get();
+        }
+        return json_encode(array("data"=>$horario,"fecha_ini"=>$fecha_ini->format('Y-m-d'),"fecha_fin"=>$fecha_fin->format('Y-m-d')));
     }
 
     /**

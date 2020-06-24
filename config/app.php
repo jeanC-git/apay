@@ -66,9 +66,7 @@ return [
     | ahead and set this to a sensible default for you out of the box.
     |
     */
-
     'timezone' => 'America/Bogota',
-
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

@@ -145,15 +145,17 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dark color="green accent-3" dense>
-          <v-btn icon dark @click="dialog_productos = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+        <v-toolbar flat dark color="yellow darken-1" tile max-height="80px">
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn depressed color="green accent-4" @click="guardar_data()" v-text="'Enviar'"></v-btn>
+            <v-btn dark
+                  text
+                  color="grey darken-3"  @click="guardar_data()" v-text="'Enviar'"></v-btn>
           </v-toolbar-items>
+          <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-toolbar>
         <v-card-text>
           <v-row>
@@ -185,11 +187,10 @@
                 </tr>
               </thead>
               <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
-                <td
-                  colspan="6"
-                  v-if="comprobar_puesto(producto_lista.numero_puesto,index)"
-                >{{producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto}}</td>
-                <tr>
+                <td colspan="6" v-if="comprobar_puesto(producto_lista.numero_puesto,index)" class="txt_puesto">
+                  {{producto_lista.nombre_puesto+' #'+ producto_lista.numero_puesto}}
+                </td>
+                <tr >
                   <td class="text-center">
                     <v-btn icon style="border:1px solid" @click="modificar_lista(index,'eliminar')">
                       <v-icon color="red">mdi-delete</v-icon>
@@ -231,39 +232,60 @@
       </v-card>
     </v-dialog>
     <!-- MODAL DE HORARIO -->
-    <!-- <v-dialog v-model="dialog_horario"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition" >
+    <v-dialog v-model="dialog_horario"
+      >
+      <v-card>
         <v-form >
           <v-container>
             <v-row>
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  label="First name"
-                  required
-                ></v-text-field>
+              <v-col cols="12" sm="6" md="4">
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal_calendar"
+                  :return-value.sync="date"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Picker in dialog"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" scrollable locale="es-419" :min="fecha_ini_calendar" :max="fecha_fin_calendar">
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal = false">Cancelar</v-btn>
+                    <v-btn text color="primary" @click="$refs.dialog.save(date)">Elegir</v-btn>
+                  </v-date-picker>
+                </v-dialog>
               </v-col>
             </v-row>
           </v-container>
         </v-form>
-    </v-dialog>-->
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 export default {
   props: ["id_user"],
   data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    modal_calendar: false,
+    fecha_ini_calendar:'',
+    fecha_fin_calendar:'',
     dialog_productos: false,
-    dialog_horario: true,
+    dialog_horario:false,
     buscador: "",
     arrayProductos_n_en_n: [],
     carrito_compras: [],
     arrayCategoria: [],
     arraySubcategoria: [],
+    arrayHorario:[],
     filtroCategoria: "",
     filtroSubCategoria: "",
     total_carrito: 0,
@@ -436,57 +458,93 @@ export default {
       }
     },
     guardar_data() {
-      Swal.fire({
-        title:
-          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText:
-          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
-        cancelButtonText:
-          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
-      }).then(result => {
-        if (result.value) {
+      if(this.carrito_compras.length>0){
+        Swal.fire({
+          title:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+          cancelButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+        }).then(result => {
           let me = this;
-          let lista = me.carrito_compras;
-          let horario = {
-            user_id: me.id_user
-          };
-          axios
-            .post("api/apiProductosConsumidor", {
-              data_lista: lista,
-              data_horario: horario
-            })
-            .then(function(response) {
-              me.carrito_compras = [];
-              const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: false,
-                onOpen: toast => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                }
-              });
-              Toast.fire({
-                icon: "success",
-                title:
-                  "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
-              });
-            });
-        }
-      });
-    },
-    ordenar_carrito() {
-      let me = this;
-      me.carrito_compras.sort(function(a, b) {
+          me.dialog_horario=true;
+          axios.get("api/apiHorario")
+        .then(function(response) {
+          me.arrayHorario = response.data.data;
+          me.fecha_ini_calendar=response.data.fecha_ini;
+          me.fecha_fin_calendar=response.data.fecha_fin;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+          // if (result.value) {
+          //   
+          //   let lista = me.carrito_compras;
+          //   let horario = {
+          //     user_id: me.id_user
+          //   };
+          //   axios
+          //     .post("api/apiProductosConsumidor", {
+          //       data_lista: lista,
+          //       data_horario: horario
+          //     })
+          //     .then(function(response) {
+          //       me.carrito_compras = [];
+          //       const Toast = Swal.mixin({
+          //         toast: true,
+          //         position: "top-end",
+          //         showConfirmButton: false,
+          //         timer: 2000,
+          //         timerProgressBar: false,
+          //         onOpen: toast => {
+          //           toast.addEventListener("mouseenter", Swal.stopTimer);
+          //           toast.addEventListener("mouseleave", Swal.resumeTimer);
+          //         }
+          //       });
+          //       Toast.fire({
+          //         icon: "success",
+          //         title:
+          //           "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
+          //       });
+          //     });
+          // }
+        });
+      }else{
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>No tiene productos agregado al carrito</p>"
+        });
+      }
+    },ordenar_carrito(){
+      let me =this;
+      me.carrito_compras.sort(function(a,b){
         return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
       });
     }
   }
 };
 </script>
+<style>
+.txt_puesto{
+  font-weight: bold;
+  font-size: 1.5rem !important;
+  text-decoration-line: underline;
+}
+</style>
