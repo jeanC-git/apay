@@ -163,14 +163,12 @@
                 color="green accent-4"
                 style="font-size:1.3rem"
                 text
-                class="pt-3"
                 v-text="'#Productos: '+ sumarCantTotal"
               ></v-btn>
               <v-btn
                 color="green accent-4"
                 style="font-size:1.3rem"
                 text
-                class="pt-3"
                 v-text="'Total: S/. '+ sumartTotales"
               ></v-btn>
             </v-col>
