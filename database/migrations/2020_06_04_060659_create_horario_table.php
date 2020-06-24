@@ -15,13 +15,12 @@ class CreateHorarioTable extends Migration
     {
         Schema::create('horario', function (Blueprint $table) {
             $table->id();
-            $table->date('hora_inicio');
-            $table->date('hora_fin');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
             $table->bigInteger('cupo');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

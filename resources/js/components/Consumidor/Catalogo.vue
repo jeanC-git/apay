@@ -151,7 +151,7 @@
           <v-toolbar-items>
             <v-btn dark
                   text
-                  color="grey darken-3"  @click="guardar_data()" v-text="'Enviar'"></v-btn>
+                  color="grey darken-3"  @click="get_horario()" v-text="'Enviar'"></v-btn>
           </v-toolbar-items>
           <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
             <v-icon>mdi-close</v-icon>
@@ -235,7 +235,8 @@
     <v-dialog v-model="dialog_horario"
       >
       <v-card>
-        <v-form >
+        <v-card-title v-text="'Escoja el horario de recojo: '"></v-card-title>
+        <v-form @submit.prevent="enviar_lista()">
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="4">
@@ -249,7 +250,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
-                      label="Picker in dialog"
+                      label="Fecha de recojo"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
@@ -258,13 +259,28 @@
                   </template>
                   <v-date-picker v-model="date" scrollable locale="es-419" :min="fecha_ini_calendar" :max="fecha_fin_calendar">
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal = false">Cancelar</v-btn>
-                    <v-btn text color="primary" @click="$refs.dialog.save(date)">Elegir</v-btn>
+                    <v-btn text color="primary" @click="modal_calendar = false">Cancelar</v-btn>
+                    <v-btn text color="primary" @click="$refs.dialog.save(date),cambiar_horarioXfecha()">Elegir</v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-col>
+              <v-col class="d-flex" cols="12" sm="6">
+                <v-select
+                  :items="arrayHorario"
+                  item-text="hora_inicio"
+                  item-value="id"
+                  label="Hora de recojo"
+                  outlined
+                  v-model="hora_recojo"
+                  item-disabled="disabled"
+                  required
+                ></v-select>
+              </v-col>
             </v-row>
           </v-container>
+          <v-card-actions>
+            <v-btn type="submit" block color="secondary" dark>Enviar lista</v-btn>
+          </v-card-actions>
         </v-form>
       </v-card>
     </v-dialog>
@@ -274,7 +290,8 @@
 export default {
   props: ["id_user"],
   data: () => ({
-    date: new Date().toISOString().substr(0, 10),
+    date: '',
+    hora_recojo:'',
     modal_calendar: false,
     fecha_ini_calendar:'',
     fecha_fin_calendar:'',
@@ -457,7 +474,7 @@ export default {
           break;
       }
     },
-    guardar_data() {
+    get_horario() {
       if(this.carrito_compras.length>0){
         Swal.fire({
           title:
@@ -471,48 +488,18 @@ export default {
           cancelButtonText:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
         }).then(result => {
-          let me = this;
-          me.dialog_horario=true;
-          axios.get("api/apiHorario")
-        .then(function(response) {
-          me.arrayHorario = response.data.data;
-          me.fecha_ini_calendar=response.data.fecha_ini;
-          me.fecha_fin_calendar=response.data.fecha_fin;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-          // if (result.value) {
-          //   
-          //   let lista = me.carrito_compras;
-          //   let horario = {
-          //     user_id: me.id_user
-          //   };
-          //   axios
-          //     .post("api/apiProductosConsumidor", {
-          //       data_lista: lista,
-          //       data_horario: horario
-          //     })
-          //     .then(function(response) {
-          //       me.carrito_compras = [];
-          //       const Toast = Swal.mixin({
-          //         toast: true,
-          //         position: "top-end",
-          //         showConfirmButton: false,
-          //         timer: 2000,
-          //         timerProgressBar: false,
-          //         onOpen: toast => {
-          //           toast.addEventListener("mouseenter", Swal.stopTimer);
-          //           toast.addEventListener("mouseleave", Swal.resumeTimer);
-          //         }
-          //       });
-          //       Toast.fire({
-          //         icon: "success",
-          //         title:
-          //           "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
-          //       });
-          //     });
-          // }
+          if (result.value) {
+            axios.get("api/apiHorario").then(function(response) {
+              me.arrayHorario = response.data.data;
+              me.date=response.data.fecha_ini;
+              me.fecha_ini_calendar=response.data.fecha_ini;
+              me.fecha_fin_calendar=response.data.fecha_fin;
+            }).catch(function(error) {
+              console.log(error);
+            });
+            let me = this;
+            me.dialog_horario=true;
+          }
         });
       }else{
         const Toast = Swal.mixin({
@@ -537,6 +524,59 @@ export default {
       me.carrito_compras.sort(function(a,b){
         return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
       });
+    },cambiar_horarioXfecha(){
+      let me=this;
+      axios.get('api/apiHorario/'+me.date).then(function(response){
+        me.arrayHorario=response.data.data;
+      })
+    },enviar_lista(){
+      let me=this;
+      Swal.fire({
+          title:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+          cancelButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+        }).then(result => {
+          if (result.value) {
+            let lista = me.groupBy(me.carrito_compras, (c) => c.id_comerciante);
+            console.log(lista);
+            let info = {
+              user_id: me.id_user,
+              hora: me.hora_recojo,
+              total_lista : me.total_carrito
+            };
+            axios.post("api/apiProductosConsumidor", {
+              data_lista: lista,
+              info: info
+            }).then(function(response) {
+              me.carrito_compras = [];
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: false,
+                onOpen: toast => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title:
+                  "<p style='font-family: Arial, sans-serif'>Se ha enviado la lista correctamente</p>"
+              });
+            });
+          }
+        });
+    },groupBy(xs, f) {
+      return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
     }
   }
 };
