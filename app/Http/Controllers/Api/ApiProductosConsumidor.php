@@ -45,7 +45,6 @@ class ApiProductosConsumidor extends Controller
     {
         $user_id=$request->info['user_id'];
         $id_consumidor=Consumidor::where('id_user',$user_id)->first();
-
         $lista = new Listas();
         $lista->total_lista = $request->info['total_lista'];;
         $lista->id_horario = $request->info['hora'];
@@ -54,7 +53,7 @@ class ApiProductosConsumidor extends Controller
         $lista_id = $lista->id;
         $precio;
         foreach ($request->data_lista as $arrayxcomerciante) {
-            for ($i=0; $i <count($arrayxcomerciante) ; $i++) { 
+            for ($i=0; $i <count($arrayxcomerciante) ; $i++) {
                 $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$arrayxcomerciante[$i]['id_comerciante'])
                 ->where('id_producto',$arrayxcomerciante[$i]['id_producto'])
                 ->first();
