@@ -232,9 +232,9 @@ export default {
       },
       editItem: {
         id: "",
-        nombre: "",
-        category: "",
-        subcategory: "",
+        nombre: 0,
+        category: 0,
+        subcategory: 0,
         price: "",
         stock: "",
         image: "",
@@ -278,7 +278,7 @@ export default {
     getSubCategorias($tipo) {
       let me = this;
       let $id_categoria =
-        $tipo == "edit" ? me.editItem.category : me.newItem.category;
+      $tipo == "edit" ? me.editItem.category : me.newItem.category;
       me.resetear_variable("edit_categoria");
       axios
         .get("api/apiSubCategoria/" + $id_categoria)
@@ -421,26 +421,25 @@ export default {
     },
     editarItem(item) {
       let vue = this;
+      
       vue.editItem.id = item.id;
       vue.editItem.stock = item.stock;
-      vue.editItem.category = item.id_categoria;
-      vue.editItem.subcategory = item.id_subcategoria;
-      vue.editItem.nombre = item.id_producto;
+      vue.editItem.category = parseInt(item.id_categoria);
       vue.editItem.price = "S/." + item.precio + " x " + item.unidad;
       vue.editItem.id_puesto = vue.id_puesto;
       vue.editItem.id_comerciante = vue.id_comerciante;
       vue.editItem.descripcion = item.descripcion;
-      axios
-        .get("api/apiSubCategoria/" + vue.editItem.category)
+      axios.get("api/apiSubCategoria/" + item.id_categoria)
         .then(function(response) {
           vue.arraySubcategoria = response.data.data;
+          vue.editItem.subcategory = parseInt(item.id_subcategoria);
         });
-      axios
-        .get("api/apiProducto/" + vue.editItem.subcategory)
-        .then(function(response) {
-          vue.arrayProductos = response.data.data;
-        });
-      vue.dialog_editar = true;
+      axios.get("api/apiProducto/" + item.id_subcategoria)
+      .then(function(response) {
+        vue.arrayProductos = response.data.data;
+        vue.editItem.nombre = parseInt(item.id_producto);
+      });
+        vue.dialog_editar = true;
     },
     abrir_modal_crear() {
       let me = this;
