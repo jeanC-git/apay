@@ -249,6 +249,7 @@
                         @keyup="modificar_lista(index,'mayor')"
                         v-model="producto_lista.cantidad"
                         class="mx-3"
+                        :rules="reglas.cantidad_producto"
                       ></v-text-field>
                     </div>
                     <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
@@ -351,7 +352,14 @@ export default {
     filtroCategoria: "",
     filtroSubCategoria: "",
     total_carrito: 0,
-    total_cant_carrito: 0
+    total_cant_carrito: 0,
+    reglas: {
+      cantidad_producto: [
+        v => !!v || "La cantidad es necesaria.",
+        v => v > 0 || "La cantidad debe ser mayor a 0.",
+        v => v < 10 || "No puedes comprar más de 10 unidades de este producto."
+      ]
+    }
   }),
   computed: {
     sumartTotales() {
