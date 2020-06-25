@@ -1,8 +1,8 @@
 <template>
   <div style="width:100% !important">
     <v-app-bar color="white" absolute style="position: sticky; top: 10%;" height="auto">
-      <v-row>
-        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1">
+      <v-row id="id_filtro">
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1" id="buscador_cat">
           <v-select
             :items="arrayCategoria"
             v-model="filtroCategoria"
@@ -15,7 +15,7 @@
             color="#69F0AE"
           ></v-select>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1">
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1" id="buscador_sub">
           <v-select
             :items="arraySubcategoria"
             v-model="filtroSubCategoria"
@@ -29,7 +29,7 @@
             no-data-text="Elija una categoría"
           ></v-select>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="4" lg="4" class="pt-1">
+        <v-col cols="12" xs="12" sm="12" md="4" lg="4" class="pt-1" id="buscador_prod">
           <v-text-field
             class="pt-1"
             v-model="buscador"
@@ -41,12 +41,28 @@
             color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="1" lg="1" class="text-center pt-3 pb-0">
+        <v-col
+          cols="12"
+          xs="12"
+          sm="12"
+          md="1"
+          lg="1"
+          class="text-center pt-3 pb-0"
+          id="buscardor_borrar"
+        >
           <v-btn small outlined rounded color="red" @click="limpiar_filtros()" class="text-center">
             <v-icon class="mr-1">mdi-close</v-icon>Filtros
           </v-btn>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="1" lg="1" class="text-center pt-1 pb-0">
+        <v-col
+          cols="12"
+          xs="6"
+          sm="12"
+          md="1"
+          lg="1"
+          class="text-center pt-1 pb-0"
+          id="buscador_carrito"
+        >
           <v-btn icon color="green accent-3" @click="abrir_modalProductos" class="pt-1">
             <v-badge
               color="deep-purple accent-4"
@@ -55,6 +71,25 @@
             >
               <v-icon>mdi-cart</v-icon>
             </v-badge>
+          </v-btn>
+        </v-col>
+        <v-col
+          cols="12"
+          xs="6"
+          sm="12"
+          md="1"
+          lg="1"
+          class="text-center pt-1 pb-0"
+          id="btn_icon_desaparecer"
+        >
+          <v-btn
+            icon
+            color="green accent-3"
+            @click="cerrar_filtros()"
+            class="pt-1"
+            v-model="mostrar_filtros"
+          >
+            <v-icon id="icon_desaparecer">mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -301,6 +336,7 @@ export default {
   data: () => ({
     date: "",
     hora_recojo: "",
+    mostrar_filtros: true,
     modal_calendar: false,
     fecha_ini_calendar: "",
     fecha_fin_calendar: "",
@@ -595,6 +631,40 @@ export default {
         icon: "success",
         title: "<p style='font-family: Arial, sans-serif'>" + mensaje + "</p>"
       });
+    },
+    cerrar_filtros() {
+      let buscador_cat = document.getElementById("buscador_cat");
+      let buscador_sub = document.getElementById("buscador_sub");
+      let buscador_prod = document.getElementById("buscador_prod");
+      let buscardor_borrar = document.getElementById("buscardor_borrar");
+      let icon_desaparecer = document.getElementById("icon_desaparecer");
+      let buscador_carrito = document.getElementById("buscador_carrito");
+      let btn_icon_desaparecer = document.getElementById(
+        "btn_icon_desaparecer"
+      );
+      if (this.mostrar_filtros) {
+        buscador_cat.classList.add("buscador_producto");
+        buscador_sub.classList.add("buscador_producto");
+        buscador_prod.classList.add("buscador_producto");
+        buscardor_borrar.classList.add("buscador_producto");
+        icon_desaparecer.classList.add("icon_desaparecer");
+        buscador_carrito.classList.remove("col-sm-12");
+        buscador_carrito.classList.add("col-sm-6");
+        btn_icon_desaparecer.classList.remove("col-sm-12");
+        btn_icon_desaparecer.classList.add("col-sm-6");
+        this.mostrar_filtros = false;
+      } else {
+        buscador_cat.classList.remove("buscador_producto");
+        buscador_sub.classList.remove("buscador_producto");
+        buscador_prod.classList.remove("buscador_producto");
+        buscardor_borrar.classList.remove("buscador_producto");
+        icon_desaparecer.classList.remove("icon_desaparecer");
+        buscador_carrito.classList.remove("col-sm-6");
+        buscador_carrito.classList.add("col-sm-12");
+        btn_icon_desaparecer.classList.remove("col-sm-6");
+        btn_icon_desaparecer.classList.add("col-sm-12");
+        this.mostrar_filtros = true;
+      }
     }
   }
 };
@@ -604,5 +674,22 @@ export default {
   font-weight: bold;
   font-size: 1.5rem !important;
   text-decoration-line: underline;
+}
+.buscador_producto {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+.icon_desaparecer {
+  rotate: 180deg;
+}
+#btn_icon_desaparecer {
+  display: none;
+}
+@media all and (min-width: 0px) and (max-width: 959px) {
+  #btn_icon_desaparecer {
+    display: initial;
+  }
 }
 </style>
