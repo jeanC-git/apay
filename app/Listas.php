@@ -9,6 +9,6 @@ class Listas extends Model
     protected $table = 'listas';
 
     protected $fillable = [
-        'id', 'total_lista', 'fecha_entrega','id_horario','id_consumidor','created_at', 'updated_at'
+        'id', 'total_lista','id_horario','id_consumidor','created_at', 'updated_at'
     ];
 }

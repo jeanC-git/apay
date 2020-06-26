@@ -48,8 +48,7 @@ class ApiNotificaciones extends Controller
      */
     public function show($id)
     {
-        $notificaciones = Notificaciones::find($id);
-        broadcast( new ListaRecibida('hola', $id) );
+        $notificaciones = Notificaciones::where('user_destino', $id)->get();
         return response()->json(['data' => $notificaciones]);
     }
 

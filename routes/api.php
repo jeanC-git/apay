@@ -17,6 +17,8 @@ Route::apiResource('apiUnidadMedida', 'Api\ApiUnidadMedida');
 Route::apiResource('apiComerciante', 'Api\ApiComerciante');
 Route::apiResource('apiComercianteProductos', 'Api\ApiComercianteProductos');
 Route::apiResource('apiProductosConsumidor', 'Api\ApiProductosConsumidor');
+Route::apiResource('apiBuscadorProducto', 'Api\ApiBuscadorProducto');
+Route::apiResource('apiHorario', 'Api\ApiHorario');
 
 
 Route::apiResource('apiNotificaciones', 'Api\ApiNotificaciones');

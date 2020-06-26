@@ -36,7 +36,7 @@ class ApiComercianteProductos extends Controller
             $producto->cantidad = 1;
         }
         // AGRUPAR DE 3 EN 3 CON chunk(3)
-        $groups = $collectProductos->chunk(4);
+        $groups = $collectProductos->chunk(3);
         return response()->json(['data' => $groups->toArray()]);
     }
 

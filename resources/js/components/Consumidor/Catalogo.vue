@@ -1,37 +1,89 @@
 <template>
-  <div height="100%" width="100%">
-    <v-app-bar color="#ffff" absolute height="auto" dense>
-      <v-row>
-        <v-col cols="12" xs="12" sm="10" md="4">
-          <p class="h1">Lleva lo que necesites</p>
+  <div style="width:100% !important">
+    <v-app-bar color="white" absolute style="position: sticky; top: 10%;" height="auto">
+      <v-row id="id_filtro">
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1" id="buscador_cat">
+          <v-select
+            :items="arrayCategoria"
+            v-model="filtroCategoria"
+            @change="getSubCategorias(), buscar_producto()"
+            item-text="nombre"
+            item-value="id"
+            label="Categoria"
+            hide-details
+            class="pt-1"
+            color="#69F0AE"
+          ></v-select>
         </v-col>
-        <v-col cols="12" xs="6" sm="8" md="6" dark fab fixed right>
+        <v-col cols="12" xs="12" sm="12" md="3" lg="3" class="pt-1" id="buscador_sub">
+          <v-select
+            :items="arraySubcategoria"
+            v-model="filtroSubCategoria"
+            @change="buscar_producto()"
+            item-text="nombre"
+            item-value="id"
+            label="Subcategoria"
+            hide-details
+            class="pt-1"
+            color="#69F0AE"
+            no-data-text="Elija una categoría"
+          ></v-select>
+        </v-col>
+        <v-col cols="12" xs="12" sm="12" md="2" lg="2" class="pt-1" id="buscador_prod">
           <v-text-field
+            class="pt-1"
             v-model="buscador"
             append-icon="mdi-magnify"
             label="Busca tu producto"
             single-line
             hide-details
             v-on:keyup="buscar_producto()"
+            color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" xs="6" sm="4" md="2" class="d-flex justify-end">
-          <v-btn icon color="green accent-3" @click="abrir_modalProductos">
-            <v-icon>mdi-cart</v-icon>
+        <v-col cols="12" xs="12" sm="12" md="2" lg="1"
+          class="text-center pt-3 pb-0"
+          id="buscardor_borrar"
+        >
+          <v-btn small outlined rounded color="yellow darken-4" @click="limpiar_filtros()" class="text-center">
+            <v-icon class="mr-1">mdi-close</v-icon>Filtros
+          </v-btn>
+          <v-spacer></v-spacer>
+        </v-col>
+        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
+          class="text-center pt-1 pb-0"
+          id="buscador_carrito"
+        >
+          <v-btn icon color="green accent-3" @click="abrir_modalProductos" class="pt-1">
+            <v-badge
+              color="grey darken-3"
+              :content="carrito_compras.length >0 ? carrito_compras.length : '0' "
+              transition="slide-x-transition"
+            >
+              <v-icon>mdi-cart</v-icon>
+            </v-badge>
+          </v-btn>
+        </v-col>
+        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
+          class="text-center pt-1 pb-0"
+          id="btn_icon_desaparecer"
+        >
+          <v-btn
+            icon
+            color="green accent-3"
+            @click="cerrar_filtros()"
+            class="pt-1"
+            v-model="mostrar_filtros"
+          >
+            <v-icon id="icon_desaparecer">mdi-chevron-double-up</v-icon>
           </v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
-
-    <v-container class="mt-5">
-      <v-card :elevation="'0'" color="white" class="mt-5 pl-3 pt-2">
-        <v-row v-for="(array, index) in arrayProductos_3_en_3" :key="index">
-          <v-col
-            cols="12"
-            xs="12"
-            sm="6"
-            md="4"
-            lg="4"
+    <v-container v-if="arrayProductos_n_en_n.length>0">
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
+        <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
+          <v-col cols="12" xs="12" sm="4" md="4" lg="4"
             v-for="producto in array"
             :key="producto.id"
           >
@@ -77,190 +129,317 @@
         </v-row>
       </v-card>
     </v-container>
+    <v-container v-else>
+      <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-0 pr-3">
+        <v-row>
+          <v-col
+            cols="12"
+            xs="12"
+            sm="12"
+            md="12"
+            lg="12"
+            style="display:flex; justify-content:center;"
+          >
+            <v-card class="text-center" style="padding-top: 10%" height="70vh" width="81vw">
+              <v-card-text>
+                <p
+                  class="text-center"
+                  style="font-size: 1.5rem"
+                >No hay productos disponibles, verifique sus filtros.</p>
+                <v-icon x-large>mdi-emoticon-sad</v-icon>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-container>
     <!-- MODAL LISTA DE PRODUCTOS -->
     <v-dialog
       v-model="dialog_productos"
       fullscreen
       hide-overlay
       transition="dialog-bottom-transition"
-      scrollable
     >
       <v-card>
         <v-toolbar flat dark color="yellow darken-1" tile max-height="80px">
-           <v-toolbar-title>Mi lista de compras</v-toolbar-title>
+          <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn
-                  dark
-                  text
-                  color="grey darken-3"
-                  @click="dialog_productos = false"
-                >
-                  Procesar
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn
-                color="green accent-3"
-                icon
-                dark
-                @click="dialog_productos = false"
-              >
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
+            <v-btn dark text color="grey darken-3" @click="get_horario()" v-text="'Enviar'"></v-btn>
           </v-toolbar-items>
+          <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </v-toolbar>
         <v-card-text>
-          <v-list three-line subheader>
-            <v-list style="overflow:auto" min-width="600px">
-              <v-list-item-group color="primary">
-                <v-row container>
-                  <v-col cols="12" sm="1" xs="1" md="1" class="d-flex justify-center align-center">
-                    <v-subheader>#</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="1" xs="1" md="1" class="d-flex justify-center align-center">
-                    <v-subheader>Puesto</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="3" xs="3" md="3" class="d-flex justify-center align-center">
-                    <v-subheader>Productos</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="3" xs="3" md="3" class="d-flex justify-center align-center">
-                    <v-subheader>Precio</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="2" xs="2" md="2" class="d-flex justify-center align-center">
-                    <v-subheader>Cantidad</v-subheader>
-                  </v-col>
-                  <v-col cols="12" sm="2" xs="2" md="2" class="d-flex justify-center align-center">
-                    <v-subheader>Costo</v-subheader>
-                  </v-col>
-                </v-row>
-                <v-list-item
-                  v-for="(producto_lista,index) in carrito_compras"
-                  :key="producto_lista.id"
-                  style="max-height:20px;padding:0"
-                >
-                  <v-row>
-                    <v-col
-                      cols="12"
-                      sm="1"
-                      xs="1"
-                      md="1"
-                      class="d-flex justify-center align-center"
-                    >
-                      <v-btn
-                        icon
-                        @click="modificar_lista(index,'eliminar')"
-                      >
-                        <v-icon color="green accent-4">mdi-delete</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="1"
-                      xs="1"
-                      md="1"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div
-                        v-text="producto_lista.nombre_puesto+' - '+ producto_lista.numero_puesto"
-                      ></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="3"
-                      xs="3"
-                      md="3"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="3"
-                      xs="3"
-                      md="3"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"></div>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      xs="2"
-                      md="2"
-                      class="d-flex justify-center align-center"
-                    >
-                      <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
-                        <v-icon color="red">mdi-minus</v-icon>
-                      </v-btn>
-                      <div style="max-width:60px;">
-                        <v-text-field
-                          style="text-align:center"
-                          @keyup="modificar_lista(index,'mayor')"
-                          v-model="producto_lista.cantidad"
-                          class="mx-3"
-                        ></v-text-field>
-                      </div>
-                      <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
-                        <v-icon color="green">mdi-plus</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="2"
-                      xs="2"
-                      md="2"
-                      class="d-flex justify-center align-center"
-                    >
-                      <div
-                        v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100"
-                      ></div>
-                    </v-col>
-                  </v-row>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-list>
-          <v-divider></v-divider>
+          <v-row>
+            <v-col cols="12" xs="12" sm="12" md="6" lg="6"></v-col>
+            <v-col cols="12" xs="12" sm="12" md="6" lg="6" class="text-right">
+              <v-btn
+                color="green accent-4"
+                style="font-size:1.3rem"
+                text
+                v-text="'#Productos: '+ sumarCantTotal"
+              ></v-btn>
+              <v-btn
+                color="green accent-4"
+                style="font-size:1.3rem"
+                text
+                v-text="'Total: S/. '+ sumartTotales"
+              ></v-btn>
+            </v-col>
+          </v-row>
+          <v-simple-table height="100%">
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center" style="min-width:180px;">Productos</th>
+                  <th class="text-center" style="min-width:160px;">Precio</th>
+                  <th class="text-center" style="min-width:169px;">Cantidad</th>
+                  <th class="text-center" style="min-width:120px;">Costo</th>
+                </tr>
+              </thead>
+              <tbody v-for="(producto_lista,index) in carrito_compras" :key="producto_lista.id">
+                <td
+                  colspan="6"
+                  v-if="comprobar_puesto(producto_lista.numero_puesto,index)"
+                  class="txt_puesto"
+                >{{producto_lista.nombre_puesto+' #'+ producto_lista.numero_puesto}}</td>
+                <tr>
+                  <td class="text-center">
+                    <v-btn icon style="border:1px solid" @click="modificar_lista(index,'eliminar')">
+                      <v-icon color="red">mdi-delete</v-icon>
+                    </v-btn>
+                  </td>
+                  <td
+                    class="text-center"
+                    v-text="producto_lista.nombre+' ('+producto_lista.descripcion+')'"
+                  ></td>
+                  <td
+                    class="text-center"
+                    v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"
+                  ></td>
+                  <td class="d-flex justify-center align-center">
+                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
+                      <v-icon color="red">mdi-minus</v-icon>
+                    </v-btn>
+                    <div style="max-width:100px;">
+                      <v-text-field
+                        style="text-align:center"
+                        @keyup="modificar_lista(index,'mayor')"
+                        v-model="producto_lista.cantidad"
+                        class="mx-3"
+                        :rules="reglas.cantidad_producto"
+                      ></v-text-field>
+                    </div>
+                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
+                      <v-icon color="green">mdi-plus</v-icon>
+                    </v-btn>
+                  </td>
+                  <td
+                    class="text-center"
+                    v-text="'S/.'+Math.round(producto_lista.precio*producto_lista.cantidad * 100) / 100"
+                  ></td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
         </v-card-text>
-        <div style="flex: 1 1 auto;"></div>
+      </v-card>
+    </v-dialog>
+    <!-- MODAL DE HORARIO -->
+    <v-dialog v-model="dialog_horario">
+      <v-card>
+        <v-card-title v-text="'Escoja el horario de recojo: '"></v-card-title>
+        <v-form @submit.prevent="enviar_lista()">
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal_calendar"
+                  :return-value.sync="date"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Fecha de recojo"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    scrollable
+                    locale="es-419"
+                    :min="fecha_ini_calendar"
+                    :max="fecha_fin_calendar"
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal_calendar = false">Cancelar</v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.dialog.save(date),cambiar_horarioXfecha()"
+                    >Elegir</v-btn>
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col class="d-flex" cols="12" sm="6">
+                <v-select
+                  :items="arrayHorario"
+                  item-text="hora_inicio"
+                  item-value="id"
+                  label="Hora de recojo"
+                  outlined
+                  v-model="hora_recojo"
+                  item-disabled="disabled"
+                  required
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-card-actions>
+            <v-btn type="submit" block color="secondary" dark>Enviar lista</v-btn>
+          </v-card-actions>
+        </v-form>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <script>
 export default {
-  props: {
-      ventana_lista: false,
-  },
+  props: ["id_user"],
   data: () => ({
+    date: "",
+    hora_recojo: "",
+    mostrar_filtros: true,
+    modal_calendar: false,
+    fecha_ini_calendar: "",
+    fecha_fin_calendar: "",
     dialog_productos: false,
-    arrayProductos_3_en_3: [],
+    dialog_horario: false,
     buscador: "",
-    carrito_compras: []
+    arrayProductos_n_en_n: [],
+    carrito_compras: [],
+    arrayCategoria: [],
+    arraySubcategoria: [],
+    arrayHorario: [],
+    filtroCategoria: "",
+    filtroSubCategoria: "",
+    total_carrito: 0,
+    total_cant_carrito: 0,
+    reglas: {
+      cantidad_producto: [
+        v => !!v || "La cantidad es necesaria.",
+        v => v > 0 || "La cantidad debe ser mayor a 0.",
+        v => v < 10 || "No puedes comprar más de 10 unidades de este producto."
+      ]
+    }
   }),
+  computed: {
+    sumartTotales() {
+      let me = this;
+      me.total_carrito = 0;
+      me.carrito_compras.forEach(producto => {
+        let totalxproducto = producto.cantidad * producto.precio;
+        // TOTAL SOLES DE LA LISTA
+        me.total_carrito = me.total_carrito + totalxproducto;
+      });
+      return Math.round(me.total_carrito * 100) / 100;
+    },
+    sumarCantTotal() {
+      let me = this;
+      me.total_cant_carrito = 0;
+      me.carrito_compras.forEach(producto => {
+        // TOTAL CANTIDAD PRODUCTOS DE LA LISTA
+        me.total_cant_carrito++;
+      });
+      return me.total_cant_carrito;
+    }
+  },
   mounted() {
     this.get_productos();
+    this.getCategorias();
   },
   methods: {
+    comprobar_puesto(a, b) {
+      let me = this;
+      if (b == 0) {
+        return true;
+      }
+      if (me.carrito_compras.length > b + 1) {
+        if (a != me.carrito_compras[b + 1].numero_puesto) {
+          if (a == me.carrito_compras[b - 1].numero_puesto) {
+            return false;
+          } else {
+            return true;
+          }
+          return true;
+        } else if (a != me.carrito_compras[b - 1].numero_puesto) {
+          return true;
+        } else {
+          console.log(a + "ningun if");
+          return false;
+        }
+      } else {
+        if (a != me.carrito_compras[b - 1].numero_puesto) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    getCategorias() {
+      let me = this;
+      me.arrayProductos = [];
+      axios
+        .get("api/apiCategoria")
+        .then(function(response) {
+          me.arrayCategoria = response.data.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getSubCategorias() {
+      let me = this;
+      axios
+        .get("api/apiSubCategoria/" + me.filtroCategoria)
+        .then(function(response) {
+          me.arraySubcategoria = response.data.data;
+        });
+    },
     get_productos() {
       let me = this;
       axios.get("api/apiComercianteProductos").then(function(response) {
-        me.arrayProductos_3_en_3 = response.data.data;
+        me.arrayProductos_n_en_n = response.data.data;
       });
+    },
+    limpiar_filtros() {
+      let me = this;
+      me.buscador = "";
+      me.filtroCategoria = "";
+      me.filtroSubCategoria = "";
+      me.buscar_producto();
     },
     buscar_producto() {
       let me = this;
-      me.arrayProductos = [];
-      let buscador = me.buscador;
-      if (buscador == "") {
-        me.get_productos();
-      } else {
-        axios
-          .get("api/apiProductosConsumidor/" + me.buscador)
-          .then(function(response) {
-            me.arrayProductos = response.data.data;
-          });
-      }
+      me.arrayProductos_n_en_n = [];
+      axios
+        .post("api/apiBuscadorProducto", {
+          filtro: me.buscador,
+          categoria: me.filtroCategoria,
+          subcategoria: me.filtroSubCategoria
+        })
+        .then(function(response) {
+          me.arrayProductos_n_en_n = response.data.data;
+        });
     },
     abrir_modalProductos() {
       let me = this;
@@ -272,27 +451,14 @@ export default {
       const found = me.carrito_compras.find(
         element => element.id == producto.id
       );
-      console.log(found);
+
       if (found == undefined) {
         me.carrito_compras.push(producto);
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: false,
-          onOpen: toast => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title:
-            "<p style='font-family: Arial, sans-serif'>Se ha añadido el producto a la lista</p>"
-        });
+        me.ordenar_carrito();
+        me.mostrar_Toast("El producto se ha añadido al carrito");
       } else {
         found.cantidad++;
+        me.mostrar_Toast("Se ha agregado una unidad al producto");
       }
     },
     modificar_lista(producto_index, tipo) {
@@ -325,7 +491,8 @@ export default {
               "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
           }).then(result => {
             if (result.value) {
-              const found = me.arrayProductos.find(
+              let found;
+              found = me.carrito_compras.find(
                 element => element.id == me.carrito_compras[producto_index].id
               );
               found.cantidad = 1;
@@ -334,7 +501,184 @@ export default {
           });
           break;
       }
+    },
+    get_horario() {
+      if (this.carrito_compras.length > 0) {
+        Swal.fire({
+          title:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+          cancelButtonText:
+            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+        }).then(result => {
+          if (result.value) {
+            axios
+              .get("api/apiHorario")
+              .then(function(response) {
+                me.arrayHorario = response.data.data;
+                me.date = response.data.fecha_ini;
+                me.fecha_ini_calendar = response.data.fecha_ini;
+                me.fecha_fin_calendar = response.data.fecha_fin;
+              })
+              .catch(function(error) {
+                console.log(error);
+              });
+            let me = this;
+            me.dialog_horario = true;
+          }
+        });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>No tiene productos agregado al carrito</p>"
+        });
+      }
+    },
+    ordenar_carrito() {
+      let me = this;
+      me.carrito_compras.sort(function(a, b) {
+        return parseInt(a.numero_puesto) - parseInt(b.numero_puesto);
+      });
+    },
+    cambiar_horarioXfecha() {
+      let me = this;
+      axios.get("api/apiHorario/" + me.date).then(function(response) {
+        me.arrayHorario = response.data.data;
+      });
+    },
+    enviar_lista() {
+      let me = this;
+      Swal.fire({
+        title:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+        cancelButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+      }).then(result => {
+        if (result.value) {
+          let lista = me.groupBy(me.carrito_compras, c => c.id_comerciante);
+          console.log(lista);
+          let info = {
+            user_id: me.id_user,
+            hora: me.hora_recojo,
+            total_lista: me.total_carrito
+          };
+          axios
+            .post("api/apiProductosConsumidor", {
+              data_lista: lista,
+              info: info
+            })
+            .then(function(response) {
+              me.dialog_horario = false;
+              me.carrito_compras = [];
+              me.mostrar_Toast("Se ha enviado la lista correctamente");
+            });
+        }
+      });
+    },
+    groupBy(xs, f) {
+      return xs.reduce(
+        (r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r),
+        {}
+      );
+    },
+    mostrar_Toast(mensaje) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "<p style='font-family: Arial, sans-serif'>" + mensaje + "</p>"
+      });
+    },
+    cerrar_filtros() {
+      let buscador_cat = document.getElementById("buscador_cat");
+      let buscador_sub = document.getElementById("buscador_sub");
+      let buscador_prod = document.getElementById("buscador_prod");
+      let buscardor_borrar = document.getElementById("buscardor_borrar");
+      let icon_desaparecer = document.getElementById("icon_desaparecer");
+      let buscador_carrito = document.getElementById("buscador_carrito");
+      let btn_icon_desaparecer = document.getElementById(
+        "btn_icon_desaparecer"
+      );
+      if (this.mostrar_filtros) {
+        buscador_cat.classList.add("buscador_producto");
+        buscador_sub.classList.add("buscador_producto");
+        buscador_prod.classList.add("buscador_producto");
+        buscardor_borrar.classList.add("buscador_producto");
+        icon_desaparecer.classList.add("icon_desaparecer");
+        buscador_carrito.classList.remove("col-sm-12");
+        buscador_carrito.classList.add("col-sm-6");
+        btn_icon_desaparecer.classList.remove("col-sm-12");
+        btn_icon_desaparecer.classList.add("col-sm-6");
+        this.mostrar_filtros = false;
+      } else {
+        buscador_cat.classList.remove("buscador_producto");
+        buscador_sub.classList.remove("buscador_producto");
+        buscador_prod.classList.remove("buscador_producto");
+        buscardor_borrar.classList.remove("buscador_producto");
+        icon_desaparecer.classList.remove("icon_desaparecer");
+        buscador_carrito.classList.remove("col-sm-6");
+        buscador_carrito.classList.add("col-sm-12");
+        btn_icon_desaparecer.classList.remove("col-sm-6");
+        btn_icon_desaparecer.classList.add("col-sm-12");
+        this.mostrar_filtros = true;
+      }
     }
   }
 };
 </script>
+<style>
+.txt_puesto {
+  font-weight: bold;
+  font-size: 1.5rem !important;
+  text-decoration-line: underline;
+}
+.buscador_producto {
+  visibility: hidden;
+  opacity: 0;
+  display: none;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+.icon_desaparecer {
+  rotate: 180deg;
+}
+#btn_icon_desaparecer {
+  display: none;
+}
+@media all and (min-width: 0px) and (max-width: 959px) {
+  #btn_icon_desaparecer {
+    display: initial;
+  }
+}
+</style>
