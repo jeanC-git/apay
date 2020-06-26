@@ -41,7 +41,7 @@
             color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="2" lg="1"
+        <v-col cols="12" xs="12" sm="12" md="2" lg="2"
           class="text-center pt-3 pb-0"
           id="buscardor_borrar"
         >
