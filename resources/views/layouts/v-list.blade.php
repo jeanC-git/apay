@@ -15,7 +15,7 @@
         <v-list-item-title>Alimentos</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="#">
+<v-list-item href="/historial-listas">
     <v-list-item-icon>
         <v-icon color="grey darken-4">mdi-note</v-icon>
     </v-list-item-icon>
