@@ -27,7 +27,7 @@ Route::get('/informacion-personal', function () {
     return view('consumidor.informacion-personal');
 });
 Route::get('/historial-listas', function () {
-    return view('comerciante.historial-listas');
+    return view('consumidor.historial-listas');
 });
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');
