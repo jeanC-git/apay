@@ -17,7 +17,7 @@
               <v-row>
                 <v-col cols="12" md="12" xs="12" style="display: flex;align-items: center;">
                   <v-toolbar color="yellow darken-2">
-                  <v-toolbar-title class="headline"   style="font-size: 1.6rem">LISTA DE PEDIDOS</v-toolbar-title>
+                  <v-toolbar-title class="headline" style="font-size: 1.6rem">LISTA DE PEDIDOS</v-toolbar-title>
                   </v-toolbar>  
                 </v-col>
               </v-row>
