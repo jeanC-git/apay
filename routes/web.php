@@ -16,6 +16,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
+Route::get('/lista-pendiente', function () {
+    return view('comerciante.lista_pendiente');
+});
 Route::get('/mis-productos','ComercianteController@Mis_productos');
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_puestos');
