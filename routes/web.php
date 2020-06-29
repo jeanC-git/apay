@@ -16,6 +16,9 @@ Route::get('/offline', function () {
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
 });
+Route::get('/lista-pendiente', function () {
+    return view('comerciante.lista_pendiente');
+});
 Route::get('/mis-productos','ComercianteController@Mis_productos');
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_puestos');
@@ -25,6 +28,9 @@ Route::get('/catalogo', function () {
 });
 Route::get('/informacion-personal', function () {
     return view('consumidor.informacion-personal');
+});
+Route::get('/historial-listas', function () {
+    return view('consumidor.historial-listas');
 });
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');

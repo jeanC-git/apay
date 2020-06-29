@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    <informacion-personal></informacion-personal>
+    <historial-listas></historial-listas>
 @endsection

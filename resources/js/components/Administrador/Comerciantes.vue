@@ -216,7 +216,18 @@ export default {
       email: "",
       dni: ""
     },
-    id_deleteItem: ""
+    id_deleteItem: "",
+    reglasValidacion: {
+      dniRules: [
+        v => !!v || "Campo requerido",
+        v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+        v => v.length < 9 || "El DNI debe ser no mayor de 8 dígitos"
+      ],
+      stringRules: [
+        v => !!v || "Campo requerido",
+        v => /^[A-Z ]+$/i.test(v) || "No se permiten números"
+      ],
+    },
   }),
   created() {
     this.initialize();

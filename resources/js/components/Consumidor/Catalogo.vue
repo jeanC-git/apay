@@ -29,7 +29,7 @@
             no-data-text="Elija una categoría"
           ></v-select>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="4" lg="4" class="pt-1" id="buscador_prod">
+        <v-col cols="12" xs="12" sm="12" md="2" lg="2" class="pt-1" id="buscador_prod">
           <v-text-field
             class="pt-1"
             v-model="buscador"
@@ -41,31 +41,22 @@
             color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col
-          cols="12"
-          xs="12"
-          sm="12"
-          md="1"
-          lg="1"
+        <v-col cols="12" xs="12" sm="12" md="2" lg="2"
           class="text-center pt-3 pb-0"
           id="buscardor_borrar"
         >
-          <v-btn small outlined rounded color="red" @click="limpiar_filtros()" class="text-center">
+          <v-btn small outlined rounded color="yellow darken-4" @click="limpiar_filtros()" class="text-center">
             <v-icon class="mr-1">mdi-close</v-icon>Filtros
           </v-btn>
+          <v-spacer></v-spacer>
         </v-col>
-        <v-col
-          cols="12"
-          xs="6"
-          sm="12"
-          md="1"
-          lg="1"
+        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
           class="text-center pt-1 pb-0"
           id="buscador_carrito"
         >
           <v-btn icon color="green accent-3" @click="abrir_modalProductos" class="pt-1">
             <v-badge
-              color="deep-purple accent-4"
+              color="grey darken-3"
               :content="carrito_compras.length >0 ? carrito_compras.length : '0' "
               transition="slide-x-transition"
             >
@@ -73,12 +64,7 @@
             </v-badge>
           </v-btn>
         </v-col>
-        <v-col
-          cols="12"
-          xs="6"
-          sm="12"
-          md="1"
-          lg="1"
+        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
           class="text-center pt-1 pb-0"
           id="btn_icon_desaparecer"
         >
@@ -97,12 +83,7 @@
     <v-container v-if="arrayProductos_n_en_n.length>0">
       <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
-          <v-col
-            cols="12"
-            xs="12"
-            sm="4"
-            md="4"
-            lg="4"
+          <v-col cols="12" xs="12" sm="4" md="4" lg="4"
             v-for="producto in array"
             :key="producto.id"
           >
@@ -126,12 +107,12 @@
               <v-card-text>
                 <v-list-item two-line>
                   <v-list-item-content>
-                    <v-list-item-subtitle v-text="producto.nombre+' - '+producto.descripcion"></v-list-item-subtitle>
-                    <v-list-item-subtitle
+                    <v-list-item-subtitle class="font-weight-bold" v-text="producto.nombre+' - '+producto.descripcion"></v-list-item-subtitle>
+                    <v-list-item-subtitle class="font-weight-bold"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
-                    <v-list-item-subtitle v-if="array.length>0">Disponible</v-list-item-subtitle>
-                    <v-list-item-subtitle v-else>No disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle class="white--text" v-if="array.length>0">Disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle class="white--text" v-else>No disponible</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -151,12 +132,7 @@
     <v-container v-else>
       <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-0 pr-3">
         <v-row>
-          <v-col
-            cols="12"
-            xs="12"
-            sm="12"
-            md="12"
-            lg="12"
+          <v-col cols="12" xs="12" sm="12" md="12" lg="12"
             style="display:flex; justify-content:center;"
           >
             <v-card class="text-center" style="padding-top: 10%" height="70vh" width="81vw">
@@ -180,11 +156,11 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar flat dark color="yellow darken-1" tile max-height="80px">
+        <v-toolbar flat dark color="yellow accent-4" tile max-height="80px">
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text color="grey darken-3" @click="get_horario()" v-text="'Enviar'"></v-btn>
+            <v-btn dark text color="grey darken-3" @click="get_horario()" v-text="'Procesar'"></v-btn>
           </v-toolbar-items>
           <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
             <v-icon>mdi-close</v-icon>
@@ -193,7 +169,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" xs="12" sm="12" md="6" lg="6"></v-col>
-            <v-col cols="12" xs="12" sm="12" md="6" lg="6" class="text-right">
+            <v-col cols="12" xs="12" sm="12" md="6" lg="6" class="text-right" background-color="light-blue">
               <v-btn
                 color="green accent-4"
                 style="font-size:1.3rem"
@@ -227,8 +203,8 @@
                 >{{producto_lista.nombre_puesto+' #'+ producto_lista.numero_puesto}}</td>
                 <tr>
                   <td class="text-center">
-                    <v-btn icon style="border:1px solid" @click="modificar_lista(index,'eliminar')">
-                      <v-icon color="red">mdi-delete</v-icon>
+                    <v-btn icon @click="modificar_lista(index,'eliminar')">
+                      <v-icon color="green accent-4">mdi-delete</v-icon>
                     </v-btn>
                   </td>
                   <td
@@ -240,20 +216,21 @@
                     v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"
                   ></td>
                   <td class="d-flex justify-center align-center">
-                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'minus')">
-                      <v-icon color="red">mdi-minus</v-icon>
+                    <v-btn small color="yellow accent-4" fab @click="modificar_lista(index,'minus')">
+                      <v-icon>mdi-minus</v-icon>
                     </v-btn>
                     <div style="max-width:100px;">
                       <v-text-field
                         style="text-align:center"
+                        color="green accent-3"
                         @keyup="modificar_lista(index,'mayor')"
                         v-model="producto_lista.cantidad"
                         class="mx-3"
                         :rules="reglas.cantidad_producto"
                       ></v-text-field>
                     </div>
-                    <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
-                      <v-icon color="green">mdi-plus</v-icon>
+                    <v-btn color="green accent-1" small fab @click="modificar_lista(index,'plus') ">
+                      <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </td>
                   <td
@@ -270,13 +247,15 @@
     <!-- MODAL DE HORARIO -->
     <v-dialog v-model="dialog_horario">
       <v-card>
-        <v-card-title v-text="'Escoja el horario de recojo: '"></v-card-title>
+        <v-card-title v-text="'Escoja un horario disponible: '">
+        </v-card-title>
         <v-form @submit.prevent="enviar_lista()">
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-dialog
                   ref="dialog"
+                  color="green accent-3"
                   v-model="modal_calendar"
                   :return-value.sync="date"
                   persistent
@@ -285,6 +264,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
+                      color="green accent-3"
                       label="Fecha de recojo"
                       prepend-icon="mdi-calendar"
                       readonly
@@ -293,6 +273,7 @@
                     ></v-text-field>
                   </template>
                   <v-date-picker
+                    color="green accent-2"
                     v-model="date"
                     scrollable
                     locale="es-419"
@@ -300,10 +281,9 @@
                     :max="fecha_fin_calendar"
                   >
                     <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal_calendar = false">Cancelar</v-btn>
+                    <v-btn text color="green accent-2" @click="modal_calendar = false">Cancelar</v-btn>
                     <v-btn
-                      text
-                      color="primary"
+                      text color="green accent-3"
                       @click="$refs.dialog.save(date),cambiar_horarioXfecha()"
                     >Elegir</v-btn>
                   </v-date-picker>
@@ -312,6 +292,7 @@
               <v-col class="d-flex" cols="12" sm="6">
                 <v-select
                   :items="arrayHorario"
+                  color="green accent-2"
                   item-text="hora_inicio"
                   item-value="id"
                   label="Hora de recojo"
@@ -324,7 +305,7 @@
             </v-row>
           </v-container>
           <v-card-actions>
-            <v-btn type="submit" block color="secondary" dark>Enviar lista</v-btn>
+            <v-btn type="submit" block color="green accent-3" dark>Enviar lista</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -502,8 +483,8 @@ export default {
               "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de eliminar el producto de la lista?</p>",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            confirmButtonColor: "#FDD835",
+            cancelButtonColor: "#00E676",
             confirmButtonText:
               "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
             cancelButtonText:
@@ -528,8 +509,8 @@ export default {
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#FDD835",
+          cancelButtonColor: "#00E676",
           confirmButtonText:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
           cancelButtonText:
@@ -589,8 +570,8 @@ export default {
           "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
+        confirmButtonColor: "#FDD835",
+        cancelButtonColor: "#00E676",
         confirmButtonText:
           "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
         cancelButtonText:
