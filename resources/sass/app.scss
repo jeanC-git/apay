@@ -33,8 +33,6 @@
 // Vuetify
 @import '~vuetify/dist/vuetify.min.css';
 
-
-
 $color-pack: false;
 // COLOR PACK VUETIFY
 @import '~vuetify/src/styles/main.sass';
@@ -45,3 +43,5 @@ $color-pack: false;
 // ANIMATE CSS
 @import '~animate.css/animate.min.css';
 
+// TOASTR
+@import "~toastr/build/toastr.min.css";

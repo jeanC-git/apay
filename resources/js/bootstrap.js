@@ -13,6 +13,7 @@ try {
     // require('bootstrap');
     // require('admin-lte');
     window.Swal = require("sweetalert2");
+    window.toastr = require("toastr");
 
 } catch (e) { }
 

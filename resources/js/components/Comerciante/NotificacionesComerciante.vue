@@ -19,6 +19,7 @@
       height="100vh"
       width="300"
     >
+      <v-btn @click="toast_native">TOAST</v-btn>
       <v-list dense nav class="py-0">
         <v-list-item two-line class="px-0">
           <v-list-item-avatar>
@@ -67,11 +68,12 @@ export default {
     Echo.private("lista-recibida." + this.id_user).listen(
       "ListaRecibida",
       e => {
-        this.emitirToast(
-          "top-end",
-          2500,
+        this.toast_native(
           "success",
-          `<p style='font-family: Arial, sans-serif'>${e.mensaje}</p>`
+          `<p style='font-family: Arial, sans-serif'>${e.mensaje}</p>`,
+          true,
+          1000,
+          800
         );
         this.getNotificaciones();
       }
@@ -102,8 +104,29 @@ export default {
         title: title
       });
     },
+    toast_native(tipo, text, newestOnTop, showDuration, hideDuration) {
+      toastr.options = {
+        closeButton: false,
+        debug: false,
+        newestOnTop: newestOnTop,
+        progressBar: false,
+        positionClass: "toast-top-right",
+        preventDuplicates: false,
+        onclick: null,
+        showDuration: showDuration,
+        hideDuration: hideDuration,
+        timeOut: "5000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "slideDown",
+        hideMethod: "slideUp"
+      };
+      toastr[tipo](text);
+    },
     getNotificaciones() {
       let vue = this;
+
       axios
         .get("api/apiNotificaciones/" + vue.id_user)
 

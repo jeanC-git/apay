@@ -28,6 +28,7 @@
         "laravel-echo": "^1.8.0",
         "pusher-js": "^6.0.3",
         "sweetalert2": "^9.14.4",
+        "toastr": "^2.1.4",
         "vuetify": "^2.2.28"
     }
 }
