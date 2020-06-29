@@ -19,7 +19,8 @@
       height="100vh"
       width="300"
     >
-      <v-btn @click="toast_native">TOAST</v-btn>
+      <!-- <v-btn @click="toast_native('success', 'hola', true, 1200,1200)">TOAST</v-btn> -->
+      <v-btn @click="web_push_notifications()">web_push_notifications</v-btn>
       <v-list dense nav class="py-0">
         <v-list-item two-line class="px-0">
           <v-list-item-avatar>
@@ -76,34 +77,11 @@ export default {
           800
         );
         this.getNotificaciones();
+        this.web_push_notifications(e.mensaje);
       }
     );
   },
   methods: {
-    emitirToast(position, timer, icon, title) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: position,
-        showConfirmButton: false,
-        timer: timer,
-        timerProgressBar: false,
-        newestOnTop: false,
-        showClass: {
-          popup: "animate__animated animate__fadeInRight"
-        },
-        hideClass: {
-          popup: "animate__animated animate__fadeOutRight"
-        },
-        onOpen: toast => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        }
-      });
-      Toast.fire({
-        icon: icon,
-        title: title
-      });
-    },
     toast_native(tipo, text, newestOnTop, showDuration, hideDuration) {
       toastr.options = {
         closeButton: false,
@@ -124,12 +102,27 @@ export default {
       };
       toastr[tipo](text);
     },
+    web_push_notifications(mensaje) {
+      if (!("Notification" in window)) {
+        alert("Web Notification is not supported");
+        return;
+      }
+      Notification.requestPermission(permission => {
+        let notification = new Notification("Nueva pedido recibido", {
+          body: mensaje, // content for the alert
+          icon: "https://apay.somadevoos.com/images/icons/icon-72x72.png" // optional image url
+        });
+
+        // link to page on clicking the notification
+        notification.onclick = () => {
+          window.open(window.location.href);
+        };
+      });
+    },
     getNotificaciones() {
       let vue = this;
-
       axios
         .get("api/apiNotificaciones/" + vue.id_user)
-
         .then(function(response) {
           var respuesta = response.data;
 
