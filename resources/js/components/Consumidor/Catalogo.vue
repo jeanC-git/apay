@@ -41,16 +41,33 @@
             color="#69F0AE"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" xs="12" sm="12" md="2" lg="2"
+        <v-col
+          cols="12"
+          xs="12"
+          sm="12"
+          md="2"
+          lg="2"
           class="text-center pt-3 pb-0"
           id="buscardor_borrar"
         >
-          <v-btn small outlined rounded color="yellow darken-4" @click="limpiar_filtros()" class="text-center">
+          <v-btn
+            small
+            outlined
+            rounded
+            color="yellow darken-4"
+            @click="limpiar_filtros()"
+            class="text-center"
+          >
             <v-icon class="mr-1">mdi-close</v-icon>Filtros
           </v-btn>
           <v-spacer></v-spacer>
         </v-col>
-        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
+        <v-col
+          cols="12"
+          xs="6"
+          sm="12"
+          md="1"
+          lg="1"
           class="text-center pt-1 pb-0"
           id="buscador_carrito"
         >
@@ -64,7 +81,12 @@
             </v-badge>
           </v-btn>
         </v-col>
-        <v-col cols="12" xs="6" sm="12" md="1" lg="1"
+        <v-col
+          cols="12"
+          xs="6"
+          sm="12"
+          md="1"
+          lg="1"
           class="text-center pt-1 pb-0"
           id="btn_icon_desaparecer"
         >
@@ -83,7 +105,12 @@
     <v-container v-if="arrayProductos_n_en_n.length>0">
       <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-3 pr-3">
         <v-row v-for="(array, index) in arrayProductos_n_en_n" :key="index">
-          <v-col cols="12" xs="12" sm="4" md="4" lg="4"
+          <v-col
+            cols="12"
+            xs="12"
+            sm="4"
+            md="4"
+            lg="4"
             v-for="producto in array"
             :key="producto.id"
           >
@@ -107,8 +134,12 @@
               <v-card-text>
                 <v-list-item two-line>
                   <v-list-item-content>
-                    <v-list-item-subtitle class="font-weight-bold" v-text="producto.nombre+' - '+producto.descripcion"></v-list-item-subtitle>
-                    <v-list-item-subtitle class="font-weight-bold"
+                    <v-list-item-subtitle
+                      class="font-weight-bold"
+                      v-text="producto.nombre+' - '+producto.descripcion"
+                    ></v-list-item-subtitle>
+                    <v-list-item-subtitle
+                      class="font-weight-bold"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
                     <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>
@@ -119,7 +150,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-fab-transition>
-                  <v-btn color="yellow darken-1" right fab @click="añadir_carrito(producto)" >
+                  <v-btn color="yellow darken-1" right fab @click="añadir_carrito(producto)">
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </v-fab-transition>
@@ -132,7 +163,12 @@
     <v-container v-else>
       <v-card :elevation="'0'" color="#F5F5F7" class="pl-3 pt-0 pr-3">
         <v-row>
-          <v-col cols="12" xs="12" sm="12" md="12" lg="12"
+          <v-col
+            cols="12"
+            xs="12"
+            sm="12"
+            md="12"
+            lg="12"
             style="display:flex; justify-content:center;"
           >
             <v-card class="text-center" style="padding-top: 10%" height="70vh" width="81vw">
@@ -169,7 +205,15 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" xs="12" sm="12" md="6" lg="6"></v-col>
-            <v-col cols="12" xs="12" sm="12" md="6" lg="6" class="text-right" background-color="light-blue">
+            <v-col
+              cols="12"
+              xs="12"
+              sm="12"
+              md="6"
+              lg="6"
+              class="text-right"
+              background-color="light-blue"
+            >
               <v-btn
                 color="green accent-4"
                 style="font-size:1.3rem"
@@ -216,13 +260,19 @@
                     v-text="'S/. '+producto_lista.precio+' x '+ producto_lista.unidad"
                   ></td>
                   <td class="d-flex justify-center align-center">
-                    <v-btn small color="yellow accent-4" fab @click="modificar_lista(index,'minus')">
+                    <v-btn
+                      small
+                      color="yellow accent-4"
+                      fab
+                      @click="modificar_lista(index,'minus')"
+                    >
                       <v-icon>mdi-minus</v-icon>
                     </v-btn>
                     <div style="max-width:100px;">
                       <v-text-field
                         style="text-align:center"
                         color="green accent-3"
+                        @keypress="validar_numero($event)"
                         @keyup="modificar_lista(index,'mayor')"
                         v-model="producto_lista.cantidad"
                         class="mx-3"
@@ -246,8 +296,7 @@
     <!-- MODAL DE HORARIO -->
     <v-dialog v-model="dialog_horario">
       <v-card>
-        <v-card-title v-text="'Escoja un horario disponible: '">
-        </v-card-title>
+        <v-card-title v-text="'Escoja un horario disponible: '"></v-card-title>
         <v-form @submit.prevent="enviar_lista()">
           <v-container>
             <v-row>
@@ -282,7 +331,8 @@
                     <v-spacer></v-spacer>
                     <v-btn text color="green accent-2" @click="modal_calendar = false">Cancelar</v-btn>
                     <v-btn
-                      text color="green accent-3"
+                      text
+                      color="green accent-3"
                       @click="$refs.dialog.save(date),cambiar_horarioXfecha()"
                     >Elegir</v-btn>
                   </v-date-picker>
@@ -339,7 +389,8 @@ export default {
         v => v > 0 || "La cantidad debe ser mayor a 0.",
         v => v < 10 || "No puedes comprar más de 10 unidades de este producto."
       ]
-    }
+    },
+    numero_valido: false
   }),
   computed: {
     sumartTotales() {
@@ -446,8 +497,8 @@ export default {
     },
     añadir_carrito(producto) {
       let me = this;
-      if(producto.disabled){
-        me.mostrar_Toast('No hay stock de este producto','error');
+      if (producto.disabled) {
+        me.mostrar_Toast("No hay stock de este producto", "error");
         return false;
       }
       let valor;
@@ -457,59 +508,71 @@ export default {
       if (found == undefined) {
         me.carrito_compras.push(producto);
         me.ordenar_carrito();
-        me.mostrar_Toast('El producto se ha añadido al carrito','success');
+        me.mostrar_Toast("El producto se ha añadido al carrito", "success");
       } else {
         found.cantidad++;
-        me.mostrar_Toast('Se ha agregado una unidad al producto','success');
+        me.mostrar_Toast("Se ha agregado una unidad al producto", "success");
       }
     },
-    modificar_lista(producto_index, tipo) {
+    validar_numero(event) {
       let me = this;
-      switch (tipo) {
-        case "plus":
-          if(me.carrito_compras[producto_index].stock>me.carrito_compras[producto_index].cantidad){
-            me.carrito_compras[producto_index].cantidad++;
-          }else{
-              me.mostrar_Toast('No hay stock suficiente','error');
-          }
-          break;
-        case "minus":
-          if (me.carrito_compras[producto_index].cantidad > 1) {
-              me.carrito_compras[producto_index].cantidad--;
-          }
-          break;
-        case "mayor":
-          if (me.carrito_compras[producto_index].cantidad == 0) {
-            me.carrito_compras[producto_index].cantidad++;
-          }
-          break;
-        case "eliminar":
-          Swal.fire({
-            title:
-              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de eliminar el producto de la lista?</p>",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#FDD835",
-            cancelButtonColor: "#00E676",
-            confirmButtonText:
-              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
-            cancelButtonText:
-              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
-          }).then(result => {
-            if (result.value) {
-              let found;
-              found = me.carrito_compras.find(
-                element => element.id == me.carrito_compras[producto_index].id
-              );
-              found.cantidad = 1;
-              me.carrito_compras.splice(producto_index, 1);
+      me.numero_valido =
+        event.charCode < 48 || event.charCode > 57 ? false : true;
+    },
+    modificar_lista(producto_index, tipo, event) {
+      let me = this;
+      if (me.numero_valido) {
+        switch (tipo) {
+          case "plus":
+            if (
+              me.carrito_compras[producto_index].stock >
+              me.carrito_compras[producto_index].cantidad
+            ) {
+              me.carrito_compras[producto_index].cantidad++;
+            } else {
+              me.mostrar_Toast("No hay stock suficiente", "error");
             }
-          });
-          break;
+            break;
+          case "minus":
+            if (me.carrito_compras[producto_index].cantidad > 1) {
+              me.carrito_compras[producto_index].cantidad--;
+            }
+            break;
+          case "mayor":
+            if (me.carrito_compras[producto_index].cantidad == 0) {
+              me.carrito_compras[producto_index].cantidad++;
+            }
+            break;
+          case "eliminar":
+            Swal.fire({
+              title:
+                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de eliminar el producto de la lista?</p>",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#FDD835",
+              cancelButtonColor: "#00E676",
+              confirmButtonText:
+                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+              cancelButtonText:
+                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+            }).then(result => {
+              if (result.value) {
+                let found;
+                found = me.carrito_compras.find(
+                  element => element.id == me.carrito_compras[producto_index].id
+                );
+                found.cantidad = 1;
+                me.carrito_compras.splice(producto_index, 1);
+              }
+            });
+            break;
+        }
+      } else {
+        me.carrito_compras[producto_index].cantidad = 1;
       }
     },
     get_horario() {
-      if(this.carrito_compras.length>=15){
+      if (this.carrito_compras.length >= 15) {
         Swal.fire({
           title:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
@@ -538,11 +601,13 @@ export default {
             me.dialog_horario = true;
           }
         });
-      }else if(this.carrito_compras.length<15 && this.carrito_compras.length>0){
-        this.mostrar_Toast('Debe llevar como minimo 15 productos','warning')
-      }
-      else if(this.carrito_compras.length==0){
-        this.mostrar_Toast('No tiene productos agregado al carrito','warning')
+      } else if (
+        this.carrito_compras.length < 15 &&
+        this.carrito_compras.length > 0
+      ) {
+        this.mostrar_Toast("Debe llevar como minimo 15 productos", "warning");
+      } else if (this.carrito_compras.length == 0) {
+        this.mostrar_Toast("No tiene productos agregado al carrito", "warning");
       }
     },
     ordenar_carrito() {
@@ -560,33 +625,37 @@ export default {
     enviar_lista() {
       let me = this;
       Swal.fire({
-          title:
-            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText:
-            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
-          cancelButtonText:
-            "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
-        }).then(result => {
-          if (result.value) {
-            let lista = me.groupBy(me.carrito_compras, (c) => c.numero_puesto);
-            console.log(lista);
-            let info = {
-              user_id: me.id_user,
-              hora: me.hora_recojo,
-              total_lista : me.total_carrito
-            };
-            axios.post("api/apiProductosConsumidor", {
+        title:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+        cancelButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+      }).then(result => {
+        if (result.value) {
+          let lista = me.groupBy(me.carrito_compras, c => c.numero_puesto);
+          console.log(lista);
+          let info = {
+            user_id: me.id_user,
+            hora: me.hora_recojo,
+            total_lista: me.total_carrito
+          };
+          axios
+            .post("api/apiProductosConsumidor", {
               data_lista: lista,
               info: info
             })
             .then(function(response) {
               me.dialog_horario = false;
               me.carrito_compras = [];
-              me.mostrar_Toast('Se ha enviado la lista correctamente','success');
+              me.mostrar_Toast(
+                "Se ha enviado la lista correctamente",
+                "success"
+              );
             });
         }
       });
@@ -597,7 +666,7 @@ export default {
         {}
       );
     },
-    mostrar_Toast(mensaje,tipo_icon){
+    mostrar_Toast(mensaje, tipo_icon) {
       const Toast = Swal.mixin({
         toast: true,
         position: "top",
@@ -612,9 +681,7 @@ export default {
       });
       Toast.fire({
         icon: tipo_icon,
-        newestOnTop: false,
-        title:
-          "<p style='font-family: Arial, sans-serif'>"+mensaje+"</p>"
+        title: "<p style='font-family: Arial, sans-serif'>" + mensaje + "</p>"
       });
     },
     cerrar_filtros() {
@@ -660,7 +727,7 @@ export default {
   font-size: 1.5rem !important;
   text-decoration-line: underline;
 }
-.buscador_producto{
+.buscador_producto {
   display: none;
 }
 .icon_desaparecer {
@@ -669,23 +736,23 @@ export default {
 #btn_icon_desaparecer {
   display: none;
 }
-@media all and (min-width:0px) and (max-width: 959px) {
-  #btn_icon_desaparecer{
+@media all and (min-width: 0px) and (max-width: 959px) {
+  #btn_icon_desaparecer {
     display: initial;
   }
 }
-@media all and (min-width:960px) and (max-width: 2000px) {
-  #buscador_cat{
-    display:block !important;
+@media all and (min-width: 960px) and (max-width: 2000px) {
+  #buscador_cat {
+    display: block !important;
   }
-  #buscador_sub{
-    display:block !important;
+  #buscador_sub {
+    display: block !important;
   }
-  #buscador_prod{
-    display:block !important;
+  #buscador_prod {
+    display: block !important;
   }
-  #buscardor_borrar{
-    display:block !important;
+  #buscardor_borrar {
+    display: block !important;
   }
 }
 </style>
