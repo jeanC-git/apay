@@ -9,9 +9,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //RUTA OFFLINE PWA
-// Route::get('/offline', function () {
-//     return view('vendor/laravelpwa/offline');
-// });
+Route::get('/offline', function () {
+    return view('vendor/laravelpwa/offline');
+});
 // RUTAS COMERCIANTE
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
@@ -28,6 +28,9 @@ Route::get('/catalogo', function () {
 });
 Route::get('/informacion-personal', function () {
     return view('consumidor.informacion-personal');
+});
+Route::get('/historial-listas', function () {
+    return view('consumidor.historial-listas');
 });
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');

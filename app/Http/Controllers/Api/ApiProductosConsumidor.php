@@ -53,7 +53,7 @@ class ApiProductosConsumidor extends Controller
         $lista_id = $lista->id;
         $precio;
         foreach ($request->data_lista as $arrayxcomerciante) {
-            for ($i=0; $i <count($arrayxcomerciante) ; $i++) { 
+            for ($i=0; $i <count($arrayxcomerciante) ; $i++) {
                 $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$arrayxcomerciante[$i]['id_comerciante'])
                 ->where('id_producto',$arrayxcomerciante[$i]['id_producto'])
                 ->first();

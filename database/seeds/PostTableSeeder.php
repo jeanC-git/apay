@@ -73,6 +73,9 @@ class PostTableSeeder extends Seeder
             'email' => 'comerciante@comerciante.com',
             'dni'   =>rand ( 1000000, 9999999 )
         ]);
+        DB::table('comerciantes')->insert([
+            'id_user' => $user_comerciante->id,
+        ]);
         $user_comerciante->assignRole('comerciante');
 
         // USUARIO CONSUMIDOR
@@ -84,6 +87,9 @@ class PostTableSeeder extends Seeder
             'password'=>Hash::make('12345678'),
             'email' => 'consumidor@consumidor.com',
             'dni'   =>rand ( 1000000, 9999999 )
+        ]);
+        DB::table('consumidores')->insert([
+            'id_user' => $user_consumidor->id,
         ]);
         $user_consumidor->assignRole('consumidor');
     }

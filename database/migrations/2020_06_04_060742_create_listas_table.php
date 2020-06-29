@@ -16,7 +16,6 @@ class CreateListasTable extends Migration
         Schema::create('listas', function (Blueprint $table) {
             $table->id();
             $table->Integer('total_lista');
-            $table->dateTime('fecha_entrega');
             $table->bigInteger('id_horario')->unsigned();
             $table->bigInteger('id_consumidor')->unsigned();
             $table->timestamps();

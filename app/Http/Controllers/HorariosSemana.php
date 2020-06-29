@@ -15,7 +15,7 @@ class HorariosSemana extends Controller
         // SABADO DE LA SIGUIENTE SEMANA
         $sabado_validar_nextWeek = Carbon::now()->addWeek()->endOfWeek()->subDay();
 
-        $validar = Horario::where('hora_inicio', $primer_dia_nextWeek_validar->format('Y-m-d').' 08:00:00')->get();
+        $validar = Horario::where('fecha_inicio', $primer_dia_nextWeek_validar->format('Y-m-d').' 08:00:00')->get();
 
         if (count($validar)) {
             $mensaje = 'Los horarios de la semana '.$primer_dia_nextWeek_validar->format('d-m-Y').' al '.$sabado_validar_nextWeek->format('d-m-Y').' ya fueron creados';
@@ -45,8 +45,8 @@ class HorariosSemana extends Controller
                     $fecha_fin = $horario[$index].' '.$value['fin'];
 
                     $nuevo_horario = new Horario();
-                    $nuevo_horario->hora_inicio = $fecha_inicio;
-                    $nuevo_horario->hora_fin = $fecha_fin;
+                    $nuevo_horario->fecha_inicio = $fecha_inicio;
+                    $nuevo_horario->fecha_fin = $fecha_fin;
                     $nuevo_horario->cupo = 40;
 
                     $nuevo_horario->save();
