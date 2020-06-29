@@ -1,5 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <lista-pendiente></lista-pendiente>
+    <lista-pendiente id_user="{{auth()->user()->id}}"></lista-pendiente>
 @endsection
 

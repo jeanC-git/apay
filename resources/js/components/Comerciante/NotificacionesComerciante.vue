@@ -85,6 +85,7 @@ export default {
         showConfirmButton: false,
         timer: timer,
         timerProgressBar: false,
+        newestOnTop: false,
         showClass: {
           popup: "animate__animated animate__fadeInRight"
         },

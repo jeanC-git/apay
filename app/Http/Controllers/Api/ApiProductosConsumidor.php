@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Comerciante_productos;
 use App\Listas;
-use App\Detalle_listas;
-use App\Consumidor;
-use App\Notificaciones;
-use App\Events\ListaRecibida;
-use  App\Comerciante;
 use App\Horario;
+use App\Consumidor;
+use App\Comerciante;
+use App\Detalle_listas;
+use App\Notificaciones;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Events\ListaRecibida;
+use App\Comerciante_productos;
+use App\Http\Controllers\Controller;
+
 class ApiProductosConsumidor extends Controller
 {
     /**
@@ -49,6 +51,7 @@ class ApiProductosConsumidor extends Controller
         $lista->total_lista = $request->info['total_lista'];;
         $lista->id_horario = $request->info['hora'];
         $lista->id_consumidor = $id_consumidor->id;
+        $lista->codigo_lista  = '#'. strtoupper(Str::random(4));
         $saved = $lista->save();
         $lista_id = $lista->id;
         $precio;

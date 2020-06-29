@@ -22,7 +22,6 @@
         :icons-and-text="icons"
       >
         <v-tabs-slider></v-tabs-slider>
-
         <v-tab
           v-for="puesto in arrayPuestos"
           :key="puesto.id"
@@ -83,7 +82,6 @@
         </v-form>
       </v-card>
     </v-dialog>
-
     <v-btn bottom color="green accent-3" dark fab fixed right @click="modal_puesto()">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -237,7 +235,6 @@ export default {
   }
 };
 </script>
-
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Sacramento&display=swap");
 /* .font-sacramento { */

@@ -111,13 +111,8 @@
                     <v-list-item-subtitle class="font-weight-bold"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
-<<<<<<< HEAD
                     <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>
                     <v-list-item-subtitle v-else>Disponible</v-list-item-subtitle>
-=======
-                    <v-list-item-subtitle class="white--text" v-if="array.length>0">Disponible</v-list-item-subtitle>
-                    <v-list-item-subtitle class="white--text" v-else>No disponible</v-list-item-subtitle>
->>>>>>> 5ef22de88975684946b8eec63bce192724376faf
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -609,6 +604,7 @@ export default {
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: false,
+        preventDuplicates: false,
         onOpen: toast => {
           toast.addEventListener("mouseenter", Swal.stopTimer);
           toast.addEventListener("mouseleave", Swal.resumeTimer);
@@ -616,6 +612,7 @@ export default {
       });
       Toast.fire({
         icon: tipo_icon,
+        newestOnTop: false,
         title:
           "<p style='font-family: Arial, sans-serif'>"+mensaje+"</p>"
       });
