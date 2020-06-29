@@ -45,7 +45,6 @@ class ApiProductosConsumidor extends Controller
     {
         $user_id=$request->info['user_id'];
         $id_consumidor=Consumidor::where('id_user',$user_id)->first();
-
         $lista = new Listas();
         $lista->total_lista = $request->info['total_lista'];;
         $lista->id_horario = $request->info['hora'];
@@ -71,7 +70,7 @@ class ApiProductosConsumidor extends Controller
                 $saved = $detalle_lista->save();
                 $id_usuario_comerciante=Comerciante::find($arrayxcomerciante[$i]['id_comerciante']);
                 if($i==0){
-                    broadcast( new ListaRecibida('Acaba de recibir un nuevo pedido',$id_usuario_comerciante->id_user));
+                    broadcast( new ListaRecibida('EL puesto #'.$arrayxcomerciante[$i]['numero_puesto'].' ha recibido una lista',$id_usuario_comerciante->id_user));
                     $notificaciones = new Notificaciones();
                     $notificaciones->mensaje = 'Acaba de recibir un nuevo pedido';
                     $notificaciones->tipo = '1';

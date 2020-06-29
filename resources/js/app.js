@@ -21,12 +21,11 @@ Vue.component('home-comerciante', require('./components/Comerciante/Home.vue').d
 Vue.component('productos', require('./components/Comerciante/Mis-productos.vue').default);
 Vue.component('notificaciones-comerciante', require('./components/Comerciante/NotificacionesComerciante.vue').default);
 
-
 //REGISTRO DE COMPONENTES SOLO PARA EL CONSUMIDOR
 Vue.component('home-consumidor', require('./components/Consumidor/Home.vue').default);
 Vue.component('catalogo', require('./components/Consumidor/Catalogo.vue').default);
-
-
+Vue.component('informacion-personal', require('./components/Consumidor/InfoPersonal.vue').default);
+Vue.component('lista-pendiente', require('./components/Comerciante/ListaPendiente.vue').default);
 //REGISTRO DE COMPONENTES SOLO PARA EL EL ADMINISTRADOR
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);

@@ -100,15 +100,15 @@
                     <v-list-item-subtitle
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
-                    <v-list-item-subtitle v-if="array.length>0">Disponible</v-list-item-subtitle>
-                    <v-list-item-subtitle v-else>No disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle v-else>Disponible</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-fab-transition>
-                  <v-btn color="yellow darken-1" right fab @click="añadir_carrito(producto)">
+                  <v-btn color="yellow darken-1" right fab @click="añadir_carrito(producto)" >
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                 </v-fab-transition>
@@ -219,6 +219,7 @@
                         @keyup="modificar_lista(index,'mayor')"
                         v-model="producto_lista.cantidad"
                         class="mx-3"
+                        type="number"
                       ></v-text-field>
                     </div>
                     <v-btn style="border:1px solid" icon @click="modificar_lista(index,'plus') ">
@@ -419,29 +420,36 @@ export default {
     },
     añadir_carrito(producto) {
       let me = this;
+      if(producto.disabled){
+        me.mostrar_Toast('No hay stock de este producto','error');
+        return false;
+      }
       let valor;
       const found = me.carrito_compras.find(
         element => element.id == producto.id
       );
-
       if (found == undefined) {
         me.carrito_compras.push(producto);
         me.ordenar_carrito();
-        me.mostrar_Toast('El producto se ha añadido al carrito');
+        me.mostrar_Toast('El producto se ha añadido al carrito','success');
       } else {
         found.cantidad++;
-        me.mostrar_Toast('Se ha agregado una unidad al producto');
+        me.mostrar_Toast('Se ha agregado una unidad al producto','success');
       }
     },
     modificar_lista(producto_index, tipo) {
       let me = this;
       switch (tipo) {
         case "plus":
-          me.carrito_compras[producto_index].cantidad++;
+          if(me.carrito_compras[producto_index].stock>me.carrito_compras[producto_index].cantidad){
+            me.carrito_compras[producto_index].cantidad++;
+          }else{
+              me.mostrar_Toast('No hay stock suficiente','error');
+          }
           break;
         case "minus":
           if (me.carrito_compras[producto_index].cantidad > 1) {
-            me.carrito_compras[producto_index].cantidad--;
+              me.carrito_compras[producto_index].cantidad--;
           }
           break;
         case "mayor":
@@ -475,7 +483,7 @@ export default {
       }
     },
     get_horario() {
-      if(this.carrito_compras.length>0){
+      if(this.carrito_compras.length>=15){
         Swal.fire({
           title:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
@@ -501,23 +509,11 @@ export default {
             me.dialog_horario=true;
           }
         });
-      }else{
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: false,
-          onOpen: toast => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
-        });
-        Toast.fire({
-          icon: "warning",
-          title:
-            "<p style='font-family: Arial, sans-serif'>No tiene productos agregado al carrito</p>"
-        });
+      }else if(this.carrito_compras.length<15 && this.carrito_compras.length>0){
+        this.mostrar_Toast('Debe llevar como minimo 15 productos','warning')
+      }
+      else if(this.carrito_compras.length==0){
+        this.mostrar_Toast('No tiene productos agregado al carrito','warning')
       }
     },
     ordenar_carrito(){
@@ -547,7 +543,7 @@ export default {
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
         }).then(result => {
           if (result.value) {
-            let lista = me.groupBy(me.carrito_compras, (c) => c.id_comerciante);
+            let lista = me.groupBy(me.carrito_compras, (c) => c.numero_puesto);
             console.log(lista);
             let info = {
               user_id: me.id_user,
@@ -560,7 +556,7 @@ export default {
             }).then(function(response) {
               me.dialog_horario=false;
               me.carrito_compras = [];
-              me.mostrar_Toast('Se ha enviado la lista correctamente');
+              me.mostrar_Toast('Se ha enviado la lista correctamente','success');
             });
           }
         });
@@ -568,10 +564,10 @@ export default {
     groupBy(xs, f) {
       return xs.reduce((r, v, i, a, k = f(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
     },
-    mostrar_Toast(mensaje){
+    mostrar_Toast(mensaje,tipo_icon){
       const Toast = Swal.mixin({
         toast: true,
-        position: "top-end",
+        position: "top",
         showConfirmButton: false,
         timer: 2000,
         timerProgressBar: false,
@@ -581,7 +577,7 @@ export default {
         }
       });
       Toast.fire({
-        icon: "success",
+        icon: tipo_icon,
         title:
           "<p style='font-family: Arial, sans-serif'>"+mensaje+"</p>"
       });
@@ -628,10 +624,7 @@ export default {
   text-decoration-line: underline;
 }
 .buscador_producto{
-  visibility: hidden;
-  opacity: 0;
   display: none;
-  transition: visibility 0s, opacity 0.5s linear;
 }
 .icon_desaparecer{
   rotate: 180deg;
@@ -640,8 +633,22 @@ export default {
   display: none;
 }
 @media all and (min-width:0px) and (max-width: 959px) {
-#btn_icon_desaparecer{
-  display: initial;
+  #btn_icon_desaparecer{
+    display: initial;
+  }
 }
+@media all and (min-width:960px) and (max-width: 2000px) {
+  #buscador_cat{
+    display:block !important;
+  }
+  #buscador_sub{
+    display:block !important;
+  }
+  #buscador_prod{
+    display:block !important;
+  }
+  #buscardor_borrar{
+    display:block !important;
+  }
 }
 </style>

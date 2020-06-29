@@ -10,14 +10,14 @@
             <v-list-item-content>
                 <v-list-item-title class="headline">Información Personal</v-list-item-title>
             </v-list-item-content>
-      </v-list-item>
+        </v-list-item>
       </v-col>
       <v-col cols="12" xs="10" sm="2">
       </v-col>
-    </v-row>
+      </v-row>
     </v-container>
     <v-row>
-      <template >
+      <template>
         <v-card
           width="450"
           height="550"
@@ -29,9 +29,8 @@
             <v-img
             src="https://concepto.de/wp-content/uploads/2018/08/persona-e1533759204552.jpg"
             height="200"
-          >
-            <v-card class="elevation-12" color="blue">
-          </v-img>
+            >
+            </v-img>
             <v-list-item two-line>
               <v-list-item-content>
                   <v-input

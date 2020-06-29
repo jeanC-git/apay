@@ -62,7 +62,13 @@ class ApiBuscadorProducto extends Controller
             'puestos.nombre as nombre_puesto','puestos.numero as numero_puesto'])
             ->orderBy('stock', 'desc')
             ->get();
-
+        foreach($productos as $value){
+            if($value->stock>0){
+                $value["disabled"]=false;
+            }else{
+                $value["disabled"]=true;
+            }
+        }
         $collectProductos = collect($productos);
         foreach ($collectProductos as $producto) {
             $producto->cantidad = 1;

@@ -30,7 +30,13 @@ class ApiComercianteProductos extends Controller
         ->join('categorias', 'categorias.id', '=', 'subcategorias.id_categoria')
         ->orderBy('stock', 'desc')
         ->get();
-
+        foreach($productos as $value){
+            if($value->stock>0){
+                $value["disabled"]=false;
+            }else{
+                $value["disabled"]=true;
+            }
+        }
         $collectProductos = collect($productos);
         foreach ($collectProductos as $producto) {
             $producto->cantidad = 1;

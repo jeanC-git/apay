@@ -10,7 +10,6 @@
         <v-icon>mdi-bell</v-icon>
       </v-badge>
     </v-btn>
-
     <v-navigation-drawer
       v-model="drawer"
       :right="right"

@@ -81,7 +81,7 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-card-title>
-            <v-form ref="form" @submit.prevent="editarItem()">
+            <v-form ref="formedit" @submit.prevent="editarItem()">
               <v-card-text>
                 <v-text-field
                   class="mt-2"
