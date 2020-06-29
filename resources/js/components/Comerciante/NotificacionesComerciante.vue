@@ -19,8 +19,6 @@
       height="100vh"
       width="300"
     >
-      <!-- <v-btn @click="toast_native('success', 'hola', true, 1200,1200)">TOAST</v-btn> -->
-      <v-btn @click="web_push_notifications()">web_push_notifications</v-btn>
       <v-list dense nav class="py-0">
         <v-list-item two-line class="px-0">
           <v-list-item-avatar>
@@ -69,13 +67,7 @@ export default {
     Echo.private("lista-recibida." + this.id_user).listen(
       "ListaRecibida",
       e => {
-        this.toast_native(
-          "success",
-          `<p style='font-family: Arial, sans-serif'>${e.mensaje}</p>`,
-          true,
-          1000,
-          800
-        );
+        this.toast_native("success", e.mensaje, true, 1000, 800);
         this.getNotificaciones();
         this.web_push_notifications(e.mensaje);
       }
@@ -100,7 +92,9 @@ export default {
         showMethod: "slideDown",
         hideMethod: "slideUp"
       };
-      toastr[tipo](text);
+      toastr[tipo](
+        "<p style='font-family: Arial, sans-serif'>" + text + "</p>"
+      );
     },
     web_push_notifications(mensaje) {
       if (!("Notification" in window)) {
