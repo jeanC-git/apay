@@ -111,8 +111,13 @@
                     <v-list-item-subtitle class="font-weight-bold"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
+<<<<<<< HEAD
                     <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>
                     <v-list-item-subtitle v-else>Disponible</v-list-item-subtitle>
+=======
+                    <v-list-item-subtitle class="white--text" v-if="array.length>0">Disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle class="white--text" v-else>No disponible</v-list-item-subtitle>
+>>>>>>> 5ef22de88975684946b8eec63bce192724376faf
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -226,7 +231,6 @@
                         @keyup="modificar_lista(index,'mayor')"
                         v-model="producto_lista.cantidad"
                         class="mx-3"
-                        type="number"
                       ></v-text-field>
                     </div>
                     <v-btn color="green accent-1" small fab @click="modificar_lista(index,'plus') ">

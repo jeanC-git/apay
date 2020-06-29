@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
+use App\Detalle_listas;
+use App\Comerciante_productos;
 class ApiComercianteLista extends Controller
 {
     /**
@@ -34,7 +36,6 @@ class ApiComercianteLista extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -45,7 +46,11 @@ class ApiComercianteLista extends Controller
      */
     public function show($id)
     {
-        
+        $listas=Comerciante_productos::where('id_puesto',$id)
+        ->join('detalle_listas','detalle_listas.id_comerciante_producto','=','comerciante_productos.id')
+        ->join('listas','listas.id','=','detalle_listas.id_lista')
+        ->get();
+        return response()->json(['data' => $listas]);
     }
 
     /**
