@@ -9,9 +9,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //RUTA OFFLINE PWA
-// Route::get('/offline', function () {
-//     return view('vendor/laravelpwa/offline');
-// });
+Route::get('/offline', function () {
+    return view('vendor/laravelpwa/offline');
+});
 // RUTAS COMERCIANTE
 Route::get('/registro-puesto', function () {
     return view('comerciante.registro_puesto');
