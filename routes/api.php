@@ -20,5 +20,7 @@ Route::apiResource('apiProductosConsumidor', 'Api\ApiProductosConsumidor');
 Route::apiResource('apiBuscadorProducto', 'Api\ApiBuscadorProducto');
 Route::apiResource('apiHorario', 'Api\ApiHorario');
 Route::apiResource('apiComercianteLista', 'Api\ApiComercianteLista');
+Route::apiResource('apiComercianteDetalleLista', 'Api\ApiComercianteDetalleLista');
+
 
 Route::apiResource('apiNotificaciones', 'Api\ApiNotificaciones');

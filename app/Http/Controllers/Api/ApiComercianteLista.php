@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Detalle_listas;
 use Illuminate\Http\Request;
+
+use App\Comerciante_productos;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-use App\Detalle_listas;
-use App\Comerciante_productos;
 class ApiComercianteLista extends Controller
 {
     /**
@@ -47,23 +49,20 @@ class ApiComercianteLista extends Controller
     public function show($id)
     {
         $listas=Comerciante_productos::
-            select('detalle_listas.id_lista','listas.codigo_lista','detalle_listas.estado','users.name','horario.fecha_inicio')
-            ->where('id_puesto',$id)
-            ->join('detalle_listas','detalle_listas.id_comerciante_producto','=','comerciante_productos.id')
-            ->join('listas','listas.id','=','detalle_listas.id_lista')
-            ->join('consumidores','consumidores.id','=','listas.id_consumidor')
-            ->join('users','users.id','=','consumidores.id_user')
-            ->join('horario','horario.id','=','listas.id_horario')
-            ->groupBy('detalle_listas.id_lista')
-            ->get();
+            select(DB::raw('count(*) as contador_detalles, detalle_listas.id_lista'),DB::raw('SUM(detalle_listas.estado) as total_lista'),'detalle_listas.id_lista','listas.codigo_lista','detalle_listas.estado','users.name','horario.fecha_inicio')
+                ->where('id_puesto',$id)
+                ->join('detalle_listas','detalle_listas.id_comerciante_producto','=','comerciante_productos.id')
+                ->join('listas','listas.id','=','detalle_listas.id_lista')
+                ->join('consumidores','consumidores.id','=','listas.id_consumidor')
+                ->join('users','users.id','=','consumidores.id_user')
+                ->join('horario','horario.id','=','listas.id_horario')
+                ->groupBy('detalle_listas.id_lista')
+                ->get();
         foreach ($listas as  $value) {
-            switch ($value->estado) {
-                case '1':
-                    $value["estado_lista"]='pendiente';
-                    break;
-                case '2':
-                    $value["estado_lista"]='revisado';
-                    break;
+            if ($value->contador_detalles!==(2*$value->total_lista)) {
+                $value["estado_lista"]='pendiente';
+            }else{
+                $value["estado_lista"]='revisado';
             }
         }
         return response()->json(['data' => $listas]);

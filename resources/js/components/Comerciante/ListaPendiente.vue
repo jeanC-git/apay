@@ -78,7 +78,7 @@
               </v-container>
             </template>
             <template v-slot:item.estado_lista="{ item }">
-              <v-chip :color="getColorEstado(item.estado)" dark v-text="item.estado_lista"></v-chip>
+              <v-chip :color="getColorEstado(item.estado_lista)" dark v-text="item.estado_lista"></v-chip>
             </template>
             <template v-slot:item.actions="{ item }">
               <v-icon small @click="abrir_modal(item)">mdi-eye</v-icon>
@@ -87,14 +87,50 @@
         </v-col>
       </v-row>
     </v-card>
+    <v-dialog v-model="dialog_lista" max-width="600px">
+      <v-card>
+        <v-card-text>
+          <v-simple-table fixed-header height="300px">
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left">Producto</th>
+                  <th class="text-left">Descripción</th>
+                  <th class="text-left">Costo(S/.)</th>
+                  <th class="text-left">Stock</th>
+                  <th class="text-left">Aprobar/Denegar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="detalle in array_detalle_lista" :key="detalle.id">
+                  <td>{{ detalle.nombre   }}</td>
+                  <td>{{ detalle.descripcion    }}</td>
+                  <td>{{ detalle.precio    }}</td>
+                  <td>{{ detalle.stock    }}</td>
+                  <td>
+                    <v-switch v-model="detalle.estado_switch" :label="getLabelSwitch(detalle.estado_switch)"></v-switch>
+                  </td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn block color="yellow darken-2">Enviar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 export default {
   props: ["id_puesto", "id_comerciante"],
   data: () => ({
+    switch2:'',
+    select_estado_producto:[{text: "Aprobar",id :"1"},{ text :"Denegar",id:"2"}],
     select_estado:[{text: "pendiente",id :"pendiente"},{ text :"revisado",id:"revisado"}],
     array_listas:[],
+    array_detalle_lista:[],
     dialog_lista: false,
     id_item_delete: "",
     rules: {
@@ -148,8 +184,8 @@ export default {
         console.log(me.array_listas);
       })
     },getColorEstado(estado){
-        if (estado == 1) return 'red'
-        else if (estado == 2) return 'green'
+        if (estado == 'pendiente') return 'red'
+        else if (estado == 'revisado') return 'green'
         else return 'green'
     },filtro(buscar){
       let me= this;
@@ -166,9 +202,15 @@ export default {
         default:
           break;
       }
-    },abrir_modal(){
+    },abrir_modal(item){
       let me=this;
       me.dialog_lista=true;
+      axios.get('api/apiComercianteDetalleLista/'+item.id_lista+':'+me.id_puesto).then(function(response){
+        me.array_detalle_lista=response.data.data;
+        console.log(me.array_detalle_lista);
+      })
+    },getLabelSwitch(estado_switch){
+        return (estado_switch) ? 'Aprobado' : 'Denegado' ;
     }
   }
 };

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Consumidor;
+use App\Detalle_listas;
 use Illuminate\Http\Request;
+use App\Comerciante_productos;
+use App\Http\Controllers\Controller;
 
 class ApiComercianteDetalleLista extends Controller
 {
@@ -46,7 +49,24 @@ class ApiComercianteDetalleLista extends Controller
      */
     public function show($id)
     {
-        //
+        $porciones = explode(":", $id);
+        $id_lista   = $porciones[0];
+        $id_puesto  = $porciones[1];
+        $detalle_listas=Detalle_listas::
+                join('comerciante_productos','detalle_listas.id_comerciante_producto','=','comerciante_productos.id')
+                ->join('listas','listas.id','=','detalle_listas.id_lista')
+                ->join('productos','productos.id','=','comerciante_productos.id_producto')
+                ->where('detalle_listas.id_lista',$id_lista)
+                ->where('comerciante_productos.id_puesto',$id_puesto)
+                ->get();
+        foreach ($detalle_listas as $value) {
+            if ($value->estado==1) {
+                $value["estado_switch"]=false;
+            }else {
+                $value["estado_switch"]=true;
+            }
+        }
+        return response()->json(['data' => $detalle_listas]);
     }
 
     /**
@@ -69,7 +89,7 @@ class ApiComercianteDetalleLista extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
