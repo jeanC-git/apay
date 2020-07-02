@@ -24,40 +24,29 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col cols="12" md="4" xs="12">
-                    <v-text-field
-                      v-model="filtro_text"
-                      color="green accent-3"
-                      single-line
-                      hide-details
-                      label="Nombre de cliente"
-                      no-data-text="No hay datos disponibles."
-                      @input="filtro('filtro_text')"
-                    ></v-text-field>
-                    <v-divider class="mx-4" inset vertical></v-divider>
-                  </v-col>
+
                   <v-col cols="12" md="4" xs="12">  
-                  <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                  >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      color="green accent-3"
-                      v-model="filtro_date"
-                      label="Seleccionar fecha"
-                      prepend-icon="mdi-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                    <v-date-picker color="yellow darken-3" v-model="filtro_date" @input="menu2 = false,filtro('filtro_date')"></v-date-picker>
-                  </v-menu>
+                    <v-menu
+                      v-model="menu2"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="290px"
+                      >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          color="green accent-3"
+                          v-model="filtro_date"
+                          label="Seleccionar fecha"
+                          prepend-icon="mdi-calendar"
+                          readonly
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker color="yellow darken-3" v-model="filtro_date" @input="menu2 = false,filtro('filtro_date')"></v-date-picker>
+                    </v-menu>
                     <v-divider class="mx-4" inset vertical></v-divider>
                   </v-col>
                   <v-col cols="12" md="4" xs="12">
@@ -72,6 +61,18 @@
                       v-model="filtro_select"
                       @change="filtro('filtro_select')"
                     ></v-select>
+                    <v-divider class="mx-4" inset vertical></v-divider>
+                  </v-col>
+                  <v-col cols="12" md="4" xs="12">
+                    <v-text-field
+                      v-model="filtro_text"
+                      color="green accent-3"
+                      single-line
+                      hide-details
+                      label="Nombre de cliente"
+                      no-data-text="No hay datos disponibles."
+                      @input="filtro('filtro_text')"
+                    ></v-text-field>
                     <v-divider class="mx-4" inset vertical></v-divider>
                   </v-col>
                 </v-row>
@@ -97,8 +98,8 @@
                   <th class="text-left">Producto</th>
                   <th class="text-left">Descripción</th>
                   <th class="text-left">Costo(S/.)</th>
-                  <th class="text-left">Stock</th>
-                  <th class="text-left">Aprobar/Denegar</th>
+                  <th class="text-left">Cantidad</th>
+                  <th class="text-left">Empacar</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,7 +107,7 @@
                   <td>{{ detalle.nombre   }}</td>
                   <td>{{ detalle.descripcion    }}</td>
                   <td>{{ detalle.precio    }}</td>
-                  <td>{{ detalle.stock    }}</td>
+                  <td>{{ detalle.cantidad    }}</td>
                   <td>
                     <v-switch v-model="detalle.estado_switch" :label="getLabelSwitch(detalle.estado_switch)"></v-switch>
                   </td>
@@ -116,7 +117,7 @@
           </v-simple-table>
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="yellow darken-2">Enviar</v-btn>
+          <v-btn block color="yellow darken-2" @click="Guardar_lista()">Guardar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -176,12 +177,8 @@ export default {
     get_listas(){
       let me=this;
       axios.get('api/apiComercianteLista/'+me.id_puesto).then(function(response){
-        console.log();
-        // me.array_listas=[];
-        // me.array_listas=response.data.data;
         me.array_listas=response.data.data;
         me.loading=false;
-        console.log(me.array_listas);
       })
     },getColorEstado(estado){
         if (estado == 'pendiente') return 'red'
@@ -194,7 +191,13 @@ export default {
             me.buscador=me.filtro_text;
           break;
         case 'filtro_date':
-            me.buscador=me.filtro_date;
+          let data= {
+            date:me.filtro_date,
+            id_puesto:me.id_puesto
+          }
+          axios.post('api/apiComercianteLista',{data}).then(function(response){
+            me.array_listas=response.data.data;
+          })
           break
         case 'filtro_select':
             me.buscador=me.filtro_select;
@@ -207,10 +210,52 @@ export default {
       me.dialog_lista=true;
       axios.get('api/apiComercianteDetalleLista/'+item.id_lista+':'+me.id_puesto).then(function(response){
         me.array_detalle_lista=response.data.data;
-        console.log(me.array_detalle_lista);
       })
     },getLabelSwitch(estado_switch){
-        return (estado_switch) ? 'Aprobado' : 'Denegado' ;
+        return (estado_switch) ? 'Listo' : 'Falta' ;
+    },Guardar_lista(){
+      let me = this;
+      Swal.fire({
+        title:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de guardar la lista?</p>",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FDD835",
+        cancelButtonColor: "#00E676",
+        confirmButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+        cancelButtonText:
+          "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+      }).then(result => {
+        if (result.value) {
+          let data=me.array_detalle_lista;
+          axios.post('api/apiComercianteDetalleLista',{data}).then(function(response){
+            if(response){
+              me.dialog_lista=false;
+              me.array_detalle_lista=[];
+              me.mostrar_Toast('Su lista ha sido procesada correctamente','success');
+              me.get_listas();
+            }
+          })
+        }
+      });
+    },mostrar_Toast(mensaje,tipo_icon){
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        }
+      });
+      Toast.fire({
+        icon: tipo_icon,
+        title:
+          "<p style='font-family: Arial, sans-serif'>"+mensaje+"</p>"
+      });
     }
   }
 };

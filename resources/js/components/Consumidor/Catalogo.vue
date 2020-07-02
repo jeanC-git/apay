@@ -108,7 +108,7 @@
                 <v-list-item two-line>
                   <v-list-item-content>
                     <v-list-item-subtitle class="font-weight-bold" v-text="producto.nombre+' - '+producto.descripcion"></v-list-item-subtitle>
-                    <v-list-item-subtitle class="font-weight-bold"
+                    <v-list-item-subtitle class="font-weight-bold text-h4 text-center justify-center"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
                     <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>

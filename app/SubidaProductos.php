@@ -29,17 +29,15 @@ class SubidaProductos extends Model  implements ToCollection
         // $rows [$i][6] ->Imagen
         for ($i=1; $i < count($rows) ; $i++) { 
             $categoria     = DB::table('categorias')
-                            ->select('categorias.id')
-                            ->where('nombre',$rows [$i][5])->first();
-
+                            ->select('categorias.id','categorias.nombre')
+                            ->where('nombre',trim($rows [$i][5]))->first();
             // SUBCATEGORIA
             $id_subca;
             $subcategoria   = DB::table('subcategorias')
                             ->select('subcategorias.id')
                             ->where('id_categoria','=',$categoria->id)
-                            ->where('nombre','=',$rows [$i][4])
+                            ->where('nombre','=',trim($rows [$i][4]))
                             ->first();
-            
             if(isset($subcategoria->id)){
                 $id_subca=$subcategoria->id;
             }else{

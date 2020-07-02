@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 class PostTableProductos extends Seeder
 {
-    /**
+    /**P
      * Run the database seeds.
      *
      * @return void
@@ -17,6 +17,7 @@ class PostTableProductos extends Seeder
                 ['nombre' => 'Carnes'],
                 ['nombre' => 'Marinos'],
                 ['nombre' => 'Abarrotes'],
+                ['nombre' => 'Lácteos'],
             ]);
             $categorias = DB::table('categorias')->get();
             foreach ($categorias as $categoria) {
