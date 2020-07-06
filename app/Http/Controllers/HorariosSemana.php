@@ -8,17 +8,22 @@ use Illuminate\Http\Request;
 
 class HorariosSemana extends Controller
 {
+    public function __construct (){
+        Carbon::setLocale('es');
+    }
+
     public function crearHorarioSemana  ()
     {
         // PRIMER DIA SIGUIENTE SEMANA
         $primer_dia_nextWeek_validar = Carbon::now()->addWeek()->startOfWeek();
         // SABADO DE LA SIGUIENTE SEMANA
         $sabado_validar_nextWeek = Carbon::now()->addWeek()->endOfWeek()->subDay();
+        $hora_actual= Carbon::now();
 
         $validar = Horario::where('fecha_inicio', $primer_dia_nextWeek_validar->format('Y-m-d').' 08:00:00')->get();
 
         if (count($validar)) {
-            $mensaje = 'Los horarios de la semana '.$primer_dia_nextWeek_validar->format('d-m-Y').' al '.$sabado_validar_nextWeek->format('d-m-Y').' ya fueron creados';
+            $mensaje = 'Los horarios de la semana '.$primer_dia_nextWeek_validar->format('d-m-Y').' al '.$sabado_validar_nextWeek->format('d-m-Y').' ya fueron creados | '.$hora_actual->format('d-m-Y H:i:s');
             return response()->json($mensaje, 200);
         } else {
             $horarios_creados = collect();

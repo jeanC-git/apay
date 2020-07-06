@@ -73,7 +73,7 @@ class ApiProductosConsumidor extends Controller
                 $saved = $detalle_lista->save();
                 $id_usuario_comerciante=Comerciante::find($arrayxcomerciante[$i]['id_comerciante']);
                 if($i==0){
-                    broadcast( new ListaRecibida('EL puesto #'.$arrayxcomerciante[$i]['numero_puesto'].' ha recibido una lista',$id_usuario_comerciante->id_user));
+                    broadcast( new ListaRecibida('El puesto #'.$arrayxcomerciante[$i]['numero_puesto'].' ha recibido una lista',$id_usuario_comerciante->id_user));
                     $notificaciones = new Notificaciones();
                     $notificaciones->mensaje = 'Acaba de recibir un nuevo pedido';
                     $notificaciones->tipo = '1';
