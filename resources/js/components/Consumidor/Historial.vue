@@ -64,7 +64,7 @@
                     v-model="buscador"
                     append-icon="mdi-magnify"
                     color="green accent-3"
-                    label="Buscador"
+                    label="Escribe código..."
                     single-line
                     hide-details
                   ></v-text-field>
@@ -74,12 +74,12 @@
           </template>
           <template v-slot:item.estado="{item }">
             <div class="text-center">
-              <v-btn rounded color="teal accent-4" dark small>{{ item.pendientes}} pendiente(s)</v-btn>
-              <v-btn rounded color="green accent-3" dark small>{{ item.aceptados}} aceptado(s)</v-btn>
+              <v-btn class="mx-2 my-2" rounded color="teal accent-4" dark small>{{ item.pendientes}} pendiente(s)</v-btn>
+              <v-btn class="mx-2 my-2" rounded color="green accent-3" dark small>{{ item.aceptados}} aceptado(s)</v-btn>
             </div>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon small @click="verDetallesxLista(item)">mdi-eye</v-icon>
+            <v-icon small @click="verDetallesxLista(item)" color="green accent-3">mdi-eye</v-icon>
           </template>
         </v-data-table>
       </v-col>
@@ -91,7 +91,7 @@
           Lista #{{verlista.id}} - Código : {{verlista.codigo_lista}}
           <v-spacer></v-spacer>
           <v-btn text @click="modal_DetalleLista = false">
-            <v-icon>mdi-close</v-icon>
+            <v-icon color="green accent-3">mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>

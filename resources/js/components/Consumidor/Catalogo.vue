@@ -111,8 +111,8 @@
                     <v-list-item-subtitle class="font-weight-bold text-h4 text-center justify-center"
                       v-text="'S/. '+producto.precio+' x '+ producto.unidad"
                     >Precio</v-list-item-subtitle>
-                    <v-list-item-subtitle v-if="producto.disabled">No disponible</v-list-item-subtitle>
-                    <v-list-item-subtitle v-else>Disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle color="white--text" v-if="producto.disabled">No disponible</v-list-item-subtitle>
+                    <v-list-item-subtitle v-else color="white--text">Disponible</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-card-text>
@@ -160,7 +160,7 @@
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text color="grey darken-3" @click="get_horario()" v-text="'Procesar'"></v-btn>
+            <v-btn rounded color="grey darken-3" @click="get_horario()">Procesar</v-btn>
           </v-toolbar-items>
           <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
             <v-icon>mdi-close</v-icon>
@@ -303,6 +303,7 @@
               </v-col>
             </v-row>
           </v-container>
+          <v-spacer></v-spacer>
           <v-card-actions>
             <v-btn type="submit" block color="green accent-3" dark>Enviar lista</v-btn>
           </v-card-actions>
@@ -564,8 +565,8 @@ export default {
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#FDD835",
+          cancelButtonColor: "#00E676",
           confirmButtonText:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
           cancelButtonText:
