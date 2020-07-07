@@ -160,7 +160,7 @@
           <v-toolbar-title>Lista de compras</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text color="grey darken-3" @click="get_horario()" v-text="'Procesar'"></v-btn>
+            <v-btn rounded color="grey darken-3" @click="get_horario()">Procesar</v-btn>
           </v-toolbar-items>
           <v-btn icon dark @click="dialog_productos = false" color="green accent-4">
             <v-icon>mdi-close</v-icon>
@@ -564,8 +564,8 @@ export default {
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>¿Estás seguro de enviar tu lista de compras?</p>",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
+          confirmButtonColor: "#FDD835",
+          cancelButtonColor: "#00E676",
           confirmButtonText:
             "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
           cancelButtonText:

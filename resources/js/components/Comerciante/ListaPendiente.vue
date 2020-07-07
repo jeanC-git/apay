@@ -82,7 +82,7 @@
               <v-chip :color="getColorEstado(item.estado_lista)" dark v-text="item.estado_lista"></v-chip>
             </template>
             <template v-slot:item.actions="{ item }">
-              <v-icon small @click="abrir_modal(item)">mdi-eye</v-icon>
+              <v-icon color="green accent-3" small @click="abrir_modal(item)">mdi-eye</v-icon>
             </template>
           </v-data-table>
         </v-col>
@@ -91,7 +91,7 @@
     <v-dialog v-model="dialog_lista" max-width="600px">
       <v-card>
         <v-card-text>
-          <v-simple-table fixed-header height="300px">
+          <v-simple-table fixed-header height="400px">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -109,7 +109,7 @@
                   <td>{{ detalle.precio    }}</td>
                   <td>{{ detalle.cantidad    }}</td>
                   <td>
-                    <v-switch v-model="detalle.estado_switch" :label="getLabelSwitch(detalle.estado_switch)"></v-switch>
+                    <v-switch color="green accent-3" v-model="detalle.estado_switch" :label="getLabelSwitch(detalle.estado_switch)"></v-switch>
                   </td>
                 </tr>
               </tbody>
