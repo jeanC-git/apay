@@ -80,6 +80,7 @@
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="verDetallesxLista(item)" color="green accent-3">mdi-eye</v-icon>
+            <v-icon small color="green accent-4">mdi-delete</v-icon>
           </template>
         </v-data-table>
       </v-col>
@@ -87,7 +88,7 @@
     <!-- MODAL DETALLE LISTAS -->
     <v-dialog v-model="modal_DetalleLista" max-width="50%">
       <v-card>
-        <v-card-title class="headline">
+        <v-card-title class="headline teal--text">
           Lista #{{verlista.id}} - Código : {{verlista.codigo_lista}}
           <v-spacer></v-spacer>
           <v-btn text @click="modal_DetalleLista = false">
