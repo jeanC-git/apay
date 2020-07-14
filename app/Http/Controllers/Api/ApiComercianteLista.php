@@ -57,12 +57,22 @@ class ApiComercianteLista extends Controller
             ->join('horario','horario.id','=','listas.id_horario')
             ->groupBy('detalle_listas.id_lista')
         ->get();
-        foreach ($listas as  $value) {
 
-            if ($value->contador_detalles!==(2*$value->total_lista)) {
+        foreach ($listas as  $value) {
+            $contador_detalles= $value->contador_detalles;
+            $total_lista=$value->total_lista;
+            $prueba=  $total_lista / $contador_detalles;
+            $value["modulo"]=$prueba;
+            if ($prueba!==2) {
                 $value["estado_lista"]='PENDIENTE';
             }else{
                 $value["estado_lista"]='REVISADO';
+            }
+            if($value->estado==3 && $value["estado_lista"]=='PENDIENTE'){
+                $value["estado_lista"]="ENTREGADO INCOMPLETO";
+            }
+            if($value->estado==3 && $value["estado_lista"]=='REVISADO'){
+                $value["estado_lista"]="ENTREGADO COMPLETO";
             }
         }
 
@@ -89,10 +99,20 @@ class ApiComercianteLista extends Controller
                 ->get();
 
                 foreach ($listas as  $value) {
-                    if ($value->contador_detalles!==(2*$value->total_lista)) {
-                        $value["estado_lista"]='PENDIENTE';
+                    if($value->estado==3){
+                        $value["estado_lista"]='ENTREGADO';
+                        $value["disable_boton"]=true;
                     }else{
-                        $value["estado_lista"]='REVISADO';
+                        $contador_detalles= $value->contador_detalles;
+                        $total_lista=$value->total_lista;
+                        $prueba=  $total_lista / $contador_detalles;
+                        $value["modulo"]=$prueba;
+                        if ($prueba==2) {
+                            $value["estado_lista"]='REVISADO';
+                        }else{
+                            $value["estado_lista"]='PENDIENTE';
+                        }
+                        $value["disable_boton"]=false;
                     }
                 }
         return response()->json(['data' => $listas]);
