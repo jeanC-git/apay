@@ -86,7 +86,15 @@
           <template v-slot:item.actions="{ item }">
             <v-tooltip v-model="item.show1" top>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn small dense rounded @click="abrir_modal(item)" v-bind="attrs" v-on="on">
+                <v-btn
+                  small
+                  dense
+                  rounded
+                  @click="abrir_modal(item)"
+                  v-bind="attrs"
+                  v-on="on"
+                  color="green accent-1"
+                >
                   <v-icon small>mdi-eye</v-icon>
                 </v-btn>
               </template>
@@ -98,7 +106,7 @@
                   small
                   dense
                   rounded
-                  color="green accent-1"
+                  color="green accent-3"
                   @click="confirmarRecojo(item)"
                   v-bind="attrs"
                   v-on="on"
@@ -115,7 +123,7 @@
     <v-dialog v-model="dialog_lista" max-width="600px">
       <v-card>
         <v-card-text>
-          <v-simple-table fixed-header height="300px">
+          <v-simple-table fixed-header height="400px">
             <template v-slot:default>
               <thead>
                 <tr>
@@ -134,6 +142,7 @@
                   <td>{{ detalle.cantidad }}</td>
                   <td>
                     <v-switch
+                      color="green accent-3"
                       v-model="detalle.estado_switch"
                       :label="getLabelSwitch(detalle.estado_switch)"
                     ></v-switch>
@@ -345,18 +354,18 @@ export default {
               id_comerciante: vue.id_comerciante,
               id_puesto: vue.id_puesto
             })
-            .then(response => {
-              console.log(response.data);
-            })
+            .then(response => {})
 
             .catch(error => {
               console.log(error);
             });
-          Swal.fire(
-            "<p style='font-family: Arial, sans-serif'>Productos recogidos</p>",
-            "",
-            "success"
-          );
+          Swal.fire({
+            title:
+              "<p style='font-family: Arial, sans-serif'>Productos recogidos</p>",
+            icon: "success",
+            confirmButtonText:
+              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>"
+          });
         }
       });
     }

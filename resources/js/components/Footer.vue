@@ -22,12 +22,14 @@
 
       <v-card-text class="white--text pt-0">
       Equipo de Apay para el desarrollo de aplicativos en mercados tradicionales.
+      Realizado con <v-icon>mdi-vuetify</v-icon> y <strong>VueJS</strong>
       </v-card-text>
 
       <v-divider color="white"></v-divider>
 
       <v-card-text class="white--text">
         {{ new Date().getFullYear() }} — <strong>Curso de Integrador</strong>
+        <v-icon>mdi-heart</v-icon>
       </v-card-text>
     </v-card>
   </v-footer>
