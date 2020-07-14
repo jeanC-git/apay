@@ -16,7 +16,7 @@ class CreateDetalleListasTable extends Migration
         Schema::create('detalle_listas', function (Blueprint $table) {
             $table->id();
             $table->Integer('estado');
-            $table->Integer('precio');
+            $table->double('precio', 12, 2);
             $table->Integer('cantidad');
             $table->bigInteger('id_comerciante_producto')->unsigned();
             $table->bigInteger('id_lista')->unsigned();

@@ -41,9 +41,11 @@ class ApiComercianteLista extends Controller
         $fecha_inicio = $request["data"]["date"];
         $id_puesto= $request["data"]["id_puesto"];
         $listas=Comerciante_productos::
-            select(DB::raw('count(*) as contador_detalles, detalle_listas.id_lista'),DB::raw('SUM(detalle_listas.estado) as total_lista'),'detalle_listas.id_lista','listas.codigo_lista','detalle_listas.estado','users.name','horario.fecha_inicio')
+            select(DB::raw('count(*) as contador_detalles, detalle_listas.id_lista'),
+            DB::raw('SUM(detalle_listas.estado) as total_lista'),'detalle_listas.id_lista','listas.codigo_lista',
+            'detalle_listas.estado','users.name','horario.fecha_inicio')
             ->where('id_puesto',$id_puesto);
-            
+
         if(!empty($fecha_inicio)){
             $listas  = $listas->whereBetween('horario.fecha_inicio',[$fecha_inicio.' 08:00:00',$fecha_inicio.' 19:00:00']);
         }
@@ -56,6 +58,7 @@ class ApiComercianteLista extends Controller
             ->groupBy('detalle_listas.id_lista')
         ->get();
         foreach ($listas as  $value) {
+
             if ($value->contador_detalles!==(2*$value->total_lista)) {
                 $value["estado_lista"]='pendiente';
             }else{
@@ -85,17 +88,13 @@ class ApiComercianteLista extends Controller
                 ->groupBy('detalle_listas.id_lista')
                 ->get();
 
-        foreach ($listas as  $value) {
-            $contador_detalles= $value->contador_detalles;
-            $total_lista=$value->total_lista;
-            $prueba=  $total_lista / $contador_detalles;
-            $value["modulo"]=$prueba;
-            if ($prueba!==2) {
-                $value["estado_lista"]='pendiente';
-            }else{
-                $value["estado_lista"]='revisado';
-            }
-        }
+                foreach ($listas as  $value) {
+                    if ($value->contador_detalles!==(2*$value->total_lista)) {
+                        $value["estado_lista"]='PENDIENTE';
+                    }else{
+                        $value["estado_lista"]='REVISADO';
+                    }
+                }
         return response()->json(['data' => $listas]);
     }
     /**
@@ -116,9 +115,34 @@ class ApiComercianteLista extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // ACTUALIZAR ESTADO DE LOS PRODUCTOS QUE LE PERTENECEN A UN COMERCIANTE A RECOGIDO
     public function update(Request $request, $id)
     {
-        //
+        $data = (object) $request->all();
+
+        $id_detalles_listas = Detalle_listas::
+                            join('comerciante_productos' , 'comerciante_productos.id', '=', 'detalle_listas.id_comerciante_producto')
+                            ->join('puestos' , 'puestos.id', '=', 'comerciante_productos.id_puesto')
+                            ->join('listas' , 'listas.id', '=', 'detalle_listas.id_lista')
+                            ->where('detalle_listas.estado', '=', 2)
+                            ->where('detalle_listas.id_lista', '=', $id)
+                            ->where('comerciante_productos.id_comerciante', '=', $data->id_comerciante)
+                            ->where('puestos.id', '=', $data->id_puesto)
+                            ->select('detalle_listas.id')
+                            ->get();
+
+        foreach ($id_detalles_listas as $key => $value) {
+
+            $det_lista_update = Detalle_listas::find($value->id);
+            $det_lista_update->estado = 3; // ESTADO 3 : PRODUCTO RECOGIDO
+            $det_lista_update->save();
+        }
+
+        return  response()->json([
+            'data' => 'Ok :D'
+        ], 200);
+
+
     }
 
     /**

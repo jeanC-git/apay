@@ -14,7 +14,7 @@
           no-data-text="No hay lista de pedidos para mostrar, verifique la fecha o intente con otra código de lista en el buscador."
         >
           <template v-slot:top>
-            <v-container>
+            <div class="ml-3 mr-3">
               <v-row>
                 <v-col cols="12" md="12" xs="12" style="display: flex;align-items: center;">
                   <v-toolbar color="yellow darken-2">
@@ -70,7 +70,7 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-            </v-container>
+            </div>
           </template>
           <template v-slot:item.estado="{item }">
             <div class="text-center">
@@ -84,6 +84,7 @@
         </v-data-table>
       </v-col>
     </v-row>
+
     <!-- MODAL DETALLE LISTAS -->
     <v-dialog v-model="modal_DetalleLista" max-width="50%">
       <v-card>
