@@ -60,9 +60,9 @@ class ApiComercianteLista extends Controller
         foreach ($listas as  $value) {
 
             if ($value->contador_detalles!==(2*$value->total_lista)) {
-                $value["estado_lista"]='pendiente';
+                $value["estado_lista"]='PENDIENTE';
             }else{
-                $value["estado_lista"]='revisado';
+                $value["estado_lista"]='REVISADO';
             }
         }
 

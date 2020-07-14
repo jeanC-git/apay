@@ -74,13 +74,53 @@
           </template>
           <template v-slot:item.estado="{item }">
             <div class="text-center">
-              <v-btn class="mx-2 my-2" rounded color="teal accent-4" dark small>{{ item.pendientes}} pendiente(s)</v-btn>
-              <v-btn class="mx-2 my-2" rounded color="green accent-3" dark small>{{ item.aceptados}} aceptado(s)</v-btn>
+              <v-btn
+                class="mx-2 my-2"
+                rounded
+                color="teal accent-4"
+                dark
+                small
+              >{{ item.pendientes}} pendiente(s)</v-btn>
+              <v-btn
+                class="mx-2 my-2"
+                rounded
+                color="green accent-3"
+                dark
+                small
+              >{{ item.aceptados}} aceptado(s)</v-btn>
             </div>
           </template>
           <template v-slot:item.actions="{ item }">
-            <v-icon small @click="verDetallesxLista(item)" color="green accent-3">mdi-eye</v-icon>
-            <v-icon small color="green accent-4">mdi-delete</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  @click="verDetallesxLista(item)"
+                  v-bind="attrs"
+                  color="green accent-2"
+                  v-on="on"
+                >mdi-eye</v-icon>
+              </template>
+              <span>Ver detalles</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  @click="cambiarHorario(item)"
+                  v-bind="attrs"
+                  color="green accent-4"
+                  v-on="on"
+                >mdi-calendar</v-icon>
+              </template>
+              <span>Cambiar horario</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" color="green accent-3" v-on="on">mdi-delete</v-icon>
+              </template>
+              <span>Eliminar lista</span>
+            </v-tooltip>
           </template>
         </v-data-table>
       </v-col>
@@ -133,6 +173,42 @@
         </v-card-actions>-->
       </v-card>
     </v-dialog>
+
+    <v-dialog v-model="cambiar_horario_dialog" max-width="50%">
+      <v-card>
+        <v-card-title>Cambiar fecha de recojo</v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12" lg="12" md="12" sm="12">
+              <v-date-picker
+                v-model="date"
+                full-width
+                :landscape="$vuetify.breakpoint.smAndUp"
+                class="mt-4"
+                :min="date"
+                :max="fecha_fin_calendar"
+                @change="cambiar_horarioXfecha()"
+              ></v-date-picker>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" lg="12" md="12" sm="12">
+              <v-select
+                :items="arrayHorario"
+                color="green accent-2"
+                item-text="hora_inicio"
+                item-value="id"
+                label="Hora de recojo"
+                outlined
+                v-model="hora_recojo"
+                item-disabled="disabled"
+                required
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -145,6 +221,9 @@ export default {
     vue.getListasxConsumidor();
   },
   data: () => ({
+    hora_recojo: "",
+    arrayHorario: [],
+    cambiar_horario_dialog: false,
     modal_DetalleLista: false,
     verlista: [],
     rules: {},
@@ -173,7 +252,11 @@ export default {
       { text: "Acciones", value: "actions", sortable: false, align: "center" }
     ],
     arrayListasConsumidor: [],
-    arrayDetallexLista: []
+    arrayDetallexLista: [],
+    arrayHorario: [],
+    fecha_ini_calendar: "",
+    fecha_fin_calendar: "",
+    date: ""
   }),
   methods: {
     hoyFecha() {
@@ -228,6 +311,29 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    cambiarHorario(item) {
+      let vue = this;
+      vue.cambiar_horario_dialog = true;
+      console.log(item);
+      axios
+        .get("api/apiHorario")
+        .then(response => {
+          console.log(response.data);
+          vue.arrayHorario = response.data.data;
+          vue.date = response.data.fecha_ini;
+          vue.fecha_ini_calendar = response.data.fecha_ini;
+          vue.fecha_fin_calendar = response.data.fecha_fin;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    cambiar_horarioXfecha() {
+      let vue = this;
+      axios.get("api/apiHorario/" + vue.date).then(function(response) {
+        vue.arrayHorario = response.data.data;
+      });
     }
   }
 };

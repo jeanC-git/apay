@@ -21,7 +21,7 @@ class ApiHorario extends Controller
         $date_now = Carbon::now();
         $date_tomorrow= $date_now->addDay();
         $date_tomorrow_format=$date_tomorrow->isoFormat('dddd');
-        
+
         $fecha_ini = $date_tomorrow->isoFormat('Y-MM-DD 08:00:00');
         $fecha_fin = Carbon::now()->endOfWeek()->sub('1 day')->isoFormat('Y-MM-DD 17:00:00');
         $horarios;
@@ -34,11 +34,11 @@ class ApiHorario extends Controller
             $horarios = Horario::whereBetween('fecha_inicio',[$fecha_ini,$fecha_fin])->get();
         }
         $horarios_day=array();
-        for ($i=0; $i < count($horarios) ; $i++) { 
+        for ($i=0; $i < count($horarios) ; $i++) {
             $hora_inicio    = strstr($horarios[$i]->fecha_inicio, ' ');
             $hora_fin       = strstr($horarios[$i]->fecha_fin, ' ');
             $disabled = ($horarios[$i]->cupo==0) ? true : false ;
-                
+
             $horarios_day[$i]=[
                 "hora_inicio"=> $hora_inicio.' - '.$horarios[$i]->cupo.' cupo(s)',
                 "hora_fin"   => $hora_fin,
@@ -78,16 +78,16 @@ class ApiHorario extends Controller
      */
     public function show($id)
     {
-        //ID-> Es la fecha de inicio 
+        //ID-> Es la fecha de inicio
         $fecha_ini=$id.' 08:00:00';
         $fecha_fin_day=$id.' 17:00:00';
         $horarios = Horario::whereBetween('fecha_inicio',[$fecha_ini,$fecha_fin_day])->get();
         $horarios_day=array();
-        for ($i=0; $i < count($horarios) ; $i++) { 
+        for ($i=0; $i < count($horarios) ; $i++) {
             $hora_inicio    = strstr($horarios[$i]->fecha_inicio, ' ');
             $hora_fin       = strstr($horarios[$i]->fecha_fin, ' ');
             $disabled = ($horarios[$i]->cupo==0) ? true : false ;
-                
+
             $horarios_day[$i]=[
                 "hora_inicio"=> $hora_inicio.' - '.$horarios[$i]->cupo.' cupo(s)',
                 "hora_fin"   => $hora_fin,

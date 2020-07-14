@@ -108,7 +108,23 @@ class ApiConsumidorLista extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        dd($data);
+
+        $lista = Listas::find($id);
+
+        $lista->id_horario = $data->id_horario;
+
+        $listas->save();
+
+
+
+        return response()->json([
+            'data' => 'Ok :D'
+        ], 200);
+
+
     }
 
     /**
