@@ -51,7 +51,7 @@
                   </v-menu>
                   <v-divider class="mx-4" inset vertical></v-divider>
                 </v-col>
-                <v-col cols="12" md="4" xs="12">
+                <!-- <v-col cols="12" md="4" xs="12">
                   <v-select
                     single-line
                     hide-details
@@ -64,7 +64,7 @@
                     @change="filtro('filtro_select')"
                   ></v-select>
                   <v-divider class="mx-4" inset vertical></v-divider>
-                </v-col>
+                </v-col> -->
                 <v-col cols="12" md="4" xs="12">
                   <v-text-field
                     v-model="filtro_text"
@@ -90,6 +90,7 @@
                   small
                   dense
                   rounded
+                  :disabled="item.disable_boton"
                   @click="abrir_modal(item)"
                   v-bind="attrs"
                   v-on="on"
@@ -107,6 +108,7 @@
                   dense
                   rounded
                   color="green accent-3"
+                  :disabled="item.disable_boton"
                   @click="confirmarRecojo(item)"
                   v-bind="attrs"
                   v-on="on"
@@ -226,7 +228,7 @@ export default {
     },
     getColorEstado(estado) {
       if (estado == "PENDIENTE") return "red";
-      else if (estado == "REVISADO") return "green";
+      else if (estado == "REVISADO") return "#607D8B";
       else return "green";
     },
     filtro(buscar) {
@@ -354,8 +356,9 @@ export default {
               id_comerciante: vue.id_comerciante,
               id_puesto: vue.id_puesto
             })
-            .then(response => {})
-
+            .then(response => {
+              vue.get_listas();
+            })
             .catch(error => {
               console.log(error);
             });
