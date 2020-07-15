@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Listas;
+use App\Horario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -85,6 +86,17 @@ class ApiCambiarHorario extends Controller
 
         $lista = Listas::find($id);
 
+    // RETORNAMOS EL CUPO AL ANTIGUO HORARIO
+        $horario = Horario::find($lista->id_horario);
+        $horario->cupo = $horario->cupo+1;
+        $horario->save();
+
+    // DISMINUIMOS EL CUPO AL NUEVO HORARIO
+        $nuevo_horario = Horario::find($data->id);
+        $nuevo_horario->cupo =  $nuevo_horario->cupo-1;
+        $nuevo_horario->save();
+
+    // ACTUALIZAMOS EL ID DE HORARIO DE LA NUEVA LISTA
         $lista->id_horario = $data->id;
         $lista->save();
 
