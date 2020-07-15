@@ -81,7 +81,18 @@ class ApiCambiarHorario extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = (object) $request->all();
+
+        $lista = Listas::find($id);
+
+        $lista->id_horario = $data->id;
+        $lista->save();
+
+        return response()->json([
+            'data' => 'OK :D'
+        ], 200);
+
+
     }
 
     /**
