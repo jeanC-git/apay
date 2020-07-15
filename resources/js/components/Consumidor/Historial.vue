@@ -117,7 +117,7 @@
 
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
-                <v-icon v-bind="attrs" color="green accent-3" v-on="on">mdi-delete</v-icon>
+                <v-icon @click="verificar_eliminar(item.id)" v-bind="attrs" color="green accent-3" v-on="on">mdi-delete</v-icon>
               </template>
               <span>Eliminar lista</span>
             </v-tooltip>
@@ -333,6 +333,44 @@ export default {
       let vue = this;
       axios.get("api/apiHorario/" + vue.date).then(function(response) {
         vue.arrayHorario = response.data.data;
+      });
+    },verificar_eliminar(id){
+      let me=this;
+      let data = {
+        id:id
+      }
+      var html = `<p style='font-family: Arial, sans-serif'>Si acepta perdera todos sus productos y su horario de recojo.<br>
+      Esta acción no se puede revertir</p>`;
+      axios.post("api/apiConsumidorLista/",{data}).then(function(response) {
+        let respuesta= response.data;
+        if(respuesta){
+          Swal.fire({
+            title:
+              "<p style='font-family: Arial, sans-serif'>¿Está seguro de eliminar tu lista?</p>",
+            html: html,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FDD835",
+            cancelButtonColor: "#00E676",
+            confirmButtonText:
+              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>",
+            cancelButtonText:
+              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Cancelar</p>"
+          }).then(result => {
+            if (result.value) {
+              axios.delete('api/apiConsumidorLista/'+id).then(function(response) {
+                me.getListasxConsumidor();
+              })
+            }
+          });
+        }else{
+          Swal.fire({
+            icon: 'warning',
+            title: 'Su pedido ya ha sido aceptado por los comerciante, no puede eliminar su lista.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
       });
     }
   }

@@ -36,7 +36,8 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($id);
+
     }
 
     /**
@@ -98,6 +99,7 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function destroy($id)
     {
-        //
+       
+        dd($id);
     }
 }

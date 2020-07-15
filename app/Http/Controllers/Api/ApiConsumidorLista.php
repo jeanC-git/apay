@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Listas;
+use App\Horario;
 use Carbon\Carbon;
 use App\Consumidor;
+use App\Comerciante;
 use App\Detalle_listas;
 use Illuminate\Http\Request;
+use App\Comerciante_productos;
 use App\Http\Controllers\Controller;
 
 class ApiConsumidorLista extends Controller
@@ -42,7 +45,15 @@ class ApiConsumidorLista extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $detalle=Detalle_listas::where('id_lista', $request->data['id'])->get();
+        foreach ($detalle as $value) {
+            if($value->estado==3){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
 
     /**
@@ -116,7 +127,7 @@ class ApiConsumidorLista extends Controller
 
         $lista->id_horario = $data->id_horario;
 
-        $listas->save();
+        $lista->save();
 
 
 
@@ -135,6 +146,30 @@ class ApiConsumidorLista extends Controller
      */
     public function destroy($id)
     {
-        //
+        $listas = Listas::where('listas.id',$id)->join('horario', 'horario.id', '=', 'listas.id_horario')
+                    ->select('listas.created_at AS fecha_lista',
+                    'listas.codigo_lista', 'listas.total_lista','horario.id as horario_id', 'horario.fecha_fin', 'horario.fecha_inicio', 'listas.id')
+                    ->orderBy('listas.id', 'desc')
+                    ->first();
+       //AUMENTAR CANTIDAD DE PERSONAS
+        $horario= Horario::find($listas->horario_id);
+        $horario->cupo=$horario->cupo+1;
+        $horario->save();
+        // ELIMINAR DETALLES LISTAS
+        $detalles= Detalle_listas::where('id_lista',$id)->join('comerciante_productos', 'comerciante_productos.id', '=', 'detalle_listas.id_comerciante_producto')
+        ->join('puestos', 'puestos.id', '=', 'comerciante_productos.id_puesto')
+        ->join('comerciantes', 'comerciantes.id', '=', 'puestos.id_comerciante')
+        ->join('users', 'users.id', '=', 'comerciantes.id_user')
+        ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')
+        ->select('productos.*','detalle_listas.*')
+        ->get();
+        foreach ($detalles as $value) {
+            $com_pro = Comerciante_productos::find($value->id_comerciante_producto);
+            $com_pro->stock = $com_pro->stock + $value->cantidad;
+            $com_pro->save();
+            Detalle_listas::destroy($value->id);
+        }
+        //ELIMINAR LISTA
+        Listas::destroy($id);
     }
 }
