@@ -176,16 +176,24 @@
 
     <v-dialog v-model="cambiar_horario_dialog" max-width="50%">
       <v-card>
-        <v-card-title>Cambiar fecha de recojo</v-card-title>
+        <v-card-title>
+          Cambiar fecha de recojo
+          <v-spacer></v-spacer>
+          <v-btn icon color="green accent-4" @click="cambiar_horario_dialog =false">
+            <v-icon color="green accent-3">mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12" lg="12" md="12" sm="12">
               <v-date-picker
-                v-model="date"
+                v-model="date_now"
                 full-width
+                color="green accent-3"
                 :landscape="$vuetify.breakpoint.smAndUp"
                 class="mt-4"
-                :min="date"
+                locale="es-419"
+                :min="fecha_ini_calendar"
                 :max="fecha_fin_calendar"
                 @change="cambiar_horarioXfecha()"
               ></v-date-picker>
@@ -206,6 +214,11 @@
               ></v-select>
             </v-col>
           </v-row>
+          <v-row>
+            <v-col cols="12" lg="12" md="12" sm="12">
+              <v-btn block color="green accent-4" @click="cambiarHorarioLista()">CAMBIAR HORARIO</v-btn>
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -217,7 +230,6 @@ export default {
   created() {
     let vue = this;
     vue.hoyFecha();
-
     vue.getListasxConsumidor();
   },
   data: () => ({
@@ -256,7 +268,8 @@ export default {
     arrayHorario: [],
     fecha_ini_calendar: "",
     fecha_fin_calendar: "",
-    date: ""
+    date_now: "",
+    id_lista_cambiar_horario: ""
   }),
   methods: {
     hoyFecha() {
@@ -315,13 +328,12 @@ export default {
     cambiarHorario(item) {
       let vue = this;
       vue.cambiar_horario_dialog = true;
-      console.log(item);
+      vue.id_lista_cambiar_horario = item.id;
       axios
         .get("api/apiHorario")
         .then(response => {
-          console.log(response.data);
           vue.arrayHorario = response.data.data;
-          vue.date = response.data.fecha_ini;
+          vue.date_now = response.data.fecha_ini;
           vue.fecha_ini_calendar = response.data.fecha_ini;
           vue.fecha_fin_calendar = response.data.fecha_fin;
         })
@@ -331,9 +343,25 @@ export default {
     },
     cambiar_horarioXfecha() {
       let vue = this;
-      axios.get("api/apiHorario/" + vue.date).then(function(response) {
+      axios.get("api/apiHorario/" + vue.date_now).then(function(response) {
         vue.arrayHorario = response.data.data;
       });
+    },
+    cambiarHorarioLista() {
+      let vue = this;
+      axios
+        .put("api/apiCambiarHorario/" + vue.id_lista_cambiar_horario, {
+          id: vue.hora_recojo
+        })
+        .then(response => {
+          vue.getListasxConsumidor();
+          setTimeout(() => {
+            vue.cambiar_horario_dialog = false;
+          }, 1500);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
