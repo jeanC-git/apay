@@ -298,7 +298,6 @@ export default {
     getListasxConsumidor() {
       let vue = this;
       vue.loading = true;
-
       axios
         .get("api/apiConsumidorLista/" + vue.id_user + ":" + vue.date)
         .then(response => {
@@ -355,7 +354,7 @@ export default {
       Esta acción no se puede revertir</p>`;
       axios.post("api/apiConsumidorLista/",{data}).then(function(response) {
         let respuesta= response.data;
-        if(respuesta){
+        if(respuesta==1){
           Swal.fire({
             title:
               "<p style='font-family: Arial, sans-serif'>¿Está seguro de eliminar tu lista?</p>",
@@ -379,8 +378,7 @@ export default {
           Swal.fire({
             icon: 'warning',
             title: 'Su pedido ya ha sido aceptado por los comerciante, no puede eliminar su lista.',
-            showConfirmButton: false,
-            timer: 1500
+            showConfirmButton: true,
           })
         }
       });

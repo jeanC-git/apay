@@ -45,15 +45,14 @@ class ApiConsumidorLista extends Controller
      */
     public function store(Request $request)
     {
-        $detalle=Detalle_listas::where('id_lista', $request->data['id'])->get();
-        foreach ($detalle as $value) {
-            if($value->estado==3){
-                return false;
-            }else{
-                return true;
+            $detalle=Detalle_listas::where('id_lista', $request->data['id'])->get();
+            foreach ($detalle as $value) {
+                if($value->estado==2){
+                    return 2;
+                }else{
+                    return 1;
+                }
             }
-        }
-        return true;
     }
 
     /**
