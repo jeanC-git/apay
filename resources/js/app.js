@@ -30,11 +30,12 @@ Vue.component('historial-listas', require('./components/Consumidor/Historial.vue
 Vue.component('notificaciones-consumidor', require('./components/Consumidor/NotificacionesConsumidor.vue').default);
 
 
-//REGISTRO DE COMPONENTES SOLO PARA EL EL ADMINISTRADOR
+//REGISTRO DE COMPONENTES SOLO PARA EL ADMINISTRADOR
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);
 Vue.component('comerciantes', require('./components/Administrador/Comerciantes.vue').default);
 Vue.component('precios-admin', require('./components/Administrador/Precios.vue').default);
 Vue.component('subida', require('./components/Administrador/SubidaMasiva.vue').default);
+Vue.component('estadisticas-admin', require('./components/Administrador/Estadisticas.vue').default);
 
 
 const app = new Vue({

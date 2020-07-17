@@ -47,6 +47,10 @@ Route::get('/precios', function () {
 Route::get('/subida_masiva', function () {
     return view('administrador.subida_masiva');
 });
+Route::get('/estadisticas', function () {
+    return view('estadisticas.estadisticas');
+});
+
 //RUTAS AUTENTIFICACION FACEBOOK
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');
 Route::get('auth/{provider}/callback', 'Auth\SocialAuthController@handleProviderCallback');

@@ -89,4 +89,12 @@
         <v-list-item-title>Subida masiva</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
+<v-list-item href="/estadisticas">
+    <v-list-item-icon>
+        <v-icon color="grey darken-4">mdi-chart-bar</v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+        <v-list-item-title>Estadísticas</v-list-item-title>
+    </v-list-item-content>
+</v-list-item>
 @endif
