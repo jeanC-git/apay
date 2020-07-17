@@ -38,6 +38,9 @@ class ApiComercianteDetalleLista extends Controller
         $detalle_listas;
         foreach ($request["data"] as $detalle) {
             $estado = ($detalle['estado_switch']) ? 2 : 1;
+            // if($estado==2){
+            //     broadcast( new ListaRecibida('Uno de sus productos ha sido aceptado',$detalle->id_consumidor));
+            // }
             $detalle_lista = Detalle_listas::find($detalle['id_lista'])->update(['estado' => $estado ]);
         }
         dd($detalle_lista);
