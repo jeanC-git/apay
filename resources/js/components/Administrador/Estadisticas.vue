@@ -3,12 +3,12 @@
     <h4>Reportes del Venta Junio</h4>
     <v-row>
       <v-col cols="12" lg="6" md="6" sm="6">
-        <line-chart
+        <pie-chart
           :chart-data="datacollection"
           :options="chartOptions"
           :styles="estilos"
           :height="350"
-        ></line-chart>
+        ></pie-chart>
       </v-col>
       <v-col cols="12" lg="6" md="6" sm="6">
         <line-chart
@@ -43,10 +43,14 @@
 </template>
 <script>
 import LineChart from "../ChartJs/LineChart";
+import BarChart from "../ChartJs/BarChart";
+import PieChart from "../ChartJs/PieChart";
 
 export default {
   components: {
-    LineChart
+    LineChart,
+    BarChart,
+    PieChart
   },
   data() {
     return {
@@ -81,8 +85,13 @@ export default {
             data: [17, 40, 50, 12, 32, 41]
           },
           {
-            label: "Ventas MAyo",
+            label: "Ventas Mayo",
             backgroundColor: "#FF9066",
+            data: [20, 32, 23, 20, 50, 56]
+          },
+          {
+            label: "Ventas Abril",
+            backgroundColor: "#F29066",
             data: [20, 32, 23, 20, 50, 56]
           }
         ]
