@@ -1,44 +1,47 @@
 <template>
-  <div class="grafico">
-    <h4>Reportes del Venta Junio</h4>
-    <v-row>
-      <v-col cols="12" lg="6" md="6" sm="6">
-        <pie-chart
-          :chart-data="datacollection"
-          :options="chartOptions"
-          :styles="estilos"
-          :height="350"
-        ></pie-chart>
-      </v-col>
-      <v-col cols="12" lg="6" md="6" sm="6">
-        <line-chart
-          :chart-data="datacollection"
-          :options="chartOptions"
-          :styles="estilos"
-          :height="350"
-        ></line-chart>
-      </v-col>
-    </v-row>
-    <h4>Reportes del Venta Junio</h4>
+  <div>
+    <v-toolbar-title class="headline">Reportes de administrador</v-toolbar-title>
+    <div class="grafico">
+      <h4>Reportes del Venta Junio</h4>
+      <v-row>
+        <v-col cols="12" lg="6" md="6" sm="6">
+          <pie-chart
+            :chart-data="datacollection"
+            :options="chartOptions"
+            :styles="estilos"
+            :height="350"
+          ></pie-chart>
+        </v-col>
+        <v-col cols="12" lg="6" md="6" sm="6">
+          <line-chart
+            :chart-data="datacollection"
+            :options="chartOptions"
+            :styles="estilos"
+            :height="350"
+          ></line-chart>
+        </v-col>
+      </v-row>
+      <h4>Reportes del Venta Junio</h4>
 
-    <v-row>
-      <v-col cols="12" lg="6" md="6" sm="6">
-        <line-chart
-          :chart-data="datacollection"
-          :options="chartOptions"
-          :styles="estilos"
-          :height="350"
-        ></line-chart>
-      </v-col>
-      <v-col cols="12" lg="6" md="6" sm="6">
-        <line-chart
-          :chart-data="datacollection"
-          :options="chartOptions"
-          :styles="estilos"
-          :height="350"
-        ></line-chart>
-      </v-col>
-    </v-row>
+      <v-row>
+        <v-col cols="12" lg="6" md="6" sm="6">
+          <line-chart
+            :chart-data="datacollection"
+            :options="chartOptions"
+            :styles="estilos"
+            :height="350"
+          ></line-chart>
+        </v-col>
+        <v-col cols="12" lg="6" md="6" sm="6">
+          <line-chart
+            :chart-data="datacollection"
+            :options="chartOptions"
+            :styles="estilos"
+            :height="350"
+          ></line-chart>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 <script>
