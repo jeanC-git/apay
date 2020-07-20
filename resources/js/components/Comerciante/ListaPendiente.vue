@@ -45,6 +45,7 @@
                     </template>
                     <v-date-picker
                       color="yellow darken-3"
+                      locale="es-419"
                       v-model="filtro_date"
                       @input="menu2 = false,filtro('filtro_date')"
                     ></v-date-picker>
@@ -362,6 +363,7 @@ export default {
           Swal.fire({
             title:
               "<p style='font-family: Arial, sans-serif'>Productos recogidos</p>",
+            confirmButtonColor: "#FDD835",
             icon: "success",
             confirmButtonText:
               "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Aceptar</p>"

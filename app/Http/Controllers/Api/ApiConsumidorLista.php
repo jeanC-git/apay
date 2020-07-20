@@ -65,8 +65,6 @@ class ApiConsumidorLista extends Controller
                     ->orderBy('listas.id', 'desc')
                     ->get();
 
-
-
         foreach ($listas as $value ) {
             $fecha = new Carbon($value->fecha_lista);
             $fecha_recojo_inicio = new Carbon($value->fecha_inicio);
