@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Detalle_listas;
+use App\Listas;
+use App\Horario;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ApiConsumidorDetalleLista extends Controller
+class ApiCambiarHorario extends Controller
 {
+    public function __construct (){
+        Carbon::setLocale('es');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -36,8 +41,7 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function store(Request $request)
     {
-        dd($id);
-
+        //
     }
 
     /**
@@ -48,24 +52,14 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function show($id)
     {
-        $id_lista = $id;
-        $detalle_lista = Detalle_listas::join('comerciante_productos', 'comerciante_productos.id', '=', 'detalle_listas.id_comerciante_producto')
-                            ->join('puestos', 'puestos.id', '=', 'comerciante_productos.id_puesto')
-                            ->join('comerciantes', 'comerciantes.id', '=', 'puestos.id_comerciante')
-                            ->join('users', 'users.id', '=', 'comerciantes.id_user')
-                            ->join('productos', 'productos.id', '=', 'comerciante_productos.id_producto')
-                            ->join('unidades_medidas', 'unidades_medidas.id', '=', 'productos.id_und_medida')
-                            ->where('id_lista', $id_lista)
-                            ->select('detalle_listas.id AS det_lista_id', 'productos.nombre AS producto' ,
-                            'detalle_listas.cantidad AS cantidad', 'puestos.nombre AS nombre_puesto',
-                            'puestos.numero AS num_puesto',
-                            'detalle_listas.estado AS estado', 'unidades_medidas.nombre AS und_medida', 'users.name AS nom_comerciante')
-                            ->orderBy('puestos.id')
-                            ->get();
+        $data_lista = Listas::where('id' , $id)->get();
+
+        $hoy = Carbon::now();
+        $sabado = $hoy->weekday(6);
 
         return response()->json([
-                    'data' => $detalle_lista
-                ]);
+            'data' => $data_lista
+        ], 200);
     }
 
     /**
@@ -88,7 +82,29 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = (object) $request->all();
+
+        $lista = Listas::find($id);
+
+    // RETORNAMOS EL CUPO AL ANTIGUO HORARIO
+        $horario = Horario::find($lista->id_horario);
+        $horario->cupo = $horario->cupo+1;
+        $horario->save();
+
+    // DISMINUIMOS EL CUPO AL NUEVO HORARIO
+        $nuevo_horario = Horario::find($data->id);
+        $nuevo_horario->cupo =  $nuevo_horario->cupo-1;
+        $nuevo_horario->save();
+
+    // ACTUALIZAMOS EL ID DE HORARIO DE LA NUEVA LISTA
+        $lista->id_horario = $data->id;
+        $lista->save();
+
+        return response()->json([
+            'data' => 'OK :D'
+        ], 200);
+
+
     }
 
     /**
@@ -99,7 +115,6 @@ class ApiConsumidorDetalleLista extends Controller
      */
     public function destroy($id)
     {
-       
-        dd($id);
+        //
     }
 }

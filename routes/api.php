@@ -19,10 +19,12 @@ Route::apiResource('apiComercianteProductos', 'Api\ApiComercianteProductos');
 Route::apiResource('apiProductosConsumidor', 'Api\ApiProductosConsumidor');
 Route::apiResource('apiBuscadorProducto', 'Api\ApiBuscadorProducto');
 Route::apiResource('apiHorario', 'Api\ApiHorario');
+Route::apiResource('apiCambiarHorario', 'Api\ApiCambiarHorario');
 Route::apiResource('apiComercianteLista', 'Api\ApiComercianteLista');
 Route::apiResource('apiConsumidorLista', 'Api\ApiConsumidorLista');
 Route::apiResource('apiConsumidorDetalleLista', 'Api\ApiConsumidorDetalleLista');
 Route::apiResource('apiComercianteDetalleLista', 'Api\ApiComercianteDetalleLista');
+
 
 
 Route::apiResource('apiNotificaciones', 'Api\ApiNotificaciones');
