@@ -2,7 +2,7 @@
   <div>
     <v-toolbar-title class="headline">Reportes de comerciante</v-toolbar-title>
     <div class="grafico">
-      <h4>Reportes del Venta Junio</h4>
+      <h4>Reportes de ventas semanal</h4>
       <v-row>
         <v-col cols="12" lg="6" md="6" sm="6">
           <pie-chart
@@ -13,15 +13,15 @@
           ></pie-chart>
         </v-col>
         <v-col cols="12" lg="6" md="6" sm="6">
-          <line-chart
+          <bar-chart
             :chart-data="datacollection"
             :options="chartOptions"
             :styles="estilos"
             :height="350"
-          ></line-chart>
+          ></bar-chart>
         </v-col>
       </v-row>
-      <h4>Reportes del Venta Junio</h4>
+      <h4>Reportes de ventas mensual</h4>
 
       <v-row>
         <v-col cols="12" lg="6" md="6" sm="6">
@@ -83,18 +83,39 @@ export default {
         ],
         datasets: [
           {
-            label: "Ventas Junio",
-            backgroundColor: "#FF0066",
+            label: "Ventas Lunes",
+            backgroundColor: "#FFEE58",
             data: [17, 40, 50, 12, 32, 41]
           },
           {
-            label: "Ventas Mayo",
-            backgroundColor: "#FF9066",
+            label: "Ventas Martes",
+            backgroundColor: "#",
+            backgroundColor: "#FB8C00",
             data: [20, 32, 23, 20, 50, 56]
           },
           {
-            label: "Ventas Abril",
-            backgroundColor: "#F29066",
+            label: "Ventas Miércoles",
+            backgroundColor: "#FBC02D",
+            data: [20, 32, 23, 20, 50, 56]
+          },
+          {
+            label: "Ventas Jueves",
+            backgroundColor: "#424242",
+            data: [20, 32, 23, 20, 50, 56]
+          },
+          {
+            label: "Ventas Viernes",
+            backgroundColor: "#69F0AE",
+            data: [20, 32, 23, 20, 50, 56]
+          },
+          {
+            label: "Ventas Sábado",
+            backgroundColor: "#00E676",
+            data: [20, 32, 23, 20, 50, 56]
+          },
+          {
+            label: "Ventas Domingo",
+            backgroundColor: "#00C853",
             data: [20, 32, 23, 20, 50, 56]
           }
         ]
