@@ -226,9 +226,9 @@ export default {
         });
     },
     getColorEstado(estado) {
-      if (estado == "PENDIENTE") return "red";
-      else if (estado == "REVISADO") return "green";
-      else return "green";
+      if (estado == "PENDIENTE") return "#FFD600";
+      else if (estado == "REVISADO") return "#00E676";
+      else return "#00E676";
     },
     filtro(buscar) {
       let me = this;

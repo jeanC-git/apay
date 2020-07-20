@@ -347,7 +347,8 @@ export default {
         Toast.fire({
           icon: "warning",
           title:
-            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenados correctamente.</p>"
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenados correctamente.</p>",
+            confirmButtonColor: "#FDD835",
         });
       }
     },
@@ -403,7 +404,8 @@ export default {
         Toast.fire({
           icon: "warning",
           title:
-            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>"
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos</p>",
+           confirmButtonColor: "#FDD835"
         });
       }
     },

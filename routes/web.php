@@ -22,6 +22,9 @@ Route::get('/lista-pendiente', function () {
 Route::get('/mis-productos','ComercianteController@Mis_productos');
 Route::post('/comerciante/registrar_puesto','ComercianteController@RegistrarPuesto');
 Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_puestos');
+Route::get('/reporte-comerciante', function () {
+    return view('comerciante.reporte-comerciante');
+});
 // RUTAS CONSUMIDOR
 Route::get('/catalogo', function () {
     return view('consumidor.catalogo');
@@ -46,6 +49,9 @@ Route::get('/precios', function () {
 });
 Route::get('/subida_masiva', function () {
     return view('administrador.subida_masiva');
+});
+Route::get('/reporte-administrador', function () {
+    return view('administrador.reporte-administrador');
 });
 //RUTAS AUTENTIFICACION FACEBOOK
 Route::get('auth/{provider}', 'Auth\SocialAuthController@redirectToProvider')->name('social.auth');

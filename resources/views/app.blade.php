@@ -21,7 +21,6 @@
             <ul>
                 <li><a href="/">Inicio</a></li>
                 <li><a href="#servicios">Servicios</a></li>
-                <li><a href="">Alimentos</a></li>
                 <li><a href="#inicio-sesion">Iniciar Sesión</a></li>
             </ul>
         </div>

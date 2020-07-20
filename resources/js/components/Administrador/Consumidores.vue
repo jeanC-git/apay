@@ -25,9 +25,6 @@
       no-data-text="No hay consumidores para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
       no-results-text="No hay consumidores para mostrar, verifique sus filtros o intente con otra palabra clave en el buscador."
     >
-      <template>
-        <v-icon small color="green accent-4">mdi-delete</v-icon>
-      </template>
     </v-data-table>
   </v-card>
 </template>
@@ -49,9 +46,8 @@ export default {
         sortable: false,
         value: "name"
       },
-      { text: "Correos", value: "email" },
-      { text: "Acciones", value: "actions", sortable: false }
-    ],
+      { text: "Correos", value: "email", stortable: false },
+     ],
     consumidores: []
   }),
 
