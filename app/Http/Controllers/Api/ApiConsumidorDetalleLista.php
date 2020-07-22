@@ -62,8 +62,7 @@ class ApiConsumidorDetalleLista extends Controller
                             'detalle_listas.estado AS estado', 'unidades_medidas.nombre AS und_medida', 'users.name AS nom_comerciante')
                             ->orderBy('puestos.id')
                             ->get();
-
-        return response()->json([
+        return  response()->json([
                     'data' => $detalle_lista
                 ]);
     }

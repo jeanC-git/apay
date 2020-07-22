@@ -46,13 +46,13 @@ class ApiConsumidorLista extends Controller
     public function store(Request $request)
     {
             $detalle=Detalle_listas::where('id_lista', $request->data['id'])->get();
+            $valor=1;;
             foreach ($detalle as $value) {
                 if($value->estado==2){
-                    return 2;
-                }else{
-                    return 1;
+                    $valor=2;
                 }
             }
+            return $valor;
     }
 
     /**
@@ -80,13 +80,24 @@ class ApiConsumidorLista extends Controller
             $fecha_recojo_inicio = new Carbon($value->fecha_inicio);
             $fecha_recojo_fin = new Carbon($value->fecha_fin);
             $value->fecha = $fecha->isoFormat('dddd D [de] MMMM');
-            $value->fecha_recojo = $fecha_recojo_inicio->isoFormat('dddd D [de] MMMM') .' '. $fecha_recojo_inicio->isoFormat('hh:mm:ss a'). ' - ' .$fecha_recojo_fin->isoFormat('hh:mm:ss a');
+            $value->fecha_recojo = $fecha_recojo_inicio->isoFormat('dddd D [de] MMMM') .' '. $fecha_recojo_inicio->isoFormat('hh:mm a'). ' - ' .$fecha_recojo_fin->isoFormat('hh:mm a');
 
             $value->pendientes= 0;
             $value->aceptados= 0;
+            $value->recogidos = 0;
             $detalle_listas= Detalle_listas::where('id_lista', $value->id)->get();
             foreach ($detalle_listas as $valor) {
-                ($valor->estado == '1') ? $value->pendientes++ : $value->aceptados++;
+                switch ($valor->estado) {
+                    case 1:
+                        $value->pendientes++;
+                        break;
+                    case 2:
+                        $value->aceptados++;
+                        break;
+                    case 3:
+                        $value->recogidos++;
+                        break;
+                }
             }
 
         }

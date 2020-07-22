@@ -26,24 +26,27 @@
         :disabled="!isEditing"
         label="Nombres"
         color="green accent-3 red--text"
+        v-model="info_personal.name"
       ></v-text-field>
       <v-text-field
         :disabled="!isEditing"
         label="Apellidos"
         color="green accent-3"
+        v-model="info_personal.lastname"
       ></v-text-field>
       <v-text-field
         :disabled="!isEditing"
         label="Correo electrónico"
         color="green accent-3"
+        v-model="info_personal.email"
       ></v-text-field>
-      <v-text-field
+      <!-- <v-text-field
         :disabled="!isEditing"
         label="Contraseña"
         color="green accent-3"
+        
       ></v-text-field>
       <v-text-field
-        v-model="password"
         color="green accent-3"
         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required, rules.min]"
@@ -52,8 +55,9 @@
         label="Contraseña"
         hint="Más de 8 caracteres"
         counter
+        v-model="info_personal.password"
         @click:append="show1 = !show1"
-          ></v-text-field>
+          ></v-text-field> -->
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions>
@@ -81,8 +85,10 @@
 
 <script>
   export default {
+    props: ["id_user"],
     data () {
       return {
+        info_personal:[],
         show1: false,
         password: 'Password',
         hasSaved: false,
@@ -95,7 +101,18 @@
         },
       }
     },
+    mounted() {
+      this.get_info_personal();
+    },
     methods: {
+      get_info_personal(){
+        let vue = this;
+        axios.get('api/api_Datos_comerciante/'+vue.id_user).then(function(response){
+          let data= response.data.data;
+          vue.info_personal=data;
+          console.log=data;
+        });
+      },
       customFilter (item, queryText, itemText) {
         const textOne = item.name.toLowerCase()
         const textTwo = item.abbr.toLowerCase()
@@ -105,8 +122,11 @@
           textTwo.indexOf(searchText) > -1
       },
       save () {
-        this.isEditing = !this.isEditing
-        this.hasSaved = true
+        let vue=this;
+        axios.post('api/api_Datos_comerciante',{data:vue.info_personal}).then(function(response){
+          this.isEditing = !this.isEditing
+          this.hasSaved = true
+        });
       },
     },
   }

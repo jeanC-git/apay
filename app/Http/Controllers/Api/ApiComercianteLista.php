@@ -69,11 +69,11 @@ class ApiComercianteLista extends Controller
                 $value["estado_lista"]='REVISADO';
             }
             if($value->estado==3 && $value["estado_lista"]=='PENDIENTE'){
-                $value["estado_lista"]="ENTREGADO INCOMPLETO";
+                $value["estado_lista"]="ENTREGADO";
             }
-            if($value->estado==3 && $value["estado_lista"]=='REVISADO'){
-                $value["estado_lista"]="ENTREGADO COMPLETO";
-            }
+            // if($value->estado==3 && $value["estado_lista"]=='REVISADO'){
+            //     $value["estado_lista"]="ENTREGADO COMPLETO";
+            // }
         }
 
         return response()->json(['data' => $listas]);
@@ -95,10 +95,17 @@ class ApiComercianteLista extends Controller
                 ->join('consumidores','consumidores.id','=','listas.id_consumidor')
                 ->join('users','users.id','=','consumidores.id_user')
                 ->join('horario','horario.id','=','listas.id_horario')
+                ->orderBy('detalle_listas.estado', 'desc') 
                 ->groupBy('detalle_listas.id_lista')
                 ->get();
-
+dd($listas);
                 foreach ($listas as  $value) {
+                    $maximo=$value->contador_detalles*2;
+                    $suma = $value->total_lista;
+                    if($maximo>$suma){
+
+                    }
+                    dd($suma);
                     if($value->estado==3){
                         $value["estado_lista"]='ENTREGADO';
                         $value["disable_boton"]=true;
@@ -152,7 +159,6 @@ class ApiComercianteLista extends Controller
                             ->get();
 
         foreach ($id_detalles_listas as $key => $value) {
-
             $det_lista_update = Detalle_listas::find($value->id);
             $det_lista_update->estado = 3; // ESTADO 3 : PRODUCTO RECOGIDO
             $det_lista_update->save();

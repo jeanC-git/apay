@@ -24,7 +24,6 @@ Route::apiResource('apiComercianteLista', 'Api\ApiComercianteLista');
 Route::apiResource('apiConsumidorLista', 'Api\ApiConsumidorLista');
 Route::apiResource('apiConsumidorDetalleLista', 'Api\ApiConsumidorDetalleLista');
 Route::apiResource('apiComercianteDetalleLista', 'Api\ApiComercianteDetalleLista');
-
-
+Route::apiResource('api_Datos_comerciante', 'Api\Api_Datos_comerciante');
 
 Route::apiResource('apiNotificaciones', 'Api\ApiNotificaciones');

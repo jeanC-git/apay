@@ -87,7 +87,14 @@
                 color="green accent-3"
                 dark
                 small
-              >{{ item.aceptados}} aceptado(s)</v-btn>
+              >{{ item.aceptados}} empacado(s)</v-btn>
+              <v-btn
+                class="mx-2 my-2"
+                rounded
+                color="#FCD12A"
+                dark
+                small
+              >{{ item.recogidos}} recogido(s)</v-btn>
             </div>
           </template>
           <template v-slot:item.actions="{ item }">
@@ -158,9 +165,10 @@
                     <div class="text-center">
                       <v-btn
                         rounded
-                        :color="detalle.estado == 1 ? '#E8F5E9' : '#00E676'"
+                        :color="get_color(detalle.estado)"
                         dark
-                      >{{ detalle.estado == 1 ? 'Pendiente' : 'Completo' }}</v-btn>
+                        v-text="get_text(detalle.estado)"
+                      ></v-btn>
                     </div>
                   </td>
                 </tr>
@@ -289,6 +297,34 @@ export default {
         i = "0" + i;
       }
       return i;
+    },get_color(item){
+      let color='';
+      switch (item) {
+        case 1:
+          color='#E8F5E9';
+          break;
+        case 2:
+          color='#00E676'
+          break;
+        case 3: 
+          color='#FCD12A'
+          break;
+      }
+      return color;
+    },get_text(item){
+      let text='';
+      switch (item) {
+        case 1:
+          text='Pendiente';
+          break;
+        case 2:
+          text='Empacado'
+          break;
+        case 3: 
+          text='Recogido'
+          break;
+      }
+      return text;
     },
     deleteItem(item) {
       let me = this;
