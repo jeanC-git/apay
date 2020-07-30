@@ -29,7 +29,7 @@ Vue.component('catalogo', require('./components/Consumidor/Catalogo.vue').defaul
 Vue.component('informacion-personal', require('./components/Consumidor/InfoPersonal.vue').default);
 Vue.component('historial-listas', require('./components/Consumidor/Historial.vue').default);
 Vue.component('notificaciones-consumidor', require('./components/Consumidor/NotificacionesConsumidor.vue').default);
-
+Vue.component('reglas', require('./components/Consumidor/Reglas.vue').default);
 
 //REGISTRO DE COMPONENTES SOLO PARA EL ADMINISTRADOR
 Vue.component('consumidores', require('./components/Administrador/Consumidores.vue').default);

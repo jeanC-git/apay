@@ -23,7 +23,7 @@
         <v-list-item-title>Mi historial</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="#">
+<v-list-item href="/reglas">
     <v-list-item-icon>
         <v-icon color="grey darken-4">mdi-security</v-icon>
     </v-list-item-icon>
