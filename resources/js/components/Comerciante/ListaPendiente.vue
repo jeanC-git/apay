@@ -91,7 +91,6 @@
                   small
                   dense
                   rounded
-                  :disabled="item.disable_boton"
                   @click="abrir_modal(item)"
                   v-bind="attrs"
                   v-on="on"
@@ -156,7 +155,7 @@
           </v-simple-table>
         </v-card-text>
         <v-card-actions>
-          <v-btn block color="yellow darken-2" @click="Guardar_lista()">Guardar</v-btn>
+          <v-btn :disabled="guardar_estado" block color="yellow darken-2" @click="Guardar_lista()">Guardar</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -166,6 +165,7 @@
 export default {
   props: ["id_puesto", "id_comerciante"],
   data: () => ({
+    guardar_estado:false,
     switch2: "",
     select_estado_producto: [
       { text: "Aprobar", id: "1" },
@@ -258,7 +258,6 @@ export default {
     },
     abrir_modal(item) {
       let me = this;
-      me.dialog_lista = true;
       axios
         .get(
           "api/apiComercianteDetalleLista/" + item.id_lista + ":" + me.id_puesto
@@ -266,6 +265,8 @@ export default {
         .then(function(response) {
           me.array_detalle_lista = response.data.data;
         });
+      me.guardar_estado=item.disable_boton;
+      me.dialog_lista = true;
     },
     getLabelSwitch(estado_switch) {
       return estado_switch ? "Listo" : "Falta";

@@ -48,7 +48,7 @@ class ApiConsumidorLista extends Controller
             $detalle=Detalle_listas::where('id_lista', $request->data['id'])->get();
             $valor=1;;
             foreach ($detalle as $value) {
-                if($value->estado==2){
+                if($value->estado==2 || $value->estado==3){
                     $valor=2;
                 }
             }
@@ -81,7 +81,6 @@ class ApiConsumidorLista extends Controller
             $fecha_recojo_fin = new Carbon($value->fecha_fin);
             $value->fecha = $fecha->isoFormat('dddd D [de] MMMM');
             $value->fecha_recojo = $fecha_recojo_inicio->isoFormat('dddd D [de] MMMM') .' '. $fecha_recojo_inicio->isoFormat('hh:mm a'). ' - ' .$fecha_recojo_fin->isoFormat('hh:mm a');
-
             $value->pendientes= 0;
             $value->aceptados= 0;
             $value->recogidos = 0;
@@ -99,12 +98,10 @@ class ApiConsumidorLista extends Controller
                         break;
                 }
             }
-
         }
         return response()->json([
             'data' => $listas
             ]);
-        dd($consumidor->id);
     }
 
     /**

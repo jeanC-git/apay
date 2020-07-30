@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Detalle_listas;
-use Illuminate\Http\Request;
+use App\Consumidor;
+use App\Comerciante;
 
+use App\Detalle_listas;
+use App\Notificaciones;
+use Illuminate\Http\Request;
+use App\Events\ListaRecibida;
 use App\Comerciante_productos;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -59,21 +63,23 @@ class ApiComercianteLista extends Controller
         ->get();
 
         foreach ($listas as  $value) {
-            $contador_detalles= $value->contador_detalles;
-            $total_lista=$value->total_lista;
-            $prueba=  $total_lista / $contador_detalles;
-            $value["modulo"]=$prueba;
-            if ($prueba!==2) {
-                $value["estado_lista"]='PENDIENTE';
+            $maximo=$value->contador_detalles*2;
+            $suma = $value->total_lista;
+            if($value->estado==3){
+                $value["estado_lista"]='ENTREGADO';
+                $value["disable_boton"]=true;
             }else{
-                $value["estado_lista"]='REVISADO';
+                $contador_detalles= $value->contador_detalles;
+                $total_lista=$value->total_lista;
+                $prueba=  $total_lista / $contador_detalles;
+                $value["modulo"]=$prueba;
+                if ($prueba==2) {
+                    $value["estado_lista"]='REVISADO';
+                }else{
+                    $value["estado_lista"]='PENDIENTE';
+                }
+                $value["disable_boton"]=false;
             }
-            if($value->estado==3 && $value["estado_lista"]=='PENDIENTE'){
-                $value["estado_lista"]="ENTREGADO";
-            }
-            // if($value->estado==3 && $value["estado_lista"]=='REVISADO'){
-            //     $value["estado_lista"]="ENTREGADO COMPLETO";
-            // }
         }
 
         return response()->json(['data' => $listas]);
@@ -98,14 +104,9 @@ class ApiComercianteLista extends Controller
                 ->orderBy('detalle_listas.estado', 'desc') 
                 ->groupBy('detalle_listas.id_lista')
                 ->get();
-dd($listas);
                 foreach ($listas as  $value) {
                     $maximo=$value->contador_detalles*2;
                     $suma = $value->total_lista;
-                    if($maximo>$suma){
-
-                    }
-                    dd($suma);
                     if($value->estado==3){
                         $value["estado_lista"]='ENTREGADO';
                         $value["disable_boton"]=true;
@@ -155,15 +156,24 @@ dd($listas);
                             ->where('detalle_listas.id_lista', '=', $id)
                             ->where('comerciante_productos.id_comerciante', '=', $data->id_comerciante)
                             ->where('puestos.id', '=', $data->id_puesto)
-                            ->select('detalle_listas.id')
+                            ->select('detalle_listas.id','comerciante_productos.id_comerciante as id_comerciante','listas.id_consumidor','listas.codigo_lista')
                             ->get();
-
+        $user_destino = Consumidor::where('id',$id_detalles_listas[0]->id_consumidor)->first();
+        $user_remitente = Comerciante::where('id',$id_detalles_listas[0]->id_comerciante)->first();
         foreach ($id_detalles_listas as $key => $value) {
             $det_lista_update = Detalle_listas::find($value->id);
             $det_lista_update->estado = 3; // ESTADO 3 : PRODUCTO RECOGIDO
             $det_lista_update->save();
+            if($key==1){
+                broadcast( new ListaRecibida('Algunos productos de su lista '.$id_detalles_listas[0]->codigo_lista.' han sido recogidos',$user_destino->id_user));
+                $notificaciones = new Notificaciones();
+                $notificaciones->mensaje = 'Algunos productos de su lista '.$id_detalles_listas[0]->codigo_lista.' han sido recogidos';
+                $notificaciones->tipo = '1';
+                $notificaciones->user_destino = $user_destino->id_user;
+                $notificaciones->id_user =$id_detalles_listas[0]->id_comerciante;
+                $notificaciones->save();
+            }   
         }
-
         return  response()->json([
             'data' => 'Ok :D'
         ], 200);

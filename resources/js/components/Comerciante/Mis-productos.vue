@@ -18,84 +18,89 @@
     <!-- EDITAR PRODUCTO -->
     <v-dialog v-model="dialog_editar" max-width="500px">
       <v-card color="grey lighten-3">
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green accent-3" text @click="editarProducto()">
-            <v-icon>mdi-content-save-all</v-icon>
-          </v-btn>
-          <v-btn color="green accent-3" text @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-actions>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col class="d-flex" cols="12" sm="6">
-                <v-select
-                  :items="arrayCategorias"
-                  label="Categoría"
-                  outlined
-                  color="green accent-3"
-                  item-text="nombre"
-                  item-value="id"
-                  v-model="editItem.category"
-                  @change="getSubCategorias('edit')"
-                ></v-select>
-              </v-col>
-              <v-col class="d-flex" cols="12" sm="6">
-                <v-select
-                  :items="arraySubcategoria"
-                  label="Sub-Categoría"
-                  item-text="nombre"
-                  item-value="id"
-                  outlined
-                  color="green accent-3"
-                  v-model="editItem.subcategory"
-                  @change="getProducto('edit')"
-                ></v-select>
-              </v-col>
-              <v-col class="d-flex" cols="12" sm="6">
-                <v-select
-                  :items="arrayProductos"
-                  label="Nombre del producto"
-                  item-text="nombre"
-                  item-value="id"
-                  outlined
-                  color="green accent-3"
-                  v-model="editItem.nombre"
-                  @change="getPrecioXunidad('edit')"
-                ></v-select>
-              </v-col>
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  color="green accent-3"
-                  disabled
-                  class="black--text"
-                  v-model="editItem.descripcion"
-                  label="Descripción del producto"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  color="green accent-3"
-                  disabled
-                  class="red--text"
-                  v-model="editItem.price"
-                  label="Precio"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  color="green accent-3"
-                  v-model="editItem.stock"
-                  :rules="reglas.stock"
-                  :counter="9"
-                  label="Stock"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
+        <v-form ref="form_edit" @submit.prevent="editarProducto()">
+          <v-card-actions>
+            <v-spacer></v-spacer>
+              <v-btn color="green accent-3" text type="submit">
+                <v-icon>mdi-content-save-all</v-icon>
+              </v-btn>
+              <v-btn color="green accent-3" text @click="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+          </v-card-actions>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col class="d-flex" cols="12" sm="6">
+                  <v-select
+                    :items="arrayCategorias"
+                    label="Categoría"
+                    outlined
+                    color="green accent-3"
+                    item-text="nombre"
+                    item-value="id"
+                    :disabled="disable_select"
+                    v-model="editItem.category"
+                    @change="getSubCategorias('edit')"
+                  ></v-select>
+                </v-col>
+                <v-col class="d-flex" cols="12" sm="6">
+                  <v-select
+                    :items="arraySubcategoria"
+                    label="Sub-Categoría"
+                    item-text="nombre"
+                    item-value="id"
+                    outlined
+                    color="green accent-3"
+                    v-model="editItem.subcategory"
+                    :disabled="disable_select"
+                    @change="getProducto('edit')"
+                  ></v-select>
+                </v-col>
+                <v-col class="d-flex" cols="12" sm="6">
+                  <v-select
+                    :items="arrayProductos"
+                    label="Nombre del producto"
+                    item-text="nombre"
+                    item-value="id"
+                    outlined
+                    color="green accent-3"
+                    v-model="editItem.nombre"
+                    :disabled="disable_select"
+                    @change="getPrecioXunidad('edit')"
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field
+                    color="green accent-3"
+                    disabled
+                    class="black--text"
+                    v-model="editItem.descripcion"
+                    label="Descripción del producto"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field
+                    color="green accent-3"
+                    disabled
+                    class="red--text"
+                    v-model="editItem.price"
+                    label="Precio"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="12">
+                  <v-text-field
+                    color="green accent-3"
+                    v-model="editItem.stock"
+                    :rules="reglas.stock"
+                    :counter="4"
+                    label="Stock"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+        </v-form>
       </v-card>
     </v-dialog>
     <!-- CREAR -->
@@ -150,7 +155,7 @@
                     color="green accent-3"
                     v-model="newItem.nombre"
                     :rules="reglas.select"
-                    item-disabled="disabled"
+                    item-disabled="disable_select"
                     @change="getPrecioXunidad('crear')"
                   ></v-select>
                 </v-col>
@@ -193,6 +198,7 @@ export default {
   props: ["id_puesto", "id_comerciante"],
   data() {
     return {
+      disable_select:true,
       arrayCategorias: [],
       arraySubcategoria: [],
       arrayProductos: [],
@@ -245,7 +251,9 @@ export default {
       reglas: {
         stock: [
           v => !!v || "Campo requerido",
-          v => v > 0 || "El stock no puede ser 0 o un valor negativo."
+          v => /^[0-9]+$/i.test(v) || "No se permiten letras",
+          v => v > 0 || "El stock no puede ser 0 o un valor negativo.",
+          v => v <= 2000 || "Máximo se pueden agregar 2000 unidades x producto.",
         ],
         select: [v => !!v || "Debe seleccionar una opción de la lista"]
       }
@@ -421,7 +429,6 @@ export default {
     },
     editarItem(item) {
       let vue = this;
-      
       vue.editItem.id = item.id;
       vue.editItem.stock = item.stock;
       vue.editItem.category = parseInt(item.id_categoria);
@@ -452,27 +459,45 @@ export default {
     },
     editarProducto() {
       let vue = this;
-      axios
-        .put("/api/apiComercianteProductos/" + vue.editItem, {
-          data: vue.editItem
-        })
-        .then(function(response) {
-          vue.editItem.id = "";
-          vue.editItem.name = "";
-          vue.editItem.stock = 0;
-          vue.editItem.category = "";
-          vue.editItem.subcategory = "";
-          vue.editItem.price = "";
-          vue.editItem.id_puesto = "";
-          vue.getProductosXPuesto();
-          vue.dialog_editar = false;
-          Swal.fire({
-            icon: "success",
-            title:
-              "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto editado.</p>",
-            timer: 1700
+      let validar = vue.$refs.form_edit.validate();
+      if(validar){
+        axios.put("/api/apiComercianteProductos/" + vue.editItem, {
+            data: vue.editItem
+        }).then(function(response) {
+            vue.editItem.id = "";
+            vue.editItem.name = "";
+            vue.editItem.stock = 0;
+            vue.editItem.category = "";
+            vue.editItem.subcategory = "";
+            vue.editItem.price = "";
+            vue.editItem.id_puesto = "";
+            vue.getProductosXPuesto();
+            vue.dialog_editar = false;
+            Swal.fire({
+              icon: "success",
+              title:
+                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Producto editado.</p>",
+              timer: 1700
+            });
           });
+      }else{
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
         });
+        Toast.fire({
+          icon: "warning",
+          title:
+            "<p style='font-family: Arial, sans-serif'>Verifique que todos los campos estén llenos y cumplan con lo requerido</p>"
+        });
+      }
     },
     resetear_variable(key) {
       let me = this;

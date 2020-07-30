@@ -128,10 +128,9 @@ export default {
         ],
         celularRules: [
           v => !!v || "Campo requerido",
+          v => /^9/.test(v) || "Ingresar número de celular valido",
           v => /^[0-9]+$/i.test(v) || "No se permiten letras",
-          v =>
-            v.length <= 9 ||
-            "El número de celular no debe ser mayor de 9 dígitos"
+          v => v.length == 9 || "El número de celular debe tener 9 dígitos"
         ],
         puestoRules: [
           v => !!v || "Campo requerido",
@@ -175,6 +174,7 @@ export default {
     registrar_puesto() {
       let me = this;
       let validar = me.$refs.form.validate();
+      console.log(validar);
       if (validar) {
         me.puesto.id_user = me.id_user;
         axios
@@ -182,16 +182,18 @@ export default {
             data: me.puesto
           })
           .then(function(response) {
-            me.dialog_registro = false;
-            me.puesto.nombre_puesto = "";
-            me.puesto.numero_puesto = "";
-            me.puesto.celular = "";
-            me.puesto.categoria = "";
-            me.puestosXusuario();
+            if(response.data.result!=='error'){
+              me.dialog_registro = false;
+              me.puesto.nombre_puesto = "";
+              me.puesto.numero_puesto = "";
+              me.puesto.celular = "";
+              me.puesto.categoria = "";
+              me.puestosXusuario();
+            }
             Swal.fire({
-              icon: "success",
+              icon: response.data.result,
               title:
-                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>Puesto registrado</p>"
+                "<p class='font-sacramento' style='font-family: Arial, sans-serif'>"+response.data.data+"</p>"
             });
           })
           .catch(function(error) {

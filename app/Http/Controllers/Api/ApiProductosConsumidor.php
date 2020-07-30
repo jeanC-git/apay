@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Listas;
 use App\Horario;
+use App\Producto;
 use App\Consumidor;
 use App\Comerciante;
 use App\Detalle_listas;
@@ -55,23 +56,50 @@ class ApiProductosConsumidor extends Controller
         $saved = $lista->save();
         $lista_id = $lista->id;
         $precio;
+        //VERIFICAR STOCK ANTES DE GUARDAR
         foreach ($request->data_lista as $arrayxcomerciante) {
             for ($i=0; $i <count($arrayxcomerciante) ; $i++) {
                 $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$arrayxcomerciante[$i]['id_comerciante'])
                 ->where('id_producto',$arrayxcomerciante[$i]['id_producto'])
                 ->first();
                 //GUARDAR_STOCK
-                $id_comerciante_producto->stock=$id_comerciante_producto->stock-$arrayxcomerciante[$i]['cantidad'];
-                $id_comerciante_producto->save();
-                //GUARDAR DETALLE LISTA
-                $detalle_lista = new Detalle_listas();
-                $detalle_lista->estado = '1';
-                $detalle_lista->precio = $arrayxcomerciante[$i]['precio'];
-                $detalle_lista->cantidad = $arrayxcomerciante[$i]['cantidad'];
-                $detalle_lista->id_comerciante_producto = $id_comerciante_producto->id;
-                $detalle_lista->id_lista = $lista_id;
-                $saved = $detalle_lista->save();
-                $id_usuario_comerciante=Comerciante::find($arrayxcomerciante[$i]['id_comerciante']);
+                $stock_actual=$id_comerciante_producto->stock-$arrayxcomerciante[$i]['cantidad'];
+                if($stock_actual<0){
+                    $producto = Producto::where('id_producto',$arrayxcomerciante[$i]['id_producto'])->first();
+                    return response()->json(['data'=>'No hay stock para el producto'.$producto->nombre.', porfavor escoger otro','result'=>'error']);
+                }
+            }
+        }
+         //DISMUNIR CANTIDAD DE PERSONAS
+        $horario= Horario::find($request->info['hora']);
+        $cantidad_cupo=$horario->cupo-1;
+        if($cantidad_cupo>0){
+            $horario->cupo=$cantidad_cupo;
+            $horario->save();
+        }else{
+            return response()->json(['data'=>'No hay cupos para este horario','result'=>'error']);
+        }
+        //GUARDAR
+        foreach ($request->data_lista as $arrayxcomerciante) {
+            for ($i=0; $i <count($arrayxcomerciante) ; $i++) {
+                $id_comerciante_producto=Comerciante_productos::where('id_comerciante',$arrayxcomerciante[$i]['id_comerciante'])
+                ->where('id_producto',$arrayxcomerciante[$i]['id_producto'])
+                ->first();
+                //GUARDAR_STOCK
+                $stock_actual=$id_comerciante_producto->stock-$arrayxcomerciante[$i]['cantidad'];
+                if($stock_actual>0){
+                    $id_comerciante_producto->stock=$stock_actual;
+                    $id_comerciante_producto->save();
+                    //GUARDAR DETALLE LISTA
+                    $detalle_lista = new Detalle_listas();
+                    $detalle_lista->estado = '1';
+                    $detalle_lista->precio = $arrayxcomerciante[$i]['precio'];
+                    $detalle_lista->cantidad = $arrayxcomerciante[$i]['cantidad'];
+                    $detalle_lista->id_comerciante_producto = $id_comerciante_producto->id;
+                    $detalle_lista->id_lista = $lista_id;
+                    $saved = $detalle_lista->save();
+                    $id_usuario_comerciante=Comerciante::find($arrayxcomerciante[$i]['id_comerciante']);
+                }
                 if($i==0){
                     broadcast( new ListaRecibida('El puesto #'.$arrayxcomerciante[$i]['numero_puesto'].' ha recibido una lista',$id_usuario_comerciante->id_user));
                     $notificaciones = new Notificaciones();
@@ -83,13 +111,8 @@ class ApiProductosConsumidor extends Controller
                 }
             }
         }
-        //DISMUNIR CANTIDAD DE PERSONAS
-        $horario= Horario::find($request->info['hora']);
-        $horario->cupo=$horario->cupo-1;
-        $horario->save();
-        return "ok ._.";
+        return response()->json(['data'=>'Tu lista ha sido guardada','result'=>'success']);
     }
-
     /**
      * Display the specified resource.
      *
