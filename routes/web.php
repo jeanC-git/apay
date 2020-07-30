@@ -35,6 +35,9 @@ Route::get('/informacion-personal', function () {
 Route::get('/historial-listas', function () {
     return view('consumidor.historial-listas');
 });
+Route::get('/reglas', function () {
+    return view('consumidor.reglas');
+});
 // RUTAS ADMINISTRADOR
 Route::get('/lista_consumidores','AdministradorController@listar_consumidores');
 Route::get('/consumidores', function () {
