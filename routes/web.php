@@ -25,6 +25,7 @@ Route::post('/comerciante/verificar_puestos','ComercianteController@Verificar_pu
 Route::get('/reporte-comerciante', function () {
     return view('comerciante.reporte-comerciante');
 });
+Route::post('/reportes_ventas','ReportesController@Obtener_Reporte');
 // RUTAS CONSUMIDOR
 Route::get('/catalogo', function () {
     return view('consumidor.catalogo');

@@ -56,14 +56,14 @@
         <v-list-item-title>Listas de compras</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="/reporte-comerciante">
+<!-- <v-list-item href="/reporte-comerciante">
     <v-list-item-icon>
         <v-icon color="grey darken-4"> mdi-chart-bar</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Reportes</v-list-item-title>
     </v-list-item-content>
-</v-list-item>
+</v-list-item> -->
 @elseif(@Auth::user()->hasRole('administrador'))
 <v-list-item href="/consumidores">
     <v-list-item-icon>
@@ -89,20 +89,20 @@
         <v-list-item-title>Precios</v-list-item-title>
     </v-list-item-content>
 </v-list-item>
-<v-list-item href="/subida_masiva">
+<!-- <v-list-item href="/subida_masiva">
     <v-list-item-icon>
         <v-icon color="grey darken-4">mdi-arrow-up-bold</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Subida masiva</v-list-item-title>
     </v-list-item-content>
-</v-list-item>
-<v-list-item href="/reporte-administrador">
+</v-list-item> -->
+<!-- <v-list-item href="/reporte-administrador">
     <v-list-item-icon>
         <v-icon color="grey darken-4"> mdi-chart-bar</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
         <v-list-item-title>Reportes</v-list-item-title>
     </v-list-item-content>
-</v-list-item>
+</v-list-item> -->
 @endif
